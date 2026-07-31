@@ -2913,6 +2913,7 @@ function App() {
               </div>
             </div>
           </div>
+        )}
         {activePlayerLink && (
           <MediaPlayerModal 
             url={activePlayerLink} 
