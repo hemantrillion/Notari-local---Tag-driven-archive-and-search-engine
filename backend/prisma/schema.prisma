@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Link {
+  id           String    @id @default(uuid())
+  url          String
+  readableCode String    @unique
+  sourceCode   String
+  typeCode     String
+  primaryTag   String
+  createdAt    DateTime  @default(now())
+  
+  // Many-to-many relation via join table LinkTag
+  tags         LinkTag[]
+}
+
+model Tag {
+  id        String    @id @default(uuid())
+  code      String    @unique // e.g. "6708"
+  label     String            // e.g. "interview-tips"
+  createdAt DateTime  @default(now())
+  
+  // Many-to-many relation via join table LinkTag
+  links     LinkTag[]
+}
+
+model LinkTag {
+  linkId String
+  link   Link   @relation(fields: [linkId], references: [id], onDelete: Cascade)
+  tagId  String
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([linkId, tagId])
+}
