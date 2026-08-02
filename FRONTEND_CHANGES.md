@@ -175,3 +175,13 @@ c:\Users\jai18\Desktop\link-archive-app\
   * Replaced `paddingTop: '16px'` with `padding: '16px 0'` to enforce symmetric 16px top and bottom padding.
   * Increased the flexbox `gap` between the 3 rounded square icons from `12px` to `18px`.
 
+### Change 2: Floating Windows Extraction & Responsive Ratio-Based Styling
+* **Goal**: I wanted to refactor all 4 floating windows (Sidebar Navigation Drawer, Create New Tag Modal, Create New Source Modal, and Tag Editor Modal) out of `App.jsx` into a dedicated modular structure (`frontend/src/components/floating-windows/`), remove the top divider line above `triple t`, and convert hardcoded pixel offsets into device-responsive ratio/percentage styling while keeping floating windows locked to Default Theme (with Light/Dark support).
+* **Actions**:
+  * Created [SidebarDrawerModal.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/floating-windows/SidebarDrawerModal.jsx) for the floating sidebar drawer, removing the `borderTop` divider line above `triple t` and applying ratio spacing (`gap: 8%`, `paddingTop: 3vh`, `paddingBottom: 3vh`).
+  * Created [CreateTagModal.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/floating-windows/CreateTagModal.jsx) for the floating tag creation modal with `default-theme-isolated` class.
+  * Created [CreateSourceModal.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/floating-windows/CreateSourceModal.jsx) for the floating source creation modal with `default-theme-isolated` class.
+  * Created [TagEditorModal.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/floating-windows/TagEditorModal.jsx) wrapping `WordEditor.jsx` inside a floating modal container.
+  * Updated [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) to import and render these 4 floating window components cleanly.
+
+
