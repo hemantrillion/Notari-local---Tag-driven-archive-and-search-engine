@@ -1151,8 +1151,8 @@ function App() {
             </div>
           </div>
 
-          {/* Drawer Footer: Three Rounded Square Buttons Side-by-Side */}
-          <div className="drawer-footer" style={{ marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
+          {/* Drawer Footer: Three Rounded Square Buttons Side-by-Side (Triple T) */}
+          <div className="drawer-footer" style={{ marginTop: 'auto', padding: '16px 0', borderTop: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '18px' }}>
             {/* 1st Square: Light / Dark Mode Toggle */}
             <button
               className="rounded-square-btn"

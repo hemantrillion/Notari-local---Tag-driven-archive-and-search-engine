@@ -163,3 +163,15 @@ c:\Users\jai18\Desktop\link-archive-app\
 | **Source Platform**| Dropdown Selector | Platform code (`ytb`, `ins`, `gfg`, `git`, `web`) |
 | **`urlId` (`readableCode`)** | Text Input (Read-only) | Computed ID: `{source}-{type}-{tagCode}-{DD}-{MMYY}-{suffix}` |
 | **Body Content** | Rich-Text Editor Area | Formatted notes, HTML content, or article body text |
+
+---
+
+## 4. Recent Changes Log
+
+### Change 1: Triple T Sidebar Footer Spacing & Alignment Fix
+* **Goal**: I wanted to fix the `triple t` icon bar at the bottom of the sidebar navigation drawer so that the icons have equal padding at the bottom (preventing them from touching or clipping against the drawer bottom edge) and have wider horizontal spacing between each of the 3 icons.
+* **Actions**:
+  * Modified the `.drawer-footer` container inline styles in [frontend/src/App.jsx:L1155](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx#L1155).
+  * Replaced `paddingTop: '16px'` with `padding: '16px 0'` to enforce symmetric 16px top and bottom padding.
+  * Increased the flexbox `gap` between the 3 rounded square icons from `12px` to `18px`.
+
