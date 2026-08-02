@@ -34,14 +34,16 @@ c:\Users\jai18\Desktop\link-archive-app\
 
 ## 2. Naming Conventions & Terminology Glossary
 
-* **`ham` / `ham icon`**: The 3-line hamburger menu icon at the top-left of the header. Toggles the sidebar drawer.
-* **`alback`**: Top-left back button icon next to `ham`. Navigates to the previous view.
-* **`home`**: Top-left home button icon. Returns directly to the main homepage.
-* **`triple t`**: The bottom bar of the sidebar drawer containing 3 action icons and reserved rounded square slots. The first icon toggles light/dark theme.
-* **`SERP`**: Search Engine Results Page, displaying filtered query results under `All`, `Images`, and `Videos` tabs.
+* **`web mints`**: The 3 top-right webpage action control buttons (`Default View`, `Design Page`, `Edit`) rendered inside a Webpage/Website Detail View ([WebsiteDetailView.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/WebsiteDetailView.jsx)).
+* **`ham` / `ham icon`**: The 3-line hamburger menu icon located at the top-left of the main header. Toggles the floating sidebar navigation drawer (`SidebarDrawerModal.jsx`).
+* **`alback`**: The top-left back button icon located next to `ham`. Navigates back to the previous screen/view in the application history.
+* **`home`**: The top-left home button icon located in the main header. Direct shortcut to return to the homepage search screen.
+* **`triple t`**: The bottom icon bar of the sidebar navigation drawer containing 3 rounded square buttons (1st icon toggles Light/Dark mode, 2nd & 3rd icons are empty slots reserved for future feature modules).
+* **`SERP`**: Search Engine Results Page, landed upon submitting a tag query from the central search box. Displays results under `All`, `Images`, and `Videos` tabs.
+* **`urlId` (`readableCode`)**: The unique readable sequential identifier generated for every link (`{source}-{type}-{tagCode}-{DD}-{MMYY}-{suffix}`).
 * **`Webpage` / `Website`**: The formatted HTML page generated when a saved link is viewed or customized.
-* **`Tag Now`**: Share dialog option that immediately opens the Tag Editor (`WordEditor.jsx`).
-* **`Tag Later`**: Share dialog option that saves the link directly to the Untagged Dashboard with default tag code `0000`.
+* **`Tag Now`**: Native share dialog option that immediately redirects to the app and opens the Tag Editor modal (`TagEditorModal.jsx`).
+* **`Tag Later`**: Native share dialog option that saves the link directly to the Untagged Dashboard in the background with default tag code `0000`.
 
 ---
 
@@ -185,10 +187,10 @@ c:\Users\jai18\Desktop\link-archive-app\
   * Updated [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) to import and render these 4 floating window components cleanly.
 
 ### Change 3: Web Mints Spacing, Profile Outline & 11-Theme Engine Overhaul
-* **Goal**: I wanted to remove the redundant inner webpage back button, increase vertical spacing for `web mints` webpage action buttons, add a bold black circular outline to the header profile icon, and overhaul the Themes Dashboard into a 2-column wide rectangle grid with live interactive app view previews backed by a dedicated theme module (`frontend/src/themes/`).
+* **Goal**: I wanted to remove the redundant inner webpage back button, increase vertical spacing for `web mints` (the 3 top-right webpage action control buttons: Default View, Design Page, Edit), add a bold black circular outline to the header profile icon (`u`), and overhaul the Themes Dashboard into a 2-column wide rectangle grid with live interactive app view previews backed by a dedicated theme module (`frontend/src/themes/`).
 * **Actions**:
   * Removed the redundant inner back button (`←`) inside [WebsiteDetailView.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/WebsiteDetailView.jsx).
-  * Designated the 3 webpage action buttons (`Default View`, `Design Page`, `Edit`) as **`web mints`** and increased ratio-based top padding (`paddingTop: 2.5vh`, `paddingBottom: 2vh`, `marginBottom: 3vh`).
+  * Designated the 3 webpage action buttons (`Default View`, `Design Page`, `Edit`) as **`web mints`** (custom term for webpage action controls) and increased ratio-based top padding (`paddingTop: 2.5vh`, `paddingBottom: 2vh`, `marginBottom: 3vh`).
   * Updated `.avatar` in [index.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/index.css#L148-L159) to add a 2.5px solid bold black circular border outline around the profile icon (`u`).
   * Created [themeRegistry.js](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/themeRegistry.js) and [themes.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/themes.css) defining 11 design environments (*Default, Spatial UI, Bento Grid, Liquid Glass, Brutalism, Maximalism, Minimalism, Claymorphism, Glassmorphism, Neomorphism, Skeuomorphism*), each with Light and Dark variants.
   * Overhauled the Themes Dashboard in [App.jsx:L2250-L2295](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx#L2250-L2295) into a 2-column wide rectangle grid with live app view preview section and removed obsolete static text and back buttons.
