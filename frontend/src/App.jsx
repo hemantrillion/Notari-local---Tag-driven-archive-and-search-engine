@@ -2533,11 +2533,6 @@ function App() {
           setEditPrimaryTagLabel={setEditTagLabel}
           editTags={editTags}
           setEditTags={setEditTags}
-          editTypeError={editTypeError}
-          editSourceCode={editSourceCode}
-          setEditSourceCode={setEditSourceCode}
-          editTypeCode={editTypeCode}
-          setEditTypeCode={setEditTypeCode}
           editReadableCode={editUrlId}
           setEditReadableCode={setEditUrlId}
           editNotes={editNotes}

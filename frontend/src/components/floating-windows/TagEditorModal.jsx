@@ -16,11 +16,6 @@ export default function TagEditorModal({
   setEditPrimaryTagLabel,
   editTags,
   setEditTags,
-  editTypeError,
-  editSourceCode,
-  setEditSourceCode,
-  editTypeCode,
-  setEditTypeCode,
   editReadableCode,
   setEditReadableCode,
   editNotes,
@@ -34,6 +29,22 @@ export default function TagEditorModal({
   handleAddTag
 }) {
   if (activeEditLinkId === null) return null;
+
+  const urlIdParts = (editReadableCode || 'web-web-0000-01-0126-000').split('-');
+  const currentSourceCode = urlIdParts[0] || 'web';
+  const currentTypeCode = urlIdParts[1] || 'web';
+
+  const handleSourceChange = (newSource) => {
+    const parts = urlIdParts.length >= 6 ? [...urlIdParts] : ['web', 'web', '0000', '01', '0126', '000'];
+    parts[0] = newSource;
+    setEditReadableCode(parts.join('-'));
+  };
+
+  const handleTypeChange = (newType) => {
+    const parts = urlIdParts.length >= 6 ? [...urlIdParts] : ['web', 'web', '0000', '01', '0126', '000'];
+    parts[1] = newType;
+    setEditReadableCode(parts.join('-'));
+  };
 
   return (
     <div 
@@ -202,8 +213,8 @@ export default function TagEditorModal({
               <select 
                 className="input-field"
                 style={{ padding: '0.55rem', width: '100%', borderRadius: '0.4rem', border: '1px solid #ccc', boxSizing: 'border-box' }}
-                value={editTypeCode}
-                onChange={(e) => setEditTypeCode(e.target.value)}
+                value={currentTypeCode}
+                onChange={(e) => handleTypeChange(e.target.value)}
               >
                 <option value="doc">Document (doc)</option>
                 <option value="vid">Video (vid)</option>
@@ -218,8 +229,8 @@ export default function TagEditorModal({
               <select 
                 className="input-field"
                 style={{ padding: '0.55rem', width: '100%', borderRadius: '0.4rem', border: '1px solid #ccc', boxSizing: 'border-box' }}
-                value={editSourceCode}
-                onChange={(e) => setEditSourceCode(e.target.value)}
+                value={currentSourceCode}
+                onChange={(e) => handleSourceChange(e.target.value)}
               >
                 {(allSources || []).map((s) => (
                   <option key={s.code} value={s.code}>
