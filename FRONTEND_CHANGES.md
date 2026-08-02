@@ -195,5 +195,14 @@ c:\Users\jai18\Desktop\link-archive-app\
   * Created [themeRegistry.js](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/themeRegistry.js) and [themes.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/themes.css) defining 11 design environments (*Default, Spatial UI, Bento Grid, Liquid Glass, Brutalism, Maximalism, Minimalism, Claymorphism, Glassmorphism, Neomorphism, Skeuomorphism*), each with Light and Dark variants.
   * Overhauled the Themes Dashboard in [App.jsx:L2250-L2295](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx#L2250-L2295) into a 2-column wide rectangle grid with live app view preview section and removed obsolete static text and back buttons.
 
+### Change 4: Sidebar Drawer Absolute Anchoring, Midnight Dark System & Theme Dashboard Previews Re-ordering
+* **Goal**: I wanted to fix the floating sidebar drawer so that it anchors inside `.app-side` (instead of popping out over the Phone Simulator on the far left), fix dark mode CSS variable overrides so the entire application and floating windows switch to a true midnight dark theme with white text, and re-order the Themes Dashboard to place the 3 mini page structure previews (Homepage, SERP, Webpage) BELOW all 11 uniform theme selection cards.
+* **Actions**:
+  * Updated [SidebarDrawerModal.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/floating-windows/SidebarDrawerModal.jsx) to use `position: absolute; inset: 0` inside `.app-side`, creating a floating drawer container with `borderRadius: 16px` and clean dark/light mode surface tokens (`#1e1e1e` in dark mode).
+  * Updated `.app-side` and `.app-header` in [index.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/index.css#L59-L80) to use `var(--bg-app)` and `var(--bg-card)` instead of hardcoded white `#ffffff`.
+  * Updated [themes.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/themes.css) and [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) to synchronize `mode-dark` and `mode-light` on `document.body` and ensure `.default-theme-isolated` elements inherit dark mode backgrounds (`#18181b`) and white text (`#f4f4f5`).
+  * Re-ordered the Themes Dashboard in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) to display the 11 uniform wide theme cards first, followed by the Live App View Preview section BELOW all options, featuring 3 mini structural representations: Homepage Search, SERP Results, and Webpage View.
+
+
 
 

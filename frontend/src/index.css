@@ -59,7 +59,8 @@ body {
 .app-side {
   flex: 1;
   height: 100%;
-  background-color: var(--bg-white);
+  background-color: var(--bg-app);
+  color: var(--text);
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
@@ -75,7 +76,8 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
-  background-color: var(--bg-white);
+  background-color: var(--bg-card);
+  color: var(--text);
   box-sizing: border-box;
   flex-shrink: 0;
   z-index: 80;

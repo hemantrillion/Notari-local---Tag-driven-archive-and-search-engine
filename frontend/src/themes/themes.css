@@ -11,24 +11,28 @@
   font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
 }
 
-body.light-mode .default-theme-isolated {
+.mode-light .default-theme-isolated, .default-theme-isolated.mode-light {
   --bg-primary: #ffffff !important;
   --bg-card: #ffffff !important;
   --text-color: #111827 !important;
+  --text: #111827 !important;
   --text-muted: #6b7280 !important;
   --border-color: #e5e7eb !important;
+  --border: #e5e7eb !important;
   --accent-color: #1a73e8 !important;
   color: #111827 !important;
 }
 
-body.dark-mode .default-theme-isolated {
-  --bg-primary: #1e1e1e !important;
-  --bg-card: #1e1e1e !important;
-  --text-color: #f3f4f6 !important;
-  --text-muted: #9ca3af !important;
-  --border-color: #374151 !important;
-  --accent-color: #4285f4 !important;
-  color: #f3f4f6 !important;
+.mode-dark .default-theme-isolated, .default-theme-isolated.mode-dark {
+  --bg-primary: #18181b !important;
+  --bg-card: #18181b !important;
+  --text-color: #f4f4f5 !important;
+  --text: #f4f4f5 !important;
+  --text-muted: #a1a1aa !important;
+  --border-color: #27272a !important;
+  --border: #27272a !important;
+  --accent-color: #3b82f6 !important;
+  color: #f4f4f5 !important;
 }
 
 /* 1. Spatial UI */

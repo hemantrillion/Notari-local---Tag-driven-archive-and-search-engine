@@ -20,12 +20,17 @@ export default function SidebarDrawerModal({
     <div 
       className="sidebar-overlay"
       style={{
-        position: 'fixed',
-        inset: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.4)',
-        backdropFilter: 'blur(2px)',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backdropFilter: 'blur(3px)',
         zIndex: 1000,
-        display: 'flex'
+        display: 'flex',
+        alignItems: 'center',
+        paddingLeft: '12px'
       }}
       onClick={() => setDrawerOpen(false)}
     >
@@ -34,90 +39,62 @@ export default function SidebarDrawerModal({
         style={{
           width: '280px',
           maxWidth: '80vw',
-          height: '100vh',
-          backgroundColor: 'var(--bg-primary, #ffffff)',
-          color: 'var(--text-primary, #111111)',
+          height: 'calc(100% - 24px)',
+          backgroundColor: themeMode === 'dark' ? '#1e1e1e' : '#ffffff',
+          color: themeMode === 'dark' ? '#ffffff' : '#111827',
           display: 'flex',
           flexDirection: 'column',
-          boxShadow: '4px 0 24px rgba(0,0,0,0.15)',
-          padding: '2vh 1.5rem',
+          boxShadow: themeMode === 'dark' ? '0 12px 32px rgba(0,0,0,0.6)' : '0 12px 32px rgba(0,0,0,0.15)',
+          padding: '2vh 1.25rem',
+          borderRadius: '16px',
+          border: themeMode === 'dark' ? '1px solid #2d2d2d' : '1px solid #e5e7eb',
           boxSizing: 'border-box'
         }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Navigation Items List */}
-        <div className="drawer-menu" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', overflowY: 'auto' }}>
-          <div 
-            className={`drawer-item ${activeTab === 'home' ? 'active' : ''}`}
-            style={{ padding: '0.75rem 1rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
-            onClick={() => {
-              navigateTo('home');
-              setDrawerOpen(false);
-            }}
-          >
-            Home
-          </div>
-          <div 
-            className={`drawer-item ${activeTab === 'untagged' ? 'active' : ''}`}
-            style={{ padding: '0.75rem 1rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
-            onClick={() => {
-              navigateTo('untagged');
-              setDrawerOpen(false);
-            }}
-          >
-            Untagged
-          </div>
-          <div 
-            className={`drawer-item ${activeTab === 'tagged' ? 'active' : ''}`}
-            style={{ padding: '0.75rem 1rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
-            onClick={() => {
-              navigateTo('tagged');
-              setDrawerOpen(false);
-            }}
-          >
-            Tagged
-          </div>
-          <div 
-            className={`drawer-item ${activeTab === 'tags' ? 'active' : ''}`}
-            style={{ padding: '0.75rem 1rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
-            onClick={() => {
-              navigateTo('tags');
-              setDrawerOpen(false);
-            }}
-          >
-            Tags
-          </div>
-          <div 
-            className={`drawer-item ${activeTab === 'sources' ? 'active' : ''}`}
-            style={{ padding: '0.75rem 1rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
-            onClick={() => {
-              navigateTo('sources');
-              setDrawerOpen(false);
-            }}
-          >
-            Sources
-          </div>
-          <div 
-            className={`drawer-item ${activeTab === 'themes' ? 'active' : ''}`}
-            style={{ padding: '0.75rem 1rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
-            onClick={() => {
-              navigateTo('themes');
-              setDrawerOpen(false);
-            }}
-          >
-            Themes
-          </div>
-          <div 
-            className={`drawer-item ${activeTab === 'logs' ? 'active' : ''}`}
-            style={{ padding: '0.75rem 1rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
-            onClick={() => {
-              navigateTo('logs');
-              setDrawerOpen(false);
-              if (fetchAuditLogs) fetchAuditLogs();
-            }}
-          >
-            Logs
-          </div>
+        <div className="drawer-menu" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', overflowY: 'auto' }}>
+          {[
+            { id: 'home', label: 'Home' },
+            { id: 'untagged', label: 'Untagged' },
+            { id: 'tagged', label: 'Tagged' },
+            { id: 'tags', label: 'Tags' },
+            { id: 'sources', label: 'Sources' },
+            { id: 'themes', label: 'Themes' },
+            { id: 'logs', label: 'Logs' }
+          ].map((item) => {
+            const isActive = activeTab === item.id;
+            return (
+              <div 
+                key={item.id}
+                className={`drawer-item ${isActive ? 'active' : ''}`}
+                style={{ 
+                  padding: '0.75rem 1rem', 
+                  borderRadius: '10px', 
+                  cursor: 'pointer', 
+                  fontWeight: 600,
+                  fontSize: '0.95rem',
+                  backgroundColor: isActive 
+                    ? (themeMode === 'dark' ? 'rgba(59, 130, 246, 0.25)' : '#e8f0fe')
+                    : 'transparent',
+                  color: isActive 
+                    ? (themeMode === 'dark' ? '#60a5fa' : '#1a73e8')
+                    : (themeMode === 'dark' ? '#e2e8f0' : '#374151'),
+                  border: isActive 
+                    ? (themeMode === 'dark' ? '1px solid rgba(59, 130, 246, 0.4)' : '1px solid rgba(26, 115, 232, 0.2)')
+                    : '1px solid transparent',
+                  transition: 'all 0.15s ease'
+                }}
+                onClick={() => {
+                  navigateTo(item.id);
+                  setDrawerOpen(false);
+                  if (item.id === 'logs' && fetchAuditLogs) fetchAuditLogs();
+                }}
+              >
+                {item.label}
+              </div>
+            );
+          })}
         </div>
 
         {/* Drawer Footer: Triple T (No Top Divider Line, Ratio-Based Alignment) */}
@@ -126,7 +103,7 @@ export default function SidebarDrawerModal({
           style={{ 
             marginTop: 'auto', 
             paddingTop: '3vh',
-            paddingBottom: '3vh',
+            paddingBottom: '2vh',
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'center', 
@@ -141,14 +118,14 @@ export default function SidebarDrawerModal({
               width: '2.6rem',
               height: '2.6rem',
               borderRadius: '22%',
-              border: '1px solid var(--border-color, #e0e0e0)',
-              backgroundColor: 'var(--bg-card, #ffffff)',
-              color: 'var(--text-color, #111111)',
+              border: themeMode === 'dark' ? '1px solid #3f3f46' : '1px solid #d1d5db',
+              backgroundColor: themeMode === 'dark' ? '#27272a' : '#ffffff',
+              color: themeMode === 'dark' ? '#ffffff' : '#111827',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
               transition: 'all 0.15s ease'
             }}
             onClick={toggleThemeMode}
@@ -158,7 +135,7 @@ export default function SidebarDrawerModal({
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
               </svg>
             ) : (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#facc15" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="5"></circle>
                 <line x1="12" y1="1" x2="12" y2="3"></line>
                 <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -180,9 +157,9 @@ export default function SidebarDrawerModal({
               width: '2.6rem',
               height: '2.6rem',
               borderRadius: '22%',
-              border: '1px solid var(--border-color, #e0e0e0)',
-              backgroundColor: 'var(--bg-card, #ffffff)',
-              color: 'var(--text-color, #111111)',
+              border: themeMode === 'dark' ? '1px solid #3f3f46' : '1px solid #d1d5db',
+              backgroundColor: themeMode === 'dark' ? '#27272a' : '#ffffff',
+              color: themeMode === 'dark' ? '#ffffff' : '#111827',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -201,9 +178,9 @@ export default function SidebarDrawerModal({
               width: '2.6rem',
               height: '2.6rem',
               borderRadius: '22%',
-              border: '1px solid var(--border-color, #e0e0e0)',
-              backgroundColor: 'var(--bg-card, #ffffff)',
-              color: 'var(--text-color, #111111)',
+              border: themeMode === 'dark' ? '1px solid #3f3f46' : '1px solid #d1d5db',
+              backgroundColor: themeMode === 'dark' ? '#27272a' : '#ffffff',
+              color: themeMode === 'dark' ? '#ffffff' : '#111827',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

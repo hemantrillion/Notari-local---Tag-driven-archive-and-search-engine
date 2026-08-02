@@ -110,6 +110,10 @@ function App() {
     showToast(`Theme changed to ${themeName}`);
   };
 
+  useEffect(() => {
+    document.body.className = `mode-${themeMode} theme-${appTheme}`;
+  }, [themeMode, appTheme]);
+
   const toggleThemeMode = () => {
     const newMode = themeMode === 'light' ? 'dark' : 'light';
     setThemeMode(newMode);
@@ -2251,76 +2255,117 @@ function App() {
         {activeTab === 'themes' && (
           <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
             
-            {/* Live Interactive App View Preview Box */}
-            <div 
-              className={`live-theme-preview-box theme-${appTheme} mode-${themeMode}`}
-              style={{
-                padding: '1.5rem',
-                borderRadius: '1.25rem',
-                border: '1px solid var(--border)',
-                backgroundColor: 'var(--bg-app)',
-                color: 'var(--text)',
-                marginBottom: '2rem',
-                boxShadow: 'var(--box-shadow)',
-                transition: 'all 0.25s ease'
-              }}
-            >
-              <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.7, marginBottom: '0.5rem', fontWeight: 700 }}>
-                Live App View Preview ({THEME_OPTIONS.find(t => t.id === appTheme)?.name} - {themeMode.toUpperCase()} Mode)
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700 }}>
-                  Sample Webpage / Link Search
-                </h2>
-                <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.75rem', borderRadius: '1rem', backgroundColor: 'var(--accent)', color: '#ffffff', fontWeight: 600 }}>
-                  Tag: programming
-                </span>
-              </div>
-              <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem' }}>
-                <div style={{ flex: 1, padding: '0.75rem', borderRadius: '0.5rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontSize: '0.9rem', fontWeight: 600, marginBottom: '0.25rem' }}>Sample Card Item</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>https://example.com/demo-link</div>
-                </div>
-                <div style={{ flex: 1, padding: '0.75rem', borderRadius: '0.5rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontSize: '0.9rem', fontWeight: 600, marginBottom: '0.25rem' }}>SERP Media Card</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Extracted image asset preview</div>
-                </div>
-              </div>
-            </div>
-
             {/* 11 Theme Options in 2-Column Wide Rectangle Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.25rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.25rem', marginBottom: '2.5rem' }}>
               {THEME_OPTIONS.map((theme) => {
                 const isActive = appTheme === theme.id;
                 return (
                   <div
                     key={theme.id}
-                    className={`theme-selection-card theme-${theme.id} mode-${themeMode}`}
+                    className="theme-selection-card"
                     onClick={() => changeTheme(theme.id)}
                     style={{
                       padding: '1.25rem 1.5rem',
                       borderRadius: '1.25rem',
                       border: isActive ? '2.5px solid var(--accent, #1a73e8)' : '1px solid var(--border)',
                       backgroundColor: 'var(--bg-card)',
+                      color: 'var(--text)',
                       cursor: 'pointer',
-                      boxShadow: 'var(--box-shadow)',
+                      boxShadow: isActive ? '0 4px 16px rgba(26, 115, 232, 0.2)' : 'var(--box-shadow)',
                       transition: 'all 0.2s ease',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between'
                     }}
                   >
-                    <span style={{ fontWeight: '700', fontSize: '1.05rem', color: 'var(--text-color, var(--text))' }}>
+                    <span style={{ fontWeight: '700', fontSize: '1.05rem', color: 'var(--text)' }}>
                       {theme.name}
                     </span>
                     {isActive && (
-                      <span style={{ fontSize: '0.75rem', fontWeight: 'bold', color: '#ffffff', backgroundColor: '#1a73e8', padding: '0.35rem 0.85rem', borderRadius: '1rem' }}>
+                      <span style={{ fontSize: '0.75rem', fontWeight: 'bold', color: '#ffffff', backgroundColor: 'var(--accent, #1a73e8)', padding: '0.35rem 0.85rem', borderRadius: '1rem' }}>
                         Active
                       </span>
                     )}
                   </div>
                 );
               })}
+            </div>
+
+            {/* Live Interactive App View Preview Section (Placed BELOW all theme options) */}
+            <div 
+              className={`live-theme-preview-container theme-${appTheme} mode-${themeMode}`}
+              style={{
+                padding: '2rem',
+                borderRadius: '1.5rem',
+                border: '1px solid var(--border)',
+                backgroundColor: 'var(--bg-app)',
+                color: 'var(--text)',
+                boxShadow: 'var(--box-shadow)',
+                transition: 'all 0.25s ease'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+                <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Live App View Preview ({THEME_OPTIONS.find(t => t.id === appTheme)?.name} - {themeMode.toUpperCase()} Mode)
+                </h3>
+                <span style={{ fontSize: '0.8rem', padding: '0.3rem 0.85rem', borderRadius: '1rem', backgroundColor: 'var(--accent)', color: '#ffffff', fontWeight: 600 }}>
+                  Active Paradigm
+                </span>
+              </div>
+
+              {/* 3 Real-time Mini App Page Previews */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem' }}>
+                
+                {/* 1. Mini Homepage Preview */}
+                <div style={{ padding: '1rem', borderRadius: '1rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 700, opacity: 0.6, marginBottom: '0.75rem', textTransform: 'uppercase' }}>
+                    Homepage Structure
+                  </div>
+                  <div style={{ fontSize: '0.9rem', fontWeight: 800, marginBottom: '0.5rem', textAlign: 'center' }}>
+                    A Sap Link
+                  </div>
+                  <div style={{ padding: '0.4rem', borderRadius: '1rem', border: '1px solid var(--border)', backgroundColor: 'var(--bg-app)', fontSize: '0.7rem', color: 'var(--text-muted)', textAlign: 'center', marginBottom: '0.75rem' }}>
+                    Search tags, URLs, or notes...
+                  </div>
+                  <div style={{ padding: '0.5rem', borderRadius: '0.5rem', border: '1px solid var(--border)', backgroundColor: 'var(--bg-app)' }}>
+                    <div style={{ fontSize: '0.75rem', fontWeight: 700 }}>YouTube Video Item</div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>web &gt; coding</div>
+                  </div>
+                </div>
+
+                {/* 2. Mini SERP Search Results Preview */}
+                <div style={{ padding: '1rem', borderRadius: '1rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 700, opacity: 0.6, marginBottom: '0.75rem', textTransform: 'uppercase' }}>
+                    SERP Structure
+                  </div>
+                  <div style={{ display: 'flex', gap: '0.3rem', marginBottom: '0.75rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.4rem' }}>
+                    <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--accent)', borderBottom: '2px solid var(--accent)' }}>All</span>
+                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginLeft: '0.5rem' }}>Images</span>
+                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginLeft: '0.5rem' }}>Videos</span>
+                  </div>
+                  <div style={{ padding: '0.5rem', borderRadius: '0.5rem', border: '1px solid var(--border)', backgroundColor: 'var(--bg-app)' }}>
+                    <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent)' }}>Wikipedia Article</div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>https://en.wikipedia.org/</div>
+                  </div>
+                </div>
+
+                {/* 3. Mini Webpage Detail View Preview */}
+                <div style={{ padding: '1rem', borderRadius: '1rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 700, opacity: 0.6, marginBottom: '0.75rem', textTransform: 'uppercase' }}>
+                    Webpage Structure
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.2rem', marginBottom: '0.5rem' }}>
+                    <span style={{ fontSize: '0.6rem', padding: '0.15rem 0.4rem', borderRadius: '0.3rem', backgroundColor: 'var(--bg-app)', border: '1px solid var(--border)' }}>web mints</span>
+                  </div>
+                  <div style={{ fontSize: '0.8rem', fontWeight: 800, marginBottom: '0.3rem' }}>
+                    Sample Webpage Title
+                  </div>
+                  <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>
+                    Formatted HTML content rendered with style controls.
+                  </div>
+                </div>
+
+              </div>
             </div>
 
           </div>
