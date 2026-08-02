@@ -45,27 +45,38 @@ export default function WebsiteDetailView({
 
   return (
     <div className="website-detail-page animate-fade" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '0 24px 24px 24px', boxSizing: 'border-box', background: detailMode === 'edit' ? 'var(--bg-app)' : styles.backgroundColor, color: detailMode === 'edit' ? 'var(--text)' : styles.textColor, fontFamily: styles.fontFamily, transition: 'all 0.25s ease' }}>
-      {/* Navigation & Toolbar */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', borderBottom: '1px solid var(--border)', padding: '12px 0', marginBottom: '16px' }}>
-        <div style={{ display: 'flex', gap: '8px' }}>
+      {/* web mints Toolbar Container */}
+      <div 
+        className="web-mints-toolbar"
+        style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'flex-end', 
+          borderBottom: '1px solid var(--border)', 
+          paddingTop: '2.5vh',
+          paddingBottom: '2vh', 
+          marginBottom: '3vh' 
+        }}
+      >
+        <div className="web-mints-group" style={{ display: 'flex', gap: '3%' }}>
           <button 
             className={`white-theme-btn ${detailMode === 'view' ? 'active' : ''}`}
             onClick={() => setDetailMode('view')}
-            style={{ fontSize: '12px', padding: '6px 12px' }}
+            style={{ fontSize: '0.85rem', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 600 }}
           >
             Default View
           </button>
           <button 
             className={`white-theme-btn ${detailMode === 'design' ? 'active' : ''}`}
             onClick={() => setDetailMode('design')}
-            style={{ fontSize: '12px', padding: '6px 12px' }}
+            style={{ fontSize: '0.85rem', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 600 }}
           >
             Design Page
           </button>
           <button 
             className={`white-theme-btn ${detailMode === 'edit' ? 'active' : ''}`}
             onClick={() => setDetailMode('edit')}
-            style={{ fontSize: '12px', padding: '6px 12px' }}
+            style={{ fontSize: '0.85rem', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 600 }}
           >
             Edit
           </button>

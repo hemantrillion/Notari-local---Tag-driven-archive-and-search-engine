@@ -184,4 +184,14 @@ c:\Users\jai18\Desktop\link-archive-app\
   * Created [TagEditorModal.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/floating-windows/TagEditorModal.jsx) wrapping `WordEditor.jsx` inside a floating modal container.
   * Updated [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) to import and render these 4 floating window components cleanly.
 
+### Change 3: Web Mints Spacing, Profile Outline & 11-Theme Engine Overhaul
+* **Goal**: I wanted to remove the redundant inner webpage back button, increase vertical spacing for `web mints` webpage action buttons, add a bold black circular outline to the header profile icon, and overhaul the Themes Dashboard into a 2-column wide rectangle grid with live interactive app view previews backed by a dedicated theme module (`frontend/src/themes/`).
+* **Actions**:
+  * Removed the redundant inner back button (`←`) inside [WebsiteDetailView.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/WebsiteDetailView.jsx).
+  * Designated the 3 webpage action buttons (`Default View`, `Design Page`, `Edit`) as **`web mints`** and increased ratio-based top padding (`paddingTop: 2.5vh`, `paddingBottom: 2vh`, `marginBottom: 3vh`).
+  * Updated `.avatar` in [index.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/index.css#L148-L159) to add a 2.5px solid bold black circular border outline around the profile icon (`u`).
+  * Created [themeRegistry.js](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/themeRegistry.js) and [themes.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/themes.css) defining 11 design environments (*Default, Spatial UI, Bento Grid, Liquid Glass, Brutalism, Maximalism, Minimalism, Claymorphism, Glassmorphism, Neomorphism, Skeuomorphism*), each with Light and Dark variants.
+  * Overhauled the Themes Dashboard in [App.jsx:L2250-L2295](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx#L2250-L2295) into a 2-column wide rectangle grid with live app view preview section and removed obsolete static text and back buttons.
+
+
 

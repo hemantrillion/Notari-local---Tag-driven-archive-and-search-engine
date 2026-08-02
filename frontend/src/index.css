@@ -156,6 +156,8 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 11px;
+  border: 2.5px solid #000000;
+  box-sizing: border-box;
 }
 
 /* Sidebar Drawer Overlay */

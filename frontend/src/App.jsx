@@ -2247,61 +2247,82 @@ function App() {
           </div>
         )}
 
-        {/* Themes View */}
+        {/* Themes Dashboard View */}
         {activeTab === 'themes' && (
           <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
-            <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '20px' }}>
-              Select from 11 themes with live visual app view previews.
-            </p>
+            
+            {/* Live Interactive App View Preview Box */}
+            <div 
+              className={`live-theme-preview-box theme-${appTheme} mode-${themeMode}`}
+              style={{
+                padding: '1.5rem',
+                borderRadius: '1.25rem',
+                border: '1px solid var(--border)',
+                backgroundColor: 'var(--bg-app)',
+                color: 'var(--text)',
+                marginBottom: '2rem',
+                boxShadow: 'var(--box-shadow)',
+                transition: 'all 0.25s ease'
+              }}
+            >
+              <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.7, marginBottom: '0.5rem', fontWeight: 700 }}>
+                Live App View Preview ({THEME_OPTIONS.find(t => t.id === appTheme)?.name} - {themeMode.toUpperCase()} Mode)
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700 }}>
+                  Sample Webpage / Link Search
+                </h2>
+                <span style={{ fontSize: '0.75rem', padding: '0.25rem 0.75rem', borderRadius: '1rem', backgroundColor: 'var(--accent)', color: '#ffffff', fontWeight: 600 }}>
+                  Tag: programming
+                </span>
+              </div>
+              <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{ flex: 1, padding: '0.75rem', borderRadius: '0.5rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+                  <div style={{ fontSize: '0.9rem', fontWeight: 600, marginBottom: '0.25rem' }}>Sample Card Item</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>https://example.com/demo-link</div>
+                </div>
+                <div style={{ flex: 1, padding: '0.75rem', borderRadius: '0.5rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+                  <div style={{ fontSize: '0.9rem', fontWeight: 600, marginBottom: '0.25rem' }}>SERP Media Card</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Extracted image asset preview</div>
+                </div>
+              </div>
+            </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px', marginBottom: '28px' }}>
+            {/* 11 Theme Options in 2-Column Wide Rectangle Grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.25rem' }}>
               {THEME_OPTIONS.map((theme) => {
                 const isActive = appTheme === theme.id;
                 return (
                   <div
                     key={theme.id}
-                    className={`theme-${theme.id} mode-${themeMode}`}
+                    className={`theme-selection-card theme-${theme.id} mode-${themeMode}`}
                     onClick={() => changeTheme(theme.id)}
                     style={{
-                      padding: '16px',
-                      borderRadius: '12px',
-                      border: isActive ? '2px solid #1a73e8' : '1px solid var(--border)',
+                      padding: '1.25rem 1.5rem',
+                      borderRadius: '1.25rem',
+                      border: isActive ? '2.5px solid var(--accent, #1a73e8)' : '1px solid var(--border)',
                       backgroundColor: 'var(--bg-card)',
                       cursor: 'pointer',
                       boxShadow: 'var(--box-shadow)',
                       transition: 'all 0.2s ease',
-                      position: 'relative'
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between'
                     }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                      <span style={{ fontWeight: '700', fontSize: '14px', color: 'var(--text-color)' }}>
-                        {theme.name}
+                    <span style={{ fontWeight: '700', fontSize: '1.05rem', color: 'var(--text-color, var(--text))' }}>
+                      {theme.name}
+                    </span>
+                    {isActive && (
+                      <span style={{ fontSize: '0.75rem', fontWeight: 'bold', color: '#ffffff', backgroundColor: '#1a73e8', padding: '0.35rem 0.85rem', borderRadius: '1rem' }}>
+                        Active
                       </span>
-                      {isActive && (
-                        <span style={{ fontSize: '10px', fontWeight: 'bold', color: '#ffffff', backgroundColor: '#1a73e8', padding: '2px 10px', borderRadius: '12px' }}>
-                          Active
-                        </span>
-                      )}
-                    </div>
-
-                    {/* App View Preview Box */}
-                    <div style={{ padding: '10px', borderRadius: '8px', border: '1px dashed var(--border)', backgroundColor: 'var(--bg-app)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                      <div style={{ height: '8px', width: '65%', backgroundColor: 'var(--accent, #1a73e8)', borderRadius: '4px' }} />
-                      <div style={{ height: '6px', width: '90%', backgroundColor: 'var(--text-muted, #888)', borderRadius: '4px', opacity: 0.5 }} />
-                      <div style={{ height: '6px', width: '40%', backgroundColor: 'var(--text-muted, #888)', borderRadius: '4px', opacity: 0.3 }} />
-                    </div>
+                    )}
                   </div>
                 );
               })}
             </div>
 
-            <button 
-              className="white-theme-btn" 
-              style={{ width: '100%', borderRadius: '24px', padding: '10px', fontSize: '13px', fontWeight: '600' }}
-              onClick={() => setActiveTab('home')}
-            >
-              Back to Search Home
-            </button>
           </div>
         )}
 
