@@ -4,8 +4,6 @@ import SidebarDrawerModal from './components/floating-windows/SidebarDrawerModal
 import CreateTagModal from './components/floating-windows/CreateTagModal';
 import CreateSourceModal from './components/floating-windows/CreateSourceModal';
 import TagEditorModal from './components/floating-windows/TagEditorModal';
-import WebsiteDetailView from './components/WebsiteDetailView';
-import WebsiteFrontendPlayground from './components/WebsiteFrontendPlayground';
 
 const THEME_OPTIONS = [
   { id: 'default', name: 'Default' },
@@ -2531,8 +2529,8 @@ function App() {
           editTitle={editTitle}
           setEditTitle={setEditTitle}
           editUrl={links.find(l => l.id === activeEditLinkId)?.url || ''}
-          editPrimaryTagLabel={editPrimaryTagLabel}
-          setEditPrimaryTagLabel={setEditPrimaryTagLabel}
+          editPrimaryTagLabel={editTagLabel}
+          setEditPrimaryTagLabel={setEditTagLabel}
           editTags={editTags}
           setEditTags={setEditTags}
           editTypeError={editTypeError}
@@ -2623,5 +2621,530 @@ const getCleanTextExcerpt = (htmlContent, maxWords = 60) => {
   if (words.length <= maxWords) return cleanText;
   return words.slice(0, maxWords).join(' ') + '...';
 };
+
+function WebsiteDetailView({ 
+  link, 
+  detailMode, 
+  setDetailMode, 
+  detailTitle, 
+  setDetailTitle, 
+  detailNotes, 
+  setDetailNotes, 
+  onBack, 
+  onOpenPlayer,
+  onSave, 
+  onSaveStyles 
+}) {
+  const [copied, setCopied] = useState(false);
+
+  return (
+    <div className="website-detail-page animate-fade" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '0 24px 24px 24px', boxSizing: 'border-box' }}>
+      {/* Navigation & Toolbar */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px', marginBottom: '16px' }}>
+        <button 
+          className="white-theme-btn" 
+          onClick={onBack}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', padding: '6px 16px', fontWeight: 'bold' }}
+        >
+          ←
+        </button>
+        
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <button 
+            className={`white-theme-btn ${detailMode === 'view' ? 'active' : ''}`}
+            onClick={() => setDetailMode('view')}
+            style={{ fontSize: '13px', padding: '6px 12px', backgroundColor: detailMode === 'view' ? '#e8f0fe' : '', color: detailMode === 'view' ? '#1a73e8' : '' }}
+          >
+            Default View
+          </button>
+          <button 
+            className={`white-theme-btn ${detailMode === 'design' ? 'active' : ''}`}
+            onClick={() => setDetailMode('design')}
+            style={{ fontSize: '13px', padding: '6px 12px', backgroundColor: detailMode === 'design' ? '#e8f0fe' : '', color: detailMode === 'design' ? '#1a73e8' : '' }}
+          >
+            Design Page
+          </button>
+          <button 
+            className={`white-theme-btn ${detailMode === 'edit' ? 'active' : ''}`}
+            onClick={() => setDetailMode('edit')}
+            style={{ fontSize: '13px', padding: '6px 12px', backgroundColor: detailMode === 'edit' ? '#e8f0fe' : '', color: detailMode === 'edit' ? '#1a73e8' : '' }}
+          >
+            Edit
+          </button>
+        </div>
+      </div>
+
+      {/* Content Panel */}
+      <div style={{ flex: 1, overflowY: 'auto' }}>
+        {detailMode === 'view' && (
+          <div>
+            <h1 style={{ fontSize: '28px', fontWeight: 'bold', margin: '0 0 16px 0', color: 'var(--text)' }}>
+              {link.title || 'Untitled Page'}
+            </h1>
+            
+            <div style={{ fontSize: '14px', color: '#5f6368', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+              <strong>Url:</strong> 
+              <span style={{ color: '#1a73e8', wordBreak: 'break-all' }}>
+                {displayUrl(link.url)}
+              </span>
+              
+              {/* Copy Button */}
+              <button 
+                className="white-theme-btn" 
+                onClick={() => {
+                  navigator.clipboard.writeText(link.url);
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 1500);
+                }}
+                style={{ padding: '2px 8px', fontSize: '11px', display: 'inline-flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}
+              >
+                {copied ? '✔ Copied' : 'Copy'}
+              </button>
+              
+              {/* Open Button */}
+              <button 
+                className="white-theme-btn"
+                onClick={() => onOpenPlayer(link.url)}
+                style={{ padding: '2px 8px', fontSize: '11px', color: 'var(--text)', display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }}
+              >
+                Open
+              </button>
+            </div>
+
+            <div 
+              className="word-editor-preview"
+              style={{ fontSize: '14px', lineHeight: '1.6', color: 'var(--text)', borderTop: '1px solid #f1f3f4', paddingTop: '16px' }}
+              dangerouslySetInnerHTML={{ __html: link.notes || '<p style="color: #888; font-style: italic;">No context notes written yet.</p>' }}
+            />
+          </div>
+        )}
+
+        {detailMode === 'design' && (
+          /* Frontend Customizer Playground */
+          <WebsiteFrontendPlayground 
+            link={link} 
+            onSave={onSaveStyles}
+          />
+        )}
+
+        {detailMode === 'edit' && (
+          /* Inline Edit View (Change title and Context notes without opening anything new) */
+          <div style={{ maxWidth: '600px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div className="input-group">
+              <label className="input-label" style={{ fontWeight: 'bold', fontSize: '12px', display: 'block', marginBottom: '4px' }}>
+                Page Title
+              </label>
+              <input 
+                type="text"
+                className="input-field"
+                style={{ padding: '10px', fontSize: '14px', width: '100%', boxSizing: 'border-box' }}
+                value={detailTitle}
+                onChange={(e) => setDetailTitle(e.target.value)}
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label" style={{ fontWeight: 'bold', fontSize: '12px', display: 'block', marginBottom: '4px' }}>
+                Page Context (Word Editor)
+              </label>
+              
+              {/* Inline word editor toolbars */}
+              <div className="editor-toolbar" style={{ display: 'flex', gap: '4px', border: '1px solid var(--border)', borderBottom: 'none', padding: '6px', borderTopLeftRadius: '6px', borderTopRightRadius: '6px', backgroundColor: '#f8f9fa' }}>
+                <button 
+                  type="button" 
+                  className="toolbar-btn" 
+                  style={{ fontWeight: 'bold', padding: '4px 8px', border: 'none', background: 'transparent', cursor: 'pointer' }} 
+                  onClick={() => document.execCommand('bold')}
+                >
+                  B
+                </button>
+                <button 
+                  type="button" 
+                  className="toolbar-btn" 
+                  style={{ fontStyle: 'italic', padding: '4px 8px', border: 'none', background: 'transparent', cursor: 'pointer' }} 
+                  onClick={() => document.execCommand('italic')}
+                >
+                  I
+                </button>
+                <button 
+                  type="button" 
+                  className="toolbar-btn" 
+                  style={{ textDecoration: 'underline', padding: '4px 8px', border: 'none', background: 'transparent', cursor: 'pointer' }} 
+                  onClick={() => document.execCommand('underline')}
+                >
+                  U
+                </button>
+              </div>
+
+              <div 
+                contentEditable
+                placeholder="Write page context here..."
+                style={{
+                  border: '1px solid var(--border)',
+                  borderBottomLeftRadius: '6px',
+                  borderBottomRightRadius: '6px',
+                  padding: '12px',
+                  fontSize: '13px',
+                  backgroundColor: '#ffffff',
+                  overflowY: 'auto',
+                  outline: 'none',
+                  minHeight: '200px',
+                  boxSizing: 'border-box',
+                  lineHeight: '1.5'
+                }}
+                onBlur={(e) => setDetailNotes(e.currentTarget.innerHTML)}
+                dangerouslySetInnerHTML={{ __html: link.notes || '' }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button 
+                className="white-theme-btn primary"
+                style={{ backgroundColor: '#1a73e8', color: '#ffffff', padding: '8px 16px' }}
+                onClick={() => onSave(detailTitle, detailNotes)}
+              >
+                Save Changes
+              </button>
+              <button 
+                className="white-theme-btn"
+                style={{ padding: '8px 16px' }}
+                onClick={() => {
+                  setDetailTitle(link.title || '');
+                  setDetailNotes(link.notes || '');
+                  setDetailMode('view');
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function WebsiteFrontendPlayground({ link, onSave }) {
+  const currentStyles = link.styleSettings || {
+    backgroundColor: '#ffffff',
+    textColor: '#202124',
+    fontFamily: 'Inter, sans-serif',
+    cardStyle: 'flat',
+    alignment: 'left',
+    containerWidth: '700px'
+  };
+
+  const [bg, setBg] = useState(currentStyles.backgroundColor);
+  const [textCol, setTextCol] = useState(currentStyles.textColor);
+  const [font, setFont] = useState(currentStyles.fontFamily);
+  const [card, setCard] = useState(currentStyles.cardStyle);
+  const [align, setAlign] = useState(currentStyles.alignment);
+  const [width, setWidth] = useState(currentStyles.containerWidth);
+
+  // Background templates
+  const BG_TEMPLATES = [
+    { name: 'White', bg: '#ffffff', text: '#202124' },
+    { name: 'Cosmic Violet', bg: 'linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%)', text: '#ffffff' },
+    { name: 'Sunset Peach', bg: 'linear-gradient(135deg, #ff5e62 0%, #ff9966 100%)', text: '#ffffff' },
+    { name: 'Teal Forest', bg: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)', text: '#ffffff' },
+    { name: 'Dark Cyberpunk', bg: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)', text: '#00ffcc' }
+  ];
+
+  const FONTS = [
+    { name: 'Inter (Sans-Serif)', value: 'Inter, sans-serif' },
+    { name: 'Playfair Display (Serif)', value: '"Playfair Display", serif' },
+    { name: 'Outfit (Rounded)', value: 'Outfit, sans-serif' },
+    { name: 'Courier Prime (Monospace)', value: '"Courier Prime", monospace' }
+  ];
+
+  const CARDS = [
+    { name: 'Flat Card', value: 'flat' },
+    { name: 'Glassmorphic Card', value: 'glass' },
+    { name: 'Minimal Borderless', value: 'minimal' }
+  ];
+
+  const ALIGNMENTS = [
+    { name: 'Left Aligned', value: 'left' },
+    { name: 'Centered', value: 'center' }
+  ];
+
+  const WIDTHS = [
+    { name: 'Narrow (500px)', value: '500px' },
+    { name: 'Medium (700px)', value: '700px' },
+    { name: 'Wide (95%)', value: '95%' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', gap: '20px', height: 'calc(100vh - 220px)', boxSizing: 'border-box' }}>
+      {/* Left Control Panel */}
+      <div style={{ width: '280px', backgroundColor: '#f8f9fa', borderRadius: '8px', padding: '16px', border: '1px solid var(--border)', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <h3 style={{ fontSize: '14px', fontWeight: 'bold', margin: '0 0 8px 0', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>Design Tools</h3>
+        
+        {/* Background Templates */}
+        <div>
+          <label style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', color: '#5f6368', display: 'block', marginBottom: '8px' }}>Theme & Background</label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            {BG_TEMPLATES.map(t => (
+              <button
+                key={t.name}
+                onClick={() => {
+                  setBg(t.bg);
+                  setTextCol(t.text);
+                }}
+                style={{
+                  padding: '8px',
+                  fontSize: '12px',
+                  borderRadius: '6px',
+                  border: '1px solid var(--border)',
+                  background: t.bg,
+                  color: t.text,
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                  textAlign: 'left',
+                  textShadow: '0 1px 2px rgba(0,0,0,0.15)'
+                }}
+              >
+                {t.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Typography */}
+        <div>
+          <label style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', color: '#5f6368', display: 'block', marginBottom: '4px' }}>Typography</label>
+          <select 
+            value={font}
+            onChange={(e) => setFont(e.target.value)}
+            style={{ width: '100%', padding: '6px', fontSize: '12px', borderRadius: '4px', border: '1px solid var(--border)' }}
+          >
+            {FONTS.map(f => (
+              <option key={f.value} value={f.value}>{f.name}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Card Style */}
+        <div>
+          <label style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', color: '#5f6368', display: 'block', marginBottom: '4px' }}>Container Layout</label>
+          <select 
+            value={card}
+            onChange={(e) => setCard(e.target.value)}
+            style={{ width: '100%', padding: '6px', fontSize: '12px', borderRadius: '4px', border: '1px solid var(--border)' }}
+          >
+            {CARDS.map(c => (
+              <option key={c.value} value={c.value}>{c.name}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Alignment */}
+        <div>
+          <label style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', color: '#5f6368', display: 'block', marginBottom: '4px' }}>Text Alignment</label>
+          <select 
+            value={align}
+            onChange={(e) => setAlign(e.target.value)}
+            style={{ width: '100%', padding: '6px', fontSize: '12px', borderRadius: '4px', border: '1px solid var(--border)' }}
+          >
+            {ALIGNMENTS.map(a => (
+              <option key={a.value} value={a.value}>{a.name}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Width */}
+        <div>
+          <label style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', color: '#5f6368', display: 'block', marginBottom: '4px' }}>Content Width</label>
+          <select 
+            value={width}
+            onChange={(e) => setWidth(e.target.value)}
+            style={{ width: '100%', padding: '6px', fontSize: '12px', borderRadius: '4px', border: '1px solid var(--border)' }}
+          >
+            {WIDTHS.map(w => (
+              <option key={w.value} value={w.value}>{w.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <button
+          className="white-theme-btn primary"
+          style={{ marginTop: 'auto', padding: '10px', fontSize: '13px', backgroundColor: '#1a73e8', color: '#ffffff' }}
+          onClick={() => {
+            onSave({
+              backgroundColor: bg,
+              textColor: textCol,
+              fontFamily: font,
+              cardStyle: card,
+              alignment: align,
+              containerWidth: width
+            });
+            alert('Design saved successfully!');
+          }}
+        >
+          Save Layout
+        </button>
+      </div>
+
+      {/* Right Live Preview Frame */}
+      <div 
+        style={{
+          flex: 1,
+          border: '1px solid var(--border)',
+          borderRadius: '8px',
+          background: bg,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '24px',
+          overflowY: 'auto',
+          boxSizing: 'border-box',
+          transition: 'all 0.3s ease'
+        }}
+      >
+        {/* Dynamic Card Container based on styles */}
+        <div
+          style={{
+            width: width,
+            maxWidth: '100%',
+            backgroundColor: card === 'glass' ? 'rgba(255, 255, 255, 0.25)' : card === 'flat' ? '#ffffff' : 'transparent',
+            backdropFilter: card === 'glass' ? 'blur(12px)' : 'none',
+            border: card === 'glass' ? '1px solid rgba(255, 255, 255, 0.3)' : card === 'flat' ? '1px solid var(--border)' : 'none',
+            borderRadius: card === 'minimal' ? '0' : '16px',
+            boxShadow: card === 'minimal' ? 'none' : '0 10px 30px rgba(0,0,0,0.06)',
+            padding: '40px',
+            boxSizing: 'border-box',
+            color: textCol,
+            fontFamily: font,
+            textAlign: align,
+            transition: 'all 0.3s ease'
+          }}
+        >
+          <h1 style={{ fontSize: '32px', fontWeight: 'bold', margin: '0 0 16px 0', letterSpacing: '-0.5px' }}>
+            {link.title || 'Untitled Page'}
+          </h1>
+          <div style={{ fontSize: '12px', opacity: 0.7, marginBottom: '24px', wordBreak: 'break-all' }}>
+            URL: {link.url}
+          </div>
+          <div 
+            style={{ fontSize: '15px', lineHeight: '1.7' }}
+            dangerouslySetInnerHTML={{ __html: link.notes || '<p style="font-style: italic; opacity: 0.5;">No context notes written yet.</p>' }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MediaPlayerModal({ url, onClose }) {
+  const getEmbedInfo = (linkUrl) => {
+    if (!linkUrl) return { type: 'web', src: '' };
+
+    const ytRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
+    const ytMatch = linkUrl.match(ytRegex);
+    if (ytMatch) {
+      return { type: 'youtube', src: `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1` };
+    }
+
+    const insRegex = /instagram\.com\/(?:p|reel|tv)\/([a-zA-Z0-9_-]+)/i;
+    const insMatch = linkUrl.match(insRegex);
+    if (insMatch) {
+      return { type: 'instagram', src: `https://www.instagram.com/p/${insMatch[1]}/embed` };
+    }
+
+    return { type: 'web', src: linkUrl };
+  };
+
+  const { type, src } = getEmbedInfo(url);
+
+  return (
+    <div 
+      className="tag-editor-overlay animate-fade"
+      style={{ zIndex: 130 }}
+      onClick={onClose}
+    >
+      <div 
+        className="tag-editor-dialog"
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          width: '90%',
+          maxWidth: '850px',
+          height: '75%',
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '0',
+          overflow: 'hidden',
+          borderRadius: '16px',
+          backgroundColor: '#000000',
+          border: '1px solid rgba(255, 255, 255, 0.1)'
+        }}
+      >
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '12px 16px',
+          backgroundColor: '#161b22',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          color: '#ffffff'
+        }}>
+          <span style={{ fontSize: '13px', fontWeight: '500', opacity: 0.85, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '80%' }}>
+            Previewing: {url}
+          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <a 
+              href={url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ fontSize: '12px', color: '#58a6ff', textDecoration: 'none', fontWeight: '500' }}
+            >
+              Open in tab ↗
+            </a>
+            <button 
+              onClick={onClose}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#ffffff',
+                fontSize: '18px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                padding: '4px 8px'
+              }}
+            >
+              ×
+            </button>
+          </div>
+        </div>
+
+        <div style={{ flex: 1, backgroundColor: '#000000', position: 'relative' }}>
+          {type === 'youtube' && (
+            <iframe 
+              src={src}
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowFullScreen
+              style={{ width: '100%', height: '100%', border: 'none' }}
+            />
+          )}
+          {type === 'instagram' && (
+            <iframe 
+              src={src}
+              allowtransparency="true"
+              frameBorder="0"
+              scrolling="no"
+              style={{ width: '100%', height: '100%', border: 'none', background: 'white' }}
+            />
+          )}
+          {type === 'web' && (
+            <iframe 
+              src={src}
+              sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+              style={{ width: '100%', height: '100%', border: 'none', background: 'white' }}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default App;
