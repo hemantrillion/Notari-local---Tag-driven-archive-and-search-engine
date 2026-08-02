@@ -39,6 +39,7 @@ function App() {
   const [links, setLinks] = useState([]);
   const [recentShowCount, setRecentShowCount] = useState(10);
   const [activeEditLinkId, setActiveEditLinkId] = useState(null);
+  const [isLocalStorageEnabled, setIsLocalStorageEnabled] = useState(true);
 
   // Search States (Right Panel)
   const [searchQuery, setSearchQuery] = useState('');
@@ -2255,8 +2256,8 @@ function App() {
         {activeTab === 'themes' && (
           <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
             
-            {/* 11 Theme Options in 2-Column Wide Rectangle Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.25rem', marginBottom: '2.5rem' }}>
+            {/* 11 Theme Options in 2-Column Grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.85rem', marginBottom: '2rem' }}>
               {THEME_OPTIONS.map((theme) => {
                 const isActive = appTheme === theme.id;
                 return (
@@ -2265,103 +2266,116 @@ function App() {
                     className="theme-selection-card"
                     onClick={() => changeTheme(theme.id)}
                     style={{
-                      padding: '1.25rem 1.5rem',
-                      borderRadius: '1.25rem',
+                      padding: '0.85rem 1.25rem',
+                      borderRadius: '0.75rem',
                       border: isActive ? '2.5px solid var(--accent, #1a73e8)' : '1px solid var(--border)',
                       backgroundColor: 'var(--bg-card)',
                       color: 'var(--text)',
+                      fontFamily: 'var(--font-family)',
                       cursor: 'pointer',
-                      boxShadow: isActive ? '0 4px 16px rgba(26, 115, 232, 0.2)' : 'var(--box-shadow)',
-                      transition: 'all 0.2s ease',
+                      boxShadow: isActive ? '0 2px 8px rgba(26, 115, 232, 0.25)' : 'var(--box-shadow)',
+                      transition: 'all 0.15s ease',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between'
                     }}
                   >
-                    <span style={{ fontWeight: '700', fontSize: '1.05rem', color: 'var(--text)' }}>
+                    <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text)', fontFamily: 'inherit' }}>
                       {theme.name}
                     </span>
-                    {isActive && (
-                      <span style={{ fontSize: '0.75rem', fontWeight: 'bold', color: '#ffffff', backgroundColor: 'var(--accent, #1a73e8)', padding: '0.35rem 0.85rem', borderRadius: '1rem' }}>
-                        Active
-                      </span>
-                    )}
                   </div>
                 );
               })}
             </div>
 
-            {/* Live Interactive App View Preview Section (Placed BELOW all theme options) */}
-            <div 
-              className={`live-theme-preview-container theme-${appTheme} mode-${themeMode}`}
-              style={{
-                padding: '2rem',
-                borderRadius: '1.5rem',
-                border: '1px solid var(--border)',
-                backgroundColor: 'var(--bg-app)',
-                color: 'var(--text)',
-                boxShadow: 'var(--box-shadow)',
-                transition: 'all 0.25s ease'
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
-                <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  Live App View Preview ({THEME_OPTIONS.find(t => t.id === appTheme)?.name} - {themeMode.toUpperCase()} Mode)
-                </h3>
-                <span style={{ fontSize: '0.8rem', padding: '0.3rem 0.85rem', borderRadius: '1rem', backgroundColor: 'var(--accent)', color: '#ffffff', fontWeight: 600 }}>
-                  Active Paradigm
-                </span>
-              </div>
+            {/* Preview Section (Header simply 'Preview', 4 Miniature Page Cards below) */}
+            <div style={{ marginTop: '2rem' }}>
+              <h2 style={{ margin: '0 0 1.25rem 0', fontSize: '1.2rem', fontWeight: 700, color: 'var(--text)', fontFamily: 'var(--font-family)' }}>
+                Preview
+              </h2>
 
-              {/* 3 Real-time Mini App Page Previews */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem' }}>
+              <div 
+                className={`preview-canvas theme-${appTheme} mode-${themeMode}`}
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gap: '1.25rem',
+                  padding: '1.5rem',
+                  borderRadius: '1rem',
+                  border: '1px solid var(--border)',
+                  backgroundColor: 'var(--bg-app)',
+                  color: 'var(--text)',
+                  transition: 'all 0.25s ease'
+                }}
+              >
                 
-                {/* 1. Mini Homepage Preview */}
-                <div style={{ padding: '1rem', borderRadius: '1rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 700, opacity: 0.6, marginBottom: '0.75rem', textTransform: 'uppercase' }}>
+                {/* 1. Miniature Homepage View Card */}
+                <div style={{ padding: '0.85rem', borderRadius: '0.75rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', fontFamily: 'var(--font-family)' }}>
+                  <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
                     Homepage Structure
                   </div>
-                  <div style={{ fontSize: '0.9rem', fontWeight: 800, marginBottom: '0.5rem', textAlign: 'center' }}>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 800, textAlign: 'center', marginBottom: '0.4rem' }}>
                     A Sap Link
                   </div>
-                  <div style={{ padding: '0.4rem', borderRadius: '1rem', border: '1px solid var(--border)', backgroundColor: 'var(--bg-app)', fontSize: '0.7rem', color: 'var(--text-muted)', textAlign: 'center', marginBottom: '0.75rem' }}>
+                  <div style={{ padding: '0.35rem', borderRadius: '1rem', border: '1px solid var(--border)', backgroundColor: 'var(--bg-app)', fontSize: '0.65rem', color: 'var(--text-muted)', textAlign: 'center', marginBottom: '0.5rem' }}>
                     Search tags, URLs, or notes...
                   </div>
-                  <div style={{ padding: '0.5rem', borderRadius: '0.5rem', border: '1px solid var(--border)', backgroundColor: 'var(--bg-app)' }}>
-                    <div style={{ fontSize: '0.75rem', fontWeight: 700 }}>YouTube Video Item</div>
-                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>web &gt; coding</div>
+                  <div style={{ padding: '0.4rem', borderRadius: '0.4rem', border: '1px solid var(--border)', backgroundColor: 'var(--bg-app)' }}>
+                    <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--accent)' }}>New page horaganaaaaa</div>
+                    <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>youtube &gt; music video | song</div>
                   </div>
                 </div>
 
-                {/* 2. Mini SERP Search Results Preview */}
-                <div style={{ padding: '1rem', borderRadius: '1rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 700, opacity: 0.6, marginBottom: '0.75rem', textTransform: 'uppercase' }}>
-                    SERP Structure
+                {/* 2. Miniature Webpage Detail View Card */}
+                <div style={{ padding: '0.85rem', borderRadius: '0.75rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', fontFamily: 'var(--font-family)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
+                    <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Webpage Structure</span>
+                    <div style={{ display: 'flex', gap: '0.2rem' }}>
+                      <span style={{ fontSize: '0.55rem', padding: '0.1rem 0.3rem', borderRadius: '0.2rem', backgroundColor: 'var(--accent)', color: '#fff' }}>web mints</span>
+                    </div>
                   </div>
-                  <div style={{ display: 'flex', gap: '0.3rem', marginBottom: '0.75rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.4rem' }}>
-                    <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--accent)', borderBottom: '2px solid var(--accent)' }}>All</span>
-                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginLeft: '0.5rem' }}>Images</span>
-                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginLeft: '0.5rem' }}>Videos</span>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 800, marginBottom: '0.25rem' }}>
+                    New page horaganaaaaa
                   </div>
-                  <div style={{ padding: '0.5rem', borderRadius: '0.5rem', border: '1px solid var(--border)', backgroundColor: 'var(--bg-app)' }}>
-                    <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent)' }}>Wikipedia Article</div>
-                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>https://en.wikipedia.org/</div>
+                  <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginBottom: '0.4rem' }}>
+                    Url: https://www.youtube.com/watch...
+                  </div>
+                  <div style={{ fontSize: '0.65rem', color: 'var(--text)', lineHeight: 1.3, opacity: 0.85 }}>
+                    first try out page what
                   </div>
                 </div>
 
-                {/* 3. Mini Webpage Detail View Preview */}
-                <div style={{ padding: '1rem', borderRadius: '1rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 700, opacity: 0.6, marginBottom: '0.75rem', textTransform: 'uppercase' }}>
-                    Webpage Structure
+                {/* 3. Miniature Tagged Dashboard Table Card */}
+                <div style={{ padding: '0.85rem', borderRadius: '0.75rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', fontFamily: 'var(--font-family)' }}>
+                  <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase' }}>
+                    Tagged Structure
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.2rem', marginBottom: '0.5rem' }}>
-                    <span style={{ fontSize: '0.6rem', padding: '0.15rem 0.4rem', borderRadius: '0.3rem', backgroundColor: 'var(--bg-app)', border: '1px solid var(--border)' }}>web mints</span>
+                  <div style={{ fontSize: '0.6rem', borderCollapse: 'collapse', width: '100%' }}>
+                    <div style={{ display: 'flex', fontWeight: 700, borderBottom: '1px solid var(--border)', paddingBottom: '0.2rem', color: 'var(--text-muted)' }}>
+                      <span style={{ flex: 1 }}>URL ID</span>
+                      <span style={{ flex: 1 }}>HEADING</span>
+                      <span style={{ flex: 1 }}>TAG</span>
+                    </div>
+                    <div style={{ display: 'flex', paddingTop: '0.2rem', color: 'var(--text)' }}>
+                      <span style={{ flex: 1, fontSize: '0.55rem' }}>ytb-vid-0003...</span>
+                      <span style={{ flex: 1, fontWeight: 600 }}>New page...</span>
+                      <span style={{ flex: 1, color: 'var(--accent)' }}>music video</span>
+                    </div>
                   </div>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 800, marginBottom: '0.3rem' }}>
-                    Sample Webpage Title
+                </div>
+
+                {/* 4. Miniature Logs Dashboard Card */}
+                <div style={{ padding: '0.85rem', borderRadius: '0.75rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', fontFamily: 'var(--font-family)' }}>
+                  <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase' }}>
+                    Logs Structure
                   </div>
-                  <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>
-                    Formatted HTML content rendered with style controls.
+                  <div style={{ display: 'flex', gap: '0.3rem', marginBottom: '0.4rem' }}>
+                    <span style={{ fontSize: '0.55rem', padding: '0.15rem 0.4rem', borderRadius: '0.8rem', backgroundColor: 'var(--accent)', color: '#fff', fontWeight: 600 }}>Change Logs (25)</span>
+                    <span style={{ fontSize: '0.55rem', padding: '0.15rem 0.4rem', borderRadius: '0.8rem', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>Audit Logs (55)</span>
+                  </div>
+                  <div style={{ padding: '0.3rem', borderRadius: '0.3rem', backgroundColor: 'var(--bg-app)', fontSize: '0.55rem' }}>
+                    <span style={{ fontWeight: 700, color: 'var(--accent)' }}>EDITED </span>
+                    <span style={{ color: 'var(--text-muted)' }}>Link 'New page horaganaaaaa' was updated.</span>
                   </div>
                 </div>
 
@@ -2374,10 +2388,7 @@ function App() {
         {/* Logs View (Dual Sub-Tabs: Change Logs & Audit Logs - NO EMOJIS) */}
         {activeTab === 'logs' && (
           <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-              <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0 }}>
-                System change and audit activity records.
-              </p>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: '16px' }}>
               <button
                 className="white-theme-btn"
                 style={{ padding: '6px 14px', fontSize: '12px' }}
@@ -2600,7 +2611,6 @@ function App() {
           }}
         />
 
-        {/* Modular Floating Windows: Create Tag & Create Source */}
         <CreateTagModal
           newTagOpen={newTagOpen}
           setNewTagOpen={setNewTagOpen}
@@ -2630,557 +2640,6 @@ function App() {
             onClose={() => setActivePlayerLink(null)} 
           />
         )}
-
-        </div> {/* closes app-content */}
-      </div>
-    </div>
-  );
-}
-
-const displayUrl = (urlStr) => {
-  if (!urlStr) return '';
-  if (urlStr.length <= 25) {
-    return <span style={{ color: 'inherit' }}>{urlStr}</span>;
-  }
-  const first25 = urlStr.slice(0, 25);
-  const next5 = urlStr.slice(25, 30);
-  const hasMore = urlStr.length > 30;
-  return (
-    <span>
-      <span style={{ color: 'inherit' }}>{first25}</span>
-      <span style={{ opacity: 0.5, color: 'inherit' }}>{next5}</span>
-      {hasMore && <span style={{ opacity: 0.7, color: 'inherit' }}>...</span>}
-    </span>
-  );
-};
-
-const getCleanTextExcerpt = (htmlContent, maxWords = 60) => {
-  if (!htmlContent) return '';
-  const cleanText = htmlContent.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-  const words = cleanText.split(/\s+/).filter(Boolean);
-  if (words.length <= maxWords) return cleanText;
-  return words.slice(0, maxWords).join(' ') + '...';
-};
-
-function WebsiteDetailView({ 
-  link, 
-  detailMode, 
-  setDetailMode, 
-  detailTitle, 
-  setDetailTitle, 
-  detailNotes, 
-  setDetailNotes, 
-  onBack, 
-  onOpenPlayer,
-  onSave, 
-  onSaveStyles 
-}) {
-  const [copied, setCopied] = useState(false);
-
-  return (
-    <div className="website-detail-page animate-fade" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '0 24px 24px 24px', boxSizing: 'border-box' }}>
-      {/* Navigation & Toolbar */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '12px', marginBottom: '16px' }}>
-        <button 
-          className="white-theme-btn" 
-          onClick={onBack}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', padding: '6px 16px', fontWeight: 'bold' }}
-        >
-          ←
-        </button>
-        
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <button 
-            className={`white-theme-btn ${detailMode === 'view' ? 'active' : ''}`}
-            onClick={() => setDetailMode('view')}
-            style={{ fontSize: '13px', padding: '6px 12px', backgroundColor: detailMode === 'view' ? '#e8f0fe' : '', color: detailMode === 'view' ? '#1a73e8' : '' }}
-          >
-            Default View
-          </button>
-          <button 
-            className={`white-theme-btn ${detailMode === 'design' ? 'active' : ''}`}
-            onClick={() => setDetailMode('design')}
-            style={{ fontSize: '13px', padding: '6px 12px', backgroundColor: detailMode === 'design' ? '#e8f0fe' : '', color: detailMode === 'design' ? '#1a73e8' : '' }}
-          >
-            Design Page
-          </button>
-          <button 
-            className={`white-theme-btn ${detailMode === 'edit' ? 'active' : ''}`}
-            onClick={() => setDetailMode('edit')}
-            style={{ fontSize: '13px', padding: '6px 12px', backgroundColor: detailMode === 'edit' ? '#e8f0fe' : '', color: detailMode === 'edit' ? '#1a73e8' : '' }}
-          >
-            Edit
-          </button>
-        </div>
-      </div>
-
-      {/* Content Panel */}
-      <div style={{ flex: 1, overflowY: 'auto' }}>
-        {detailMode === 'view' && (
-          <div>
-            <h1 style={{ fontSize: '28px', fontWeight: 'bold', margin: '0 0 16px 0', color: 'var(--text)' }}>
-              {link.title || 'Untitled Page'}
-            </h1>
-            
-            <div style={{ fontSize: '14px', color: '#5f6368', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-              <strong>Url:</strong> 
-              <span style={{ color: '#1a73e8', wordBreak: 'break-all' }}>
-                {displayUrl(link.url)}
-              </span>
-              
-              {/* Copy Button */}
-              <button 
-                className="white-theme-btn" 
-                onClick={() => {
-                  navigator.clipboard.writeText(link.url);
-                  setCopied(true);
-                  setTimeout(() => setCopied(false), 1500);
-                }}
-                style={{ padding: '2px 8px', fontSize: '11px', display: 'inline-flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}
-              >
-                {copied ? '✔ Copied' : 'Copy'}
-              </button>
-              
-              {/* Open Button */}
-              <button 
-                className="white-theme-btn"
-                onClick={() => onOpenPlayer(link.url)}
-                style={{ padding: '2px 8px', fontSize: '11px', color: 'var(--text)', display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }}
-              >
-                Open
-              </button>
-            </div>
-
-            <div 
-              className="word-editor-preview"
-              style={{ fontSize: '14px', lineHeight: '1.6', color: 'var(--text)', borderTop: '1px solid #f1f3f4', paddingTop: '16px' }}
-              dangerouslySetInnerHTML={{ __html: link.notes || '<p style="color: #888; font-style: italic;">No context notes written yet.</p>' }}
-            />
-          </div>
-        )}
-
-        {detailMode === 'design' && (
-          /* Frontend Customizer Playground */
-          <WebsiteFrontendPlayground 
-            link={link} 
-            onSave={onSaveStyles}
-          />
-        )}
-
-        {detailMode === 'edit' && (
-          /* Inline Edit View (Change title and Context notes without opening anything new) */
-          <div style={{ maxWidth: '600px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div className="input-group">
-              <label className="input-label" style={{ fontWeight: 'bold', fontSize: '12px', display: 'block', marginBottom: '4px' }}>
-                Page Title
-              </label>
-              <input 
-                type="text"
-                className="input-field"
-                style={{ padding: '10px', fontSize: '14px', width: '100%', boxSizing: 'border-box' }}
-                value={detailTitle}
-                onChange={(e) => setDetailTitle(e.target.value)}
-              />
-            </div>
-
-            <div className="input-group">
-              <label className="input-label" style={{ fontWeight: 'bold', fontSize: '12px', display: 'block', marginBottom: '4px' }}>
-                Page Context (Word Editor)
-              </label>
-              
-              {/* Inline word editor toolbars */}
-              <div className="editor-toolbar" style={{ display: 'flex', gap: '4px', border: '1px solid var(--border)', borderBottom: 'none', padding: '6px', borderTopLeftRadius: '6px', borderTopRightRadius: '6px', backgroundColor: '#f8f9fa' }}>
-                <button 
-                  type="button" 
-                  className="toolbar-btn" 
-                  style={{ fontWeight: 'bold', padding: '4px 8px', border: 'none', background: 'transparent', cursor: 'pointer' }} 
-                  onClick={() => document.execCommand('bold')}
-                >
-                  B
-                </button>
-                <button 
-                  type="button" 
-                  className="toolbar-btn" 
-                  style={{ fontStyle: 'italic', padding: '4px 8px', border: 'none', background: 'transparent', cursor: 'pointer' }} 
-                  onClick={() => document.execCommand('italic')}
-                >
-                  I
-                </button>
-                <button 
-                  type="button" 
-                  className="toolbar-btn" 
-                  style={{ textDecoration: 'underline', padding: '4px 8px', border: 'none', background: 'transparent', cursor: 'pointer' }} 
-                  onClick={() => document.execCommand('underline')}
-                >
-                  U
-                </button>
-              </div>
-
-              <div 
-                contentEditable
-                placeholder="Write page context here..."
-                style={{
-                  border: '1px solid var(--border)',
-                  borderBottomLeftRadius: '6px',
-                  borderBottomRightRadius: '6px',
-                  padding: '12px',
-                  fontSize: '13px',
-                  backgroundColor: '#ffffff',
-                  overflowY: 'auto',
-                  outline: 'none',
-                  minHeight: '200px',
-                  boxSizing: 'border-box',
-                  lineHeight: '1.5'
-                }}
-                onBlur={(e) => setDetailNotes(e.currentTarget.innerHTML)}
-                dangerouslySetInnerHTML={{ __html: link.notes || '' }}
-              />
-            </div>
-
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <button 
-                className="white-theme-btn primary"
-                style={{ backgroundColor: '#1a73e8', color: '#ffffff', padding: '8px 16px' }}
-                onClick={() => onSave(detailTitle, detailNotes)}
-              >
-                Save Changes
-              </button>
-              <button 
-                className="white-theme-btn"
-                style={{ padding: '8px 16px' }}
-                onClick={() => {
-                  setDetailTitle(link.title || '');
-                  setDetailNotes(link.notes || '');
-                  setDetailMode('view');
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function WebsiteFrontendPlayground({ link, onSave }) {
-  const currentStyles = link.styleSettings || {
-    backgroundColor: '#ffffff',
-    textColor: '#202124',
-    fontFamily: 'Inter, sans-serif',
-    cardStyle: 'flat',
-    alignment: 'left',
-    containerWidth: '700px'
-  };
-
-  const [bg, setBg] = useState(currentStyles.backgroundColor);
-  const [textCol, setTextCol] = useState(currentStyles.textColor);
-  const [font, setFont] = useState(currentStyles.fontFamily);
-  const [card, setCard] = useState(currentStyles.cardStyle);
-  const [align, setAlign] = useState(currentStyles.alignment);
-  const [width, setWidth] = useState(currentStyles.containerWidth);
-
-  // Background templates
-  const BG_TEMPLATES = [
-    { name: 'White', bg: '#ffffff', text: '#202124' },
-    { name: 'Cosmic Violet', bg: 'linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%)', text: '#ffffff' },
-    { name: 'Sunset Peach', bg: 'linear-gradient(135deg, #ff5e62 0%, #ff9966 100%)', text: '#ffffff' },
-    { name: 'Teal Forest', bg: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)', text: '#ffffff' },
-    { name: 'Dark Cyberpunk', bg: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)', text: '#00ffcc' }
-  ];
-
-  const FONTS = [
-    { name: 'Inter (Sans-Serif)', value: 'Inter, sans-serif' },
-    { name: 'Playfair Display (Serif)', value: '"Playfair Display", serif' },
-    { name: 'Outfit (Rounded)', value: 'Outfit, sans-serif' },
-    { name: 'Courier Prime (Monospace)', value: '"Courier Prime", monospace' }
-  ];
-
-  const CARDS = [
-    { name: 'Flat Card', value: 'flat' },
-    { name: 'Glassmorphic Card', value: 'glass' },
-    { name: 'Minimal Borderless', value: 'minimal' }
-  ];
-
-  const ALIGNMENTS = [
-    { name: 'Left Aligned', value: 'left' },
-    { name: 'Centered', value: 'center' }
-  ];
-
-  const WIDTHS = [
-    { name: 'Narrow (500px)', value: '500px' },
-    { name: 'Medium (700px)', value: '700px' },
-    { name: 'Wide (95%)', value: '95%' }
-  ];
-
-  return (
-    <div style={{ display: 'flex', gap: '20px', height: 'calc(100vh - 220px)', boxSizing: 'border-box' }}>
-      {/* Left Control Panel */}
-      <div style={{ width: '280px', backgroundColor: '#f8f9fa', borderRadius: '8px', padding: '16px', border: '1px solid var(--border)', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <h3 style={{ fontSize: '14px', fontWeight: 'bold', margin: '0 0 8px 0', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>Design Tools</h3>
-        
-        {/* Background Templates */}
-        <div>
-          <label style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', color: '#5f6368', display: 'block', marginBottom: '8px' }}>Theme & Background</label>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            {BG_TEMPLATES.map(t => (
-              <button
-                key={t.name}
-                onClick={() => {
-                  setBg(t.bg);
-                  setTextCol(t.text);
-                }}
-                style={{
-                  padding: '8px',
-                  fontSize: '12px',
-                  borderRadius: '6px',
-                  border: '1px solid var(--border)',
-                  background: t.bg,
-                  color: t.text,
-                  cursor: 'pointer',
-                  fontWeight: '600',
-                  textAlign: 'left',
-                  textShadow: '0 1px 2px rgba(0,0,0,0.15)'
-                }}
-              >
-                {t.name}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Typography */}
-        <div>
-          <label style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', color: '#5f6368', display: 'block', marginBottom: '4px' }}>Typography</label>
-          <select 
-            value={font}
-            onChange={(e) => setFont(e.target.value)}
-            style={{ width: '100%', padding: '6px', fontSize: '12px', borderRadius: '4px', border: '1px solid var(--border)' }}
-          >
-            {FONTS.map(f => (
-              <option key={f.value} value={f.value}>{f.name}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* Card Style */}
-        <div>
-          <label style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', color: '#5f6368', display: 'block', marginBottom: '4px' }}>Container Layout</label>
-          <select 
-            value={card}
-            onChange={(e) => setCard(e.target.value)}
-            style={{ width: '100%', padding: '6px', fontSize: '12px', borderRadius: '4px', border: '1px solid var(--border)' }}
-          >
-            {CARDS.map(c => (
-              <option key={c.value} value={c.value}>{c.name}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* Alignment */}
-        <div>
-          <label style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', color: '#5f6368', display: 'block', marginBottom: '4px' }}>Text Alignment</label>
-          <select 
-            value={align}
-            onChange={(e) => setAlign(e.target.value)}
-            style={{ width: '100%', padding: '6px', fontSize: '12px', borderRadius: '4px', border: '1px solid var(--border)' }}
-          >
-            {ALIGNMENTS.map(a => (
-              <option key={a.value} value={a.value}>{a.name}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* Width */}
-        <div>
-          <label style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', color: '#5f6368', display: 'block', marginBottom: '4px' }}>Content Width</label>
-          <select 
-            value={width}
-            onChange={(e) => setWidth(e.target.value)}
-            style={{ width: '100%', padding: '6px', fontSize: '12px', borderRadius: '4px', border: '1px solid var(--border)' }}
-          >
-            {WIDTHS.map(w => (
-              <option key={w.value} value={w.value}>{w.name}</option>
-            ))}
-          </select>
-        </div>
-
-        <button
-          className="white-theme-btn primary"
-          style={{ marginTop: 'auto', padding: '10px', fontSize: '13px', backgroundColor: '#1a73e8', color: '#ffffff' }}
-          onClick={() => {
-            onSave({
-              backgroundColor: bg,
-              textColor: textCol,
-              fontFamily: font,
-              cardStyle: card,
-              alignment: align,
-              containerWidth: width
-            });
-            alert('Design saved successfully!');
-          }}
-        >
-          Save Layout
-        </button>
-      </div>
-
-      {/* Right Live Preview Frame */}
-      <div 
-        style={{
-          flex: 1,
-          border: '1px solid var(--border)',
-          borderRadius: '8px',
-          background: bg,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '24px',
-          overflowY: 'auto',
-          boxSizing: 'border-box',
-          transition: 'all 0.3s ease'
-        }}
-      >
-        {/* Dynamic Card Container based on styles */}
-        <div
-          style={{
-            width: width,
-            maxWidth: '100%',
-            backgroundColor: card === 'glass' ? 'rgba(255, 255, 255, 0.25)' : card === 'flat' ? '#ffffff' : 'transparent',
-            backdropFilter: card === 'glass' ? 'blur(12px)' : 'none',
-            border: card === 'glass' ? '1px solid rgba(255, 255, 255, 0.3)' : card === 'flat' ? '1px solid var(--border)' : 'none',
-            borderRadius: card === 'minimal' ? '0' : '16px',
-            boxShadow: card === 'minimal' ? 'none' : '0 10px 30px rgba(0,0,0,0.06)',
-            padding: '40px',
-            boxSizing: 'border-box',
-            color: textCol,
-            fontFamily: font,
-            textAlign: align,
-            transition: 'all 0.3s ease'
-          }}
-        >
-          <h1 style={{ fontSize: '32px', fontWeight: 'bold', margin: '0 0 16px 0', letterSpacing: '-0.5px' }}>
-            {link.title || 'Untitled Page'}
-          </h1>
-          <div style={{ fontSize: '12px', opacity: 0.7, marginBottom: '24px', wordBreak: 'break-all' }}>
-            URL: {link.url}
-          </div>
-          <div 
-            style={{ fontSize: '15px', lineHeight: '1.7' }}
-            dangerouslySetInnerHTML={{ __html: link.notes || '<p style="font-style: italic; opacity: 0.5;">No context notes written yet.</p>' }}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function MediaPlayerModal({ url, onClose }) {
-  const getEmbedInfo = (linkUrl) => {
-    if (!linkUrl) return { type: 'web', src: '' };
-
-    const ytRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
-    const ytMatch = linkUrl.match(ytRegex);
-    if (ytMatch) {
-      return { type: 'youtube', src: `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1` };
-    }
-
-    const insRegex = /instagram\.com\/(?:p|reel|tv)\/([a-zA-Z0-9_-]+)/i;
-    const insMatch = linkUrl.match(insRegex);
-    if (insMatch) {
-      return { type: 'instagram', src: `https://www.instagram.com/p/${insMatch[1]}/embed` };
-    }
-
-    return { type: 'web', src: linkUrl };
-  };
-
-  const { type, src } = getEmbedInfo(url);
-
-  return (
-    <div 
-      className="tag-editor-overlay animate-fade"
-      style={{ zIndex: 130 }}
-      onClick={onClose}
-    >
-      <div 
-        className="tag-editor-dialog"
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          width: '90%',
-          maxWidth: '850px',
-          height: '75%',
-          display: 'flex',
-          flexDirection: 'column',
-          padding: '0',
-          overflow: 'hidden',
-          borderRadius: '16px',
-          backgroundColor: '#000000',
-          border: '1px solid rgba(255, 255, 255, 0.1)'
-        }}
-      >
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '12px 16px',
-          backgroundColor: '#161b22',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-          color: '#ffffff'
-        }}>
-          <span style={{ fontSize: '13px', fontWeight: '500', opacity: 0.85, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '80%' }}>
-            Previewing: {url}
-          </span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <a 
-              href={url} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              style={{ fontSize: '12px', color: '#58a6ff', textDecoration: 'none', fontWeight: '500' }}
-            >
-              Open in tab ↗
-            </a>
-            <button 
-              onClick={onClose}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: '#ffffff',
-                fontSize: '18px',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                padding: '4px 8px'
-              }}
-            >
-              ×
-            </button>
-          </div>
-        </div>
-
-        <div style={{ flex: 1, backgroundColor: '#000000', position: 'relative' }}>
-          {type === 'youtube' && (
-            <iframe 
-              src={src}
-              allow="autoplay; encrypted-media; picture-in-picture"
-              allowFullScreen
-              style={{ width: '100%', height: '100%', border: 'none' }}
-            />
-          )}
-          {type === 'instagram' && (
-            <iframe 
-              src={src}
-              allowtransparency="true"
-              frameBorder="0"
-              scrolling="no"
-              style={{ width: '100%', height: '100%', border: 'none', background: 'white' }}
-            />
-          )}
-          {type === 'web' && (
-            <iframe 
-              src={src}
-              sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-              style={{ width: '100%', height: '100%', border: 'none', background: 'white' }}
-            />
-          )}
         </div>
       </div>
     </div>

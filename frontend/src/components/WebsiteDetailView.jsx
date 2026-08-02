@@ -53,9 +53,10 @@ export default function WebsiteDetailView({
           alignItems: 'center', 
           justifyContent: 'flex-end', 
           borderBottom: '1px solid var(--border)', 
-          paddingTop: '2.5vh',
-          paddingBottom: '2vh', 
-          marginBottom: '3vh' 
+          marginTop: '2rem',
+          paddingTop: '1.5rem',
+          paddingBottom: '1rem', 
+          marginBottom: '2rem' 
         }}
       >
         <div className="web-mints-group" style={{ display: 'flex', gap: '3%' }}>

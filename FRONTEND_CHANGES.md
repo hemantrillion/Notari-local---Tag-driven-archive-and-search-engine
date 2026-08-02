@@ -203,6 +203,16 @@ c:\Users\jai18\Desktop\link-archive-app\
   * Updated [themes.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/themes.css) and [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) to synchronize `mode-dark` and `mode-light` on `document.body` and ensure `.default-theme-isolated` elements inherit dark mode backgrounds (`#18181b`) and white text (`#f4f4f5`).
   * Re-ordered the Themes Dashboard in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) to display the 11 uniform wide theme cards first, followed by the Live App View Preview section BELOW all options, featuring 3 mini structural representations: Homepage Search, SERP Results, and Webpage View.
 
-
-
-
+### Change 5: JSX Build Syntax Fix, Themes Dashboard Cards Compact Refactor & Preview Section Miniatures
+* **Goal**: I wanted to fix the Vite JSX build compilation syntax error in `App.jsx`, update the Themes Dashboard cards to be compact without "Active" badges and use standard system typography, restructure the Themes Preview section to render 4 distinct miniature page cards (Homepage, Webpage Detail with `web mints` badge, Tagged Table, Logs Dashboard), fix the profile icon (`u`) click crash, purge obsolete duplicate back buttons and text, and adjust upper spacing for `web mints`.
+* **Actions**:
+  * Fixed the broken JSX structure and unclosed block tags around line 2420–2530 in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx), restoring clean production build compilation (`npx vite build` completed with 0 errors).
+  * Refactored the 11 theme cards in the Themes Dashboard inside [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) to use compact styling (`padding: 0.85rem 1.25rem`), removed "Active" text badges, and applied standard app font family `var(--font-family)`. Selection is cleanly indicated via a `2.5px solid var(--accent)` highlight border.
+  * Overhauled the Themes Preview section in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) with a clean header titled **`Preview`** and 4 miniature page representation cards:
+    1. **Mini Homepage View Card**: Displaying app title `A Sap Link`, search pill, and link item badge.
+    2. **Mini Webpage Detail View Card**: Displaying page title, URL, notes snippet, and top-right **`web mints`** action badge.
+    3. **Mini Tagged Dashboard Table Card**: Displaying table header (`URL ID`, `HEADING`, `TAG`) and data row.
+    4. **Mini Logs Dashboard Card**: Displaying sub-tabs `Change Logs` / `Audit Logs` and audit item.
+  * Removed unnecessary subtitle text *"System change and audit activity records."* from the Logs Dashboard tab in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx).
+  * Purged all remaining duplicate inline back buttons (`←`) from webpage views in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) and increased top spacing above `web mints` controls in [WebsiteDetailView.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/WebsiteDetailView.jsx).
+  * Added missing `isLocalStorageEnabled` state in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx), fixing the crash when clicking the profile avatar (`u`).
