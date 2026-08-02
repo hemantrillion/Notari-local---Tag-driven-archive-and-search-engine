@@ -592,3 +592,19 @@ body {
   }
 }
 
+/* Isolated dialog action buttons */
+.tag-editor-dialog .white-theme-btn,
+.media-player-dialog .white-theme-btn {
+  background-color: var(--bg-card) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 8px !important;
+}
+
+.tag-editor-dialog .white-theme-btn.primary,
+.media-player-dialog .white-theme-btn.primary {
+  background-color: var(--accent-color, #1a73e8) !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+

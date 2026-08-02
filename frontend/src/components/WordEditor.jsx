@@ -335,34 +335,46 @@ export default function WordEditor({ value, onChange, placeholder = "Write notes
         
         <div style={{ width: '1px', height: '16px', backgroundColor: '#ccc', margin: '0 4px' }} />
 
-        {['🙂', '👍', '❤️', '🎉', '🔥', '🚀'].map(emoji => (
-          <button
-            key={emoji}
-            type="button"
-            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '13px', padding: '2px' }}
-            onMouseDown={(e) => e.preventDefault()}
-            onClick={() => {
-              document.execCommand('insertText', false, emoji);
+        {/* Text Color Picker */}
+        <label style={{ display: 'inline-flex', alignItems: 'center', gap: '2px', cursor: 'pointer', fontSize: '11px' }} title="Font Color">
+          <span style={{ fontWeight: 'bold', color: 'var(--text-color)' }}>A</span>
+          <input 
+            type="color" 
+            style={{ width: '20px', height: '20px', padding: 0, border: 'none', background: 'none', cursor: 'pointer' }}
+            onChange={(e) => {
+              document.execCommand('foreColor', false, e.target.value);
               if (editorRef.current) onChange(editorRef.current.innerHTML);
             }}
-          >
-            {emoji}
-          </button>
-        ))}
+          />
+        </label>
+
+        {/* Highlight / Background Color Picker */}
+        <label style={{ display: 'inline-flex', alignItems: 'center', gap: '2px', cursor: 'pointer', fontSize: '11px' }} title="Highlight Color">
+          <span style={{ backgroundColor: '#ffeb3b', color: '#000', padding: '0 4px', borderRadius: '2px', fontWeight: 'bold' }}>H</span>
+          <input 
+            type="color" 
+            style={{ width: '20px', height: '20px', padding: 0, border: 'none', background: 'none', cursor: 'pointer' }}
+            onChange={(e) => {
+              document.execCommand('hiliteColor', false, e.target.value);
+              if (editorRef.current) onChange(editorRef.current.innerHTML);
+            }}
+          />
+        </label>
 
         <div style={{ width: '1px', height: '16px', backgroundColor: '#ccc', margin: '0 4px' }} />
 
         <button 
           type="button" 
           className="header-btn" 
-          style={{ padding: '4px 6px', borderRadius: '4px', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-          title="Attach Image, MP3, or MP4 from Desktop"
+          style={{ padding: '4px 8px', borderRadius: '4px', height: '26px', display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '11px' }}
+          title="Attach Image, Video, or Audio file"
           onMouseDown={(e) => e.preventDefault()}
           onClick={() => fileInputRef.current && fileInputRef.current.click()}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
           </svg>
+          Attach
         </button>
         <input 
           type="file" 

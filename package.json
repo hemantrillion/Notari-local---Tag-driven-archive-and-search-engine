@@ -1,0 +1,11 @@
+{
+  "name": "link-archive-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npx concurrently \"npm start --prefix backend\" \"npm run dev --prefix frontend\"",
+    "dev": "npx concurrently \"npm start --prefix backend\" \"npm run dev --prefix frontend\"",
+    "backend": "npm start --prefix backend",
+    "frontend": "npm run dev --prefix frontend"
+  }
+}

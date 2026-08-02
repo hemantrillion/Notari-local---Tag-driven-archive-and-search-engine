@@ -1,4 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
+import NavigationControls from './components/NavigationControls';
+
+const THEME_OPTIONS = [
+  { id: 'default', name: 'Default' },
+  { id: 'spatial_ui', name: 'Spatial UI' },
+  { id: 'bento_grid', name: 'Bento Grid' },
+  { id: 'liquid_glass', name: 'Liquid Glass' },
+  { id: 'brutalism', name: 'Brutalism' },
+  { id: 'maximalism', name: 'Maximalism' },
+  { id: 'minimalism', name: 'Minimalism' },
+  { id: 'claymorphism', name: 'Claymorphism' },
+  { id: 'glassmorphism', name: 'Glassmorphism' },
+  { id: 'neomorphism', name: 'Neomorphism' },
+  { id: 'skeumorphism', name: 'Skeumorphism' },
+];
 
 const API_BASE = 'http://localhost:5005/api';
 
@@ -72,6 +87,53 @@ function App() {
   const [detailTitle, setDetailTitle] = useState('');
   const [detailNotes, setDetailNotes] = useState('');
   const [activePlayerLink, setActivePlayerLink] = useState(null);
+  const [appTheme, setAppTheme] = useState(() => localStorage.getItem('appTheme') || 'default');
+  const [themeMode, setThemeMode] = useState(() => localStorage.getItem('themeMode') || 'light');
+  const [toast, setToast] = useState(null);
+
+  const showToast = (message, type = 'info') => {
+    setToast({ message, type });
+    setTimeout(() => {
+      setToast(null);
+    }, 3000);
+  };
+
+  const changeTheme = (newTheme) => {
+    setAppTheme(newTheme);
+    localStorage.setItem('appTheme', newTheme);
+    const themeObj = THEME_OPTIONS.find(t => t.id === newTheme);
+    const themeName = themeObj ? themeObj.name : newTheme;
+    showToast(`Theme changed to ${themeName}`);
+  };
+
+  const toggleThemeMode = () => {
+    const newMode = themeMode === 'light' ? 'dark' : 'light';
+    setThemeMode(newMode);
+    localStorage.setItem('themeMode', newMode);
+    showToast(`${newMode === 'light' ? 'Light' : 'Dark'} mode enabled`);
+  };
+  const [viewHistory, setViewHistory] = useState([]);
+
+  const navigateTo = (tab, viewLink = null) => {
+    setViewHistory((prev) => [...prev, { tab: activeTab, viewLink: activeViewLink }]);
+    setActiveTab(tab);
+    setActiveViewLink(viewLink);
+  };
+
+  const handleGoBack = () => {
+    if (viewHistory.length > 0) {
+      const last = viewHistory[viewHistory.length - 1];
+      setViewHistory((prev) => prev.slice(0, -1));
+      setActiveTab(last.tab);
+      setActiveViewLink(last.viewLink);
+    } else {
+      if (activeViewLink) {
+        setActiveViewLink(null);
+      } else if (activeTab !== 'home') {
+        setActiveTab('home');
+      }
+    }
+  };
   const [auditLogs, setAuditLogs] = useState([]);
   const [auditLogsLoading, setAuditLogsLoading] = useState(false);
   const [logsSubTab, setLogsSubTab] = useState('change'); // 'change' | 'audit'
@@ -214,7 +276,7 @@ function App() {
   // Load selected editing link details into Tag Editor states
   useEffect(() => {
     if (activeEditLinkId) {
-      const link = links.find((l) => l.id === activeEditLinkId);
+      const link = links.find((l) => l.id === activeEditLinkId) || searchResults.find((l) => l.id === activeEditLinkId);
       if (link) {
         setEditUrlId(link.readableCode);
         setEditTagLabel(link.tagLabel || '');
@@ -225,14 +287,9 @@ function App() {
         setEditNotes(link.notes || '');
         setEditTitle(link.title || '');
         setEditError('');
-        setTimeout(() => {
-          if (editorRef.current) {
-            editorRef.current.innerHTML = link.notes || '';
-          }
-        }, 0);
       }
     }
-  }, [activeEditLinkId, links]);
+  }, [activeEditLinkId]);
 
   const updateActiveTags = (newTags) => {
     setEditTags(newTags);
@@ -261,16 +318,16 @@ function App() {
       });
       const resData = await response.json();
       if (response.ok && resData.success) {
-        alert('Added to Untagged List!');
+        showToast('Added to Untagged List!');
         setPhoneShareOpen(false);
         fetchLinks();
         fetchTags();
         fetchSources();
       } else {
-        alert(resData.error || 'Failed to share');
+        showToast(resData.error || 'Failed to share', 'error');
       }
     } catch (err) {
-      alert('Error connecting to server');
+      showToast('Error connecting to server', 'error');
     }
   };
 
@@ -284,16 +341,16 @@ function App() {
       const resData = await response.json();
       if (response.ok && resData.success) {
         setPhoneShareOpen(false);
+        setLinks((prev) => [resData.data, ...prev]);
+        setActiveEditLinkId(resData.data.id);
         fetchLinks();
         fetchTags();
         fetchSources();
-        // Immediately load this new record's ID into the Tag Editor modal
-        setActiveEditLinkId(resData.data.id);
       } else {
-        alert(resData.error || 'Failed to share');
+        showToast(resData.error || 'Failed to share', 'error');
       }
     } catch (err) {
-      alert('Error connecting to server');
+      showToast('Error connecting to server', 'error');
     }
   };
 
@@ -320,12 +377,12 @@ function App() {
 
   const handleDeleteLink = async (id, e) => {
     e.stopPropagation();
-    if (!window.confirm('Delete this record?')) return;
     try {
       const response = await fetch(`${API_BASE}/links/${id}`, {
         method: 'DELETE',
       });
       if (response.ok) {
+        showToast('Record deleted');
         fetchLinks();
         fetchTags();
         fetchSources();
@@ -436,7 +493,7 @@ function App() {
 
   // Save edits inside Tag Editor
   const handleSaveTagEditor = async () => {
-    const finalNotes = editorRef.current ? editorRef.current.innerHTML : editNotes;
+    const finalNotes = editNotes;
 
     // 1. Resolve any unsaved text in the tagSearchQuery input box
     let finalTags = [...editTags];
@@ -461,10 +518,12 @@ function App() {
             await fetchTags(); // refresh tag database registry
           } else {
             setEditError(createData.error || 'Failed to create tag');
+            showToast(createData.error || 'Failed to create tag', 'error');
             return;
           }
         } catch (err) {
           setEditError('Server connection error.');
+          showToast('Server connection error.', 'error');
           return;
         }
       }
@@ -483,6 +542,7 @@ function App() {
     const regex = /^[a-z]{3}-[a-z]{3}-[a-z0-9]{4}-\d{2}-\d{4}-\d{3}$/;
     if (!regex.test(finalReadableCode)) {
       setEditError('Cannot be tagged');
+      showToast('Cannot be tagged', 'error');
       return;
     }
 
@@ -500,14 +560,17 @@ function App() {
       const resData = await response.json();
       if (response.ok && resData.success) {
         setActiveEditLinkId(null);
+        showToast('Tag saved successfully!');
         fetchLinks();
         fetchTags();
         fetchSources();
       } else {
         setEditError(resData.error || 'Cannot be tagged');
+        showToast(resData.error || 'Cannot be tagged', 'error');
       }
     } catch (err) {
       setEditError('Cannot be tagged');
+      showToast('Cannot be tagged', 'error');
     }
   };
 
@@ -668,7 +731,7 @@ function App() {
   };
 
   return (
-    <div className="split-layout">
+    <div className={`split-layout theme-${appTheme} mode-${themeMode}`}>
       
       {/* ========================================================
           LEFT SIDE: MOCK PHONE SCREEN (PROPORTION LOCKED TO 2:0.9)
@@ -978,6 +1041,16 @@ function App() {
                 <line x1="3" y1="18" x2="21" y2="18"></line>
               </svg>
             </button>
+            <NavigationControls
+              isEditing={false}
+              onGoBack={handleGoBack}
+              onGoHome={() => {
+                setActiveTab('home');
+                setActiveViewLink(null);
+                setIsSearchSubmitted(false);
+                setSearchQuery('');
+              }}
+            />
             <div className="header-title">
               {activeTab === 'home' ? '' : activeTab}
             </div>
@@ -988,7 +1061,7 @@ function App() {
               className="header-btn" 
               onClick={(e) => {
                 e.stopPropagation();
-                setActiveTab('profile');
+                navigateTo('profile');
                 setSearchMode(false);
               }}
               title="Profile"
@@ -1012,7 +1085,7 @@ function App() {
             <div 
               className={`drawer-item ${activeTab === 'home' ? 'active' : ''}`}
               onClick={() => {
-                setActiveTab('home');
+                navigateTo('home');
                 setActiveViewLink(null);
                 setIsSearchSubmitted(false);
                 setSearchQuery('');
@@ -1024,7 +1097,7 @@ function App() {
             <div 
               className={`drawer-item ${activeTab === 'untagged' ? 'active' : ''}`}
               onClick={() => {
-                setActiveTab('untagged');
+                navigateTo('untagged');
                 setDrawerOpen(false);
               }}
             >
@@ -1033,7 +1106,7 @@ function App() {
             <div 
               className={`drawer-item ${activeTab === 'tagged' ? 'active' : ''}`}
               onClick={() => {
-                setActiveTab('tagged');
+                navigateTo('tagged');
                 setDrawerOpen(false);
               }}
             >
@@ -1042,7 +1115,7 @@ function App() {
             <div 
               className={`drawer-item ${activeTab === 'tags' ? 'active' : ''}`}
               onClick={() => {
-                setActiveTab('tags');
+                navigateTo('tags');
                 setDrawerOpen(false);
               }}
             >
@@ -1051,22 +1124,115 @@ function App() {
             <div 
               className={`drawer-item ${activeTab === 'sources' ? 'active' : ''}`}
               onClick={() => {
-                setActiveTab('sources');
+                navigateTo('sources');
                 setDrawerOpen(false);
               }}
             >
               Sources ({sources.length})
             </div>
             <div 
+              className={`drawer-item ${activeTab === 'themes' ? 'active' : ''}`}
+              onClick={() => {
+                navigateTo('themes');
+                setDrawerOpen(false);
+              }}
+            >
+              Themes
+            </div>
+            <div 
               className={`drawer-item ${activeTab === 'logs' ? 'active' : ''}`}
               onClick={() => {
-                setActiveTab('logs');
+                navigateTo('logs');
                 setDrawerOpen(false);
                 fetchAuditLogs();
               }}
             >
               Logs
             </div>
+          </div>
+
+          {/* Drawer Footer: Three Rounded Square Buttons Side-by-Side */}
+          <div className="drawer-footer" style={{ marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
+            {/* 1st Square: Light / Dark Mode Toggle */}
+            <button
+              className="rounded-square-btn"
+              title={themeMode === 'light' ? 'Switch to Dark mode' : 'Switch to Light mode'}
+              style={{
+                width: '42px',
+                height: '42px',
+                borderRadius: '10px',
+                border: '1px solid var(--border)',
+                backgroundColor: 'var(--bg-card)',
+                color: 'var(--text-color)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                boxShadow: 'var(--box-shadow)',
+                transition: 'all 0.15s ease'
+              }}
+              onClick={toggleThemeMode}
+            >
+              {themeMode === 'light' ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <line x1="12" y1="1" x2="12" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="23"></line>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                  <line x1="1" y1="12" x2="3" y2="12"></line>
+                  <line x1="21" y1="12" x2="23" y2="12"></line>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+              )}
+            </button>
+
+            {/* 2nd Square: Empty Interactive Button */}
+            <button
+              className="rounded-square-btn"
+              title="Empty Action"
+              style={{
+                width: '42px',
+                height: '42px',
+                borderRadius: '10px',
+                border: '1px solid var(--border)',
+                backgroundColor: 'var(--bg-card)',
+                color: 'var(--text-color)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                opacity: 0.7,
+                transition: 'all 0.15s ease'
+              }}
+              onClick={() => showToast('Option reserved')}
+            />
+
+            {/* 3rd Square: Empty Interactive Button */}
+            <button
+              className="rounded-square-btn"
+              title="Empty Action"
+              style={{
+                width: '42px',
+                height: '42px',
+                borderRadius: '10px',
+                border: '1px solid var(--border)',
+                backgroundColor: 'var(--bg-card)',
+                color: 'var(--text-color)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                opacity: 0.7,
+                transition: 'all 0.15s ease'
+              }}
+              onClick={() => showToast('Option reserved')}
+            />
           </div>
         </div>
 
@@ -1130,8 +1296,8 @@ function App() {
                   }}
                   onBlur={() => setTimeout(() => setShowHomeSuggestions(false), 200)}
                   onKeyDown={(e) => {
-                    const lastPart = searchQuery.split(',').pop().trim().toLowerCase();
-                    const currentTokens = searchQuery.split(',').map(p => p.trim().toLowerCase()).filter(Boolean);
+                    const lastPart = searchQuery.split(/[|,]/).pop().trim().toLowerCase();
+                    const currentTokens = searchQuery.split(/[|,]/).map(p => p.trim().toLowerCase()).filter(Boolean);
                     const filtered = tags.filter(t => 
                       lastPart && 
                       t.label.toLowerCase().includes(lastPart) &&
@@ -1154,10 +1320,10 @@ function App() {
                         if (homeActiveSuggestionIndex >= 0 && homeActiveSuggestionIndex < filtered.length) {
                           e.preventDefault();
                           const selectedTag = filtered[homeActiveSuggestionIndex];
-                          const parts = searchQuery.split(',');
+                          const parts = searchQuery.split(/[|,]/);
                           parts.pop();
                           parts.push(selectedTag.label);
-                          const newQuery = parts.map(p => p.trim()).filter(Boolean).join(', ') + ', ';
+                          const newQuery = parts.map(p => p.trim()).filter(Boolean).join(' | ') + ' | ';
                           setSearchQuery(newQuery);
                           setShowHomeSuggestions(false);
                           setHomeActiveSuggestionIndex(-1);
@@ -1219,8 +1385,8 @@ function App() {
                     }}
                   >
                     {(() => {
-                      const lastPart = searchQuery.split(',').pop().trim().toLowerCase();
-                      const currentTokens = searchQuery.split(',').map(p => p.trim().toLowerCase()).filter(Boolean);
+                      const lastPart = searchQuery.split(/[|,]/).pop().trim().toLowerCase();
+                      const currentTokens = searchQuery.split(/[|,]/).map(p => p.trim().toLowerCase()).filter(Boolean);
                       const filtered = tags.filter(t => 
                         lastPart && 
                         t.label.toLowerCase().includes(lastPart) &&
@@ -1247,10 +1413,10 @@ function App() {
                               e.preventDefault();
                             }}
                             onClick={() => {
-                              const parts = searchQuery.split(',');
+                              const parts = searchQuery.split(/[|,]/);
                               parts.pop();
                               parts.push(t.label);
-                              const newQuery = parts.map(p => p.trim()).filter(Boolean).join(', ') + ', ';
+                              const newQuery = parts.map(p => p.trim()).filter(Boolean).join(' | ') + ' | ';
                               setSearchQuery(newQuery);
                               setShowHomeSuggestions(false);
                               setHomeActiveSuggestionIndex(-1);
@@ -1319,10 +1485,18 @@ function App() {
                   {(() => {
                     const filteredSearchResults = searchResults.filter(link => {
                       if (activeSearchTab === 'images') {
-                        return link.typeCode === 'img' || /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(link.url);
+                        return (
+                          link.typeCode === 'img' || 
+                          /\.(jpg|jpeg|png|gif|webp|svg)/i.test(link.url) ||
+                          /<img[^>]+src=/i.test(link.notes || '')
+                        );
                       }
                       if (activeSearchTab === 'videos') {
-                        return link.typeCode === 'vid' || /youtube\.com|youtu\.be|vimeo\.com/i.test(link.url);
+                        return (
+                          link.typeCode === 'vid' || 
+                          /youtube\.com|youtu\.be|vimeo\.com/i.test(link.url) ||
+                          /<(video|iframe)[^>]+src=/i.test(link.notes || '')
+                        );
                       }
                       if (activeSearchTab === 'new') {
                         const sevenDaysAgo = new Date();
@@ -1333,57 +1507,91 @@ function App() {
                     });
                     return (
                       <>
-                        {filteredSearchResults.map(link => (
-                          <div 
-                            key={link.id} 
-                            className="result-card animate-fade"
-                            onClick={() => {
-                              setActiveViewLink(link);
-                              setDetailMode('view');
-                            }}
-                            style={{ cursor: 'pointer' }}
-                          >
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '6px' }}>
-                              <span className="result-breadcrumb" style={{ margin: 0 }}>
-                                {link.from} &gt; {link.tags && link.tags.length > 0 ? link.tags.map(t => t.label).join(', ') : (link.tagLabel || 'untagged')}
-                              </span>
-                              <span style={{ color: '#70757a', fontSize: '12px' }}>•</span>
-                              <a 
-                                href="#" 
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  setActiveViewLink(link);
-                                  setDetailMode('view');
-                                }}
-                                style={{ fontSize: '12px', color: '#70757a', textDecoration: 'none' }}
-                              >
-                                {displayUrl(link.url)}
-                              </a>
-                            </div>
-                            <div style={{ marginBottom: '4px' }}>
-                              <a 
-                                href="#" 
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  setActiveViewLink(link);
-                                  setDetailMode('view');
-                                }}
-                                className="result-title-link" 
-                                style={{ fontSize: '15px', fontWeight: '600', color: '#1a73e8', textDecoration: 'none' }}
-                              >
-                                {link.title || 'Untitled Page'}
-                              </a>
-                            </div>
-                            <div 
-                              className="result-excerpt" 
-                              style={{ fontSize: '13px', color: 'var(--text-muted, #5f6368)', lineHeight: '1.5', marginTop: '6px' }}
-                            >
-                              {getCleanTextExcerpt(link.notes)}
-                            </div>
+                        {filteredSearchResults.length === 0 ? (
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100px', padding: '40px 0' }}>
+                            <p style={{ fontSize: '14px', color: 'var(--text-color)', margin: 0, fontWeight: '500' }}>
+                              Did not find and relatable content.
+                            </p>
                           </div>
-                        ))}
+                        ) : (
+                          filteredSearchResults.map(link => {
+                            const imageSrc = activeSearchTab === 'images' ? (
+                              /\.(jpg|jpeg|png|gif|webp|svg)/i.test(link.url) ? link.url :
+                              (link.notes || '').match(/<img[^>]+src=["']([^"']+)["']/i)?.[1] ||
+                              'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&auto=format&fit=crop'
+                            ) : null;
+
+                            const videoEmbedSrc = activeSearchTab === 'videos' ? (
+                              /youtube\.com|youtu\.be/i.test(link.url) ? (
+                                `https://www.youtube.com/embed/${link.url.includes('v=') ? link.url.split('v=')[1].split('&')[0] : link.url.split('/').pop()}`
+                              ) : (link.notes || '').match(/<(video|iframe)[^>]+src=["']([^"']+)["']/i)?.[1]
+                            ) : null;
+
+                            return (
+                              <div 
+                                key={link.id} 
+                                className="result-card animate-fade"
+                                onClick={() => {
+                                  navigateTo(activeTab, link);
+                                  setDetailMode('view');
+                                }}
+                                style={{ cursor: 'pointer' }}
+                              >
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '6px' }}>
+                                  <span className="result-breadcrumb" style={{ margin: 0 }}>
+                                    {link.from} &gt; {link.tags && link.tags.length > 0 ? link.tags.map(t => t.label).join(' | ') : (link.tagLabel || 'untagged')}
+                                  </span>
+                                  <span style={{ color: '#70757a', fontSize: '12px' }}>•</span>
+                                  <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{link.readableCode}</span>
+                                </div>
+
+                                {/* Media Rendering for Images / Videos Search Tabs */}
+                                {activeSearchTab === 'images' && imageSrc && (
+                                  <div style={{ marginBottom: '10px' }}>
+                                    <img 
+                                      src={imageSrc} 
+                                      alt={link.title || 'Image Preview'} 
+                                      style={{ width: '100%', maxHeight: '240px', objectFit: 'cover', borderRadius: '8px', border: '1px solid var(--border)' }} 
+                                    />
+                                  </div>
+                                )}
+
+                                {activeSearchTab === 'videos' && videoEmbedSrc && (
+                                  <div style={{ marginBottom: '10px' }}>
+                                    <iframe 
+                                      src={videoEmbedSrc} 
+                                      title={link.title || 'Video Player'}
+                                      style={{ width: '100%', height: '220px', borderRadius: '8px', border: 'none' }}
+                                      allowFullScreen
+                                    />
+                                  </div>
+                                )}
+
+                                <div style={{ marginBottom: '4px' }}>
+                                  <a 
+                                    href="#" 
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      e.stopPropagation();
+                                      navigateTo(activeTab, link);
+                                      setDetailMode('view');
+                                    }}
+                                    className="result-title-link" 
+                                    style={{ fontSize: '15px', fontWeight: '600', color: '#1a73e8', textDecoration: 'none' }}
+                                  >
+                                    {link.title || 'Untitled Page'}
+                                  </a>
+                                </div>
+                                <div 
+                                  className="result-excerpt" 
+                                  style={{ fontSize: '13px', color: 'var(--text-muted, #5f6368)', lineHeight: '1.5', marginTop: '6px' }}
+                                >
+                                  {getCleanTextExcerpt(link.notes)}
+                                </div>
+                              </div>
+                            );
+                          })
+                        )}
                       </>
                     );
                   })()}
@@ -1409,7 +1617,7 @@ function App() {
                           style={{ cursor: 'pointer' }}
                         >
                           <span className="result-breadcrumb">
-                            {link.from} &gt; {link.tags && link.tags.length > 0 ? link.tags.map(t => t.label).join(', ') : (link.tagLabel || 'untagged')}
+                            {link.from} &gt; {link.tags && link.tags.length > 0 ? link.tags.map(t => t.label).join(' | ') : (link.tagLabel || 'untagged')}
                           </span>
                           <div style={{ marginBottom: '4px' }}>
                             <a 
@@ -1678,7 +1886,7 @@ function App() {
                                       </span>
                                     )}
                                     <div className="tags-tooltip-box">
-                                      {activeTags.map(t => t.label).join(', ')}
+                                      {activeTags.map(t => t.label).join(' | ')}
                                     </div>
                                   </>
                                 ) : (
@@ -1724,7 +1932,7 @@ function App() {
 
             {tagEditError && (
               <div style={{ color: 'var(--danger)', fontSize: '13px', fontWeight: 'bold', marginTop: '12px' }}>
-                ⚠️ {tagEditError}
+                {tagEditError}
               </div>
             )}
 
@@ -1838,13 +2046,13 @@ function App() {
                                   className="btn-sm-danger" 
                                   style={{ padding: '4px 8px' }}
                                   onClick={async () => {
-                                    if (!window.confirm(`Delete tag "${tag.label}"?`)) return;
                                     try {
                                       const response = await fetch(`${API_BASE}/tags/${tag.code}`, {
                                         method: 'DELETE'
                                       });
                                       const resData = await response.json();
                                       if (response.ok && resData.success) {
+                                        showToast('Tag deleted');
                                         fetchTags();
                                       } else {
                                         setTagEditError(resData.error || 'Failed to delete tag');
@@ -1908,7 +2116,7 @@ function App() {
 
             {sourceEditError && (
               <div style={{ color: 'var(--danger)', fontSize: '13px', fontWeight: 'bold', marginTop: '12px' }}>
-                ⚠️ {sourceEditError}
+                {sourceEditError}
               </div>
             )}
 
@@ -2017,13 +2225,13 @@ function App() {
                                     className="btn-sm-danger" 
                                     style={{ padding: '4px 8px' }}
                                     onClick={async () => {
-                                      if (!window.confirm(`Delete source "${source.name}"?`)) return;
                                       try {
                                         const response = await fetch(`${API_BASE}/sources/${source.code}`, {
                                           method: 'DELETE'
                                         });
                                         const resData = await response.json();
                                         if (response.ok && resData.success) {
+                                          showToast('Source deleted');
                                           fetchSources();
                                         } else {
                                           setSourceEditError(resData.error || 'Failed to delete source');
@@ -2099,58 +2307,201 @@ function App() {
               <strong>Device Connected:</strong> Desktop Simulator
             </div>
 
-            <button className="white-theme-btn" onClick={() => setActiveTab('home')}>
+            {/* Storage Settings Section */}
+            <div style={{ padding: '0 0 24px 0', borderBottom: '1px solid var(--border)', marginBottom: '24px' }}>
+              <h3 style={{ margin: '0 0 8px', fontSize: '15px', fontWeight: 'bold' }}>Storage Settings</h3>
+              <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: '0 0 16px' }}>
+                Manage local storage archiving configuration.
+              </p>
+
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'space-between', 
+                padding: '14px 16px', 
+                backgroundColor: 'var(--bg-card)', 
+                borderRadius: '8px', 
+                border: 'var(--card-border)', 
+                boxShadow: 'var(--box-shadow)'
+              }}>
+                <div>
+                  <div style={{ fontWeight: '600', fontSize: '13px' }}>Local Storage Archiving</div>
+                  <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>
+                    Status: {isLocalStorageEnabled ? 'Enabled (Active)' : 'Disabled'}
+                  </div>
+                </div>
+                
+                <button
+                  className={`white-theme-btn ${isLocalStorageEnabled ? 'primary' : ''}`}
+                  style={{ padding: '6px 14px', fontSize: '12px', fontWeight: '600' }}
+                  onClick={() => {
+                    const nextVal = !isLocalStorageEnabled;
+                    setIsLocalStorageEnabled(nextVal);
+                    localStorage.setItem('isLocalStorageEnabled', String(nextVal));
+                    showToast(nextVal ? 'Local Storage Enabled' : 'Local Storage Disabled');
+                  }}
+                >
+                  {isLocalStorageEnabled ? 'Disable' : 'Enable'}
+                </button>
+              </div>
+            </div>
+
+            {/* Theme Settings Section in Profile */}
+            <div style={{ padding: '0 0 24px 0', marginBottom: '24px' }}>
+              <h3 style={{ margin: '0 0 8px', fontSize: '15px', fontWeight: 'bold' }}>Theme Settings</h3>
+              <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: '0 0 16px' }}>
+                Select visual style theme with live app previews.
+              </p>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px' }}>
+                {THEME_OPTIONS.map((theme) => {
+                  const isActive = appTheme === theme.id;
+                  return (
+                    <div
+                      key={theme.id}
+                      className={`theme-${theme.id} mode-${themeMode}`}
+                      onClick={() => changeTheme(theme.id)}
+                      style={{
+                        padding: '16px',
+                        borderRadius: '12px',
+                        border: isActive ? '2px solid #1a73e8' : '1px solid var(--border)',
+                        backgroundColor: 'var(--bg-card)',
+                        cursor: 'pointer',
+                        boxShadow: 'var(--box-shadow)',
+                        transition: 'all 0.2s ease',
+                        position: 'relative'
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                        <span style={{ fontWeight: '700', fontSize: '14px', color: 'var(--text-color)' }}>
+                          {theme.name}
+                        </span>
+                        {isActive && (
+                          <span style={{ fontSize: '10px', fontWeight: 'bold', color: '#ffffff', backgroundColor: '#1a73e8', padding: '2px 10px', borderRadius: '12px' }}>
+                            Active
+                          </span>
+                        )}
+                      </div>
+
+                      <div style={{ padding: '10px', borderRadius: '8px', border: '1px dashed var(--border)', backgroundColor: 'var(--bg-app)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        <div style={{ height: '8px', width: '65%', backgroundColor: 'var(--accent, #1a73e8)', borderRadius: '4px' }} />
+                        <div style={{ height: '6px', width: '90%', backgroundColor: 'var(--text-muted, #888)', borderRadius: '4px', opacity: 0.5 }} />
+                        <div style={{ height: '6px', width: '40%', backgroundColor: 'var(--text-muted, #888)', borderRadius: '4px', opacity: 0.3 }} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Themes View */}
+        {activeTab === 'themes' && (
+          <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '20px' }}>
+              Select from 11 themes with live visual app view previews.
+            </p>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px', marginBottom: '28px' }}>
+              {THEME_OPTIONS.map((theme) => {
+                const isActive = appTheme === theme.id;
+                return (
+                  <div
+                    key={theme.id}
+                    className={`theme-${theme.id} mode-${themeMode}`}
+                    onClick={() => changeTheme(theme.id)}
+                    style={{
+                      padding: '16px',
+                      borderRadius: '12px',
+                      border: isActive ? '2px solid #1a73e8' : '1px solid var(--border)',
+                      backgroundColor: 'var(--bg-card)',
+                      cursor: 'pointer',
+                      boxShadow: 'var(--box-shadow)',
+                      transition: 'all 0.2s ease',
+                      position: 'relative'
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                      <span style={{ fontWeight: '700', fontSize: '14px', color: 'var(--text-color)' }}>
+                        {theme.name}
+                      </span>
+                      {isActive && (
+                        <span style={{ fontSize: '10px', fontWeight: 'bold', color: '#ffffff', backgroundColor: '#1a73e8', padding: '2px 10px', borderRadius: '12px' }}>
+                          Active
+                        </span>
+                      )}
+                    </div>
+
+                    {/* App View Preview Box */}
+                    <div style={{ padding: '10px', borderRadius: '8px', border: '1px dashed var(--border)', backgroundColor: 'var(--bg-app)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      <div style={{ height: '8px', width: '65%', backgroundColor: 'var(--accent, #1a73e8)', borderRadius: '4px' }} />
+                      <div style={{ height: '6px', width: '90%', backgroundColor: 'var(--text-muted, #888)', borderRadius: '4px', opacity: 0.5 }} />
+                      <div style={{ height: '6px', width: '40%', backgroundColor: 'var(--text-muted, #888)', borderRadius: '4px', opacity: 0.3 }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <button 
+              className="white-theme-btn" 
+              style={{ width: '100%', borderRadius: '24px', padding: '10px', fontSize: '13px', fontWeight: '600' }}
+              onClick={() => setActiveTab('home')}
+            >
               Back to Search Home
             </button>
           </div>
         )}
 
-        {/* Logs Dashboard View (Dual Sub-Tabs: Change Logs & Audit Logs) */}
+        {/* Logs View (Dual Sub-Tabs: Change Logs & Audit Logs - NO EMOJIS) */}
         {activeTab === 'logs' && (
           <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-              <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '700' }}>Logs Dashboard</h2>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0 }}>
+                System change and audit activity records.
+              </p>
               <button
                 className="white-theme-btn"
                 style={{ padding: '6px 14px', fontSize: '12px' }}
                 onClick={fetchAuditLogs}
                 disabled={auditLogsLoading}
               >
-                {auditLogsLoading ? 'Loading…' : '↻ Refresh'}
+                {auditLogsLoading ? 'Loading...' : 'Refresh'}
               </button>
             </div>
 
-            {/* Sub-Tab Navigation Toggle */}
+            {/* Sub-Tab Navigation Toggle with Live Counts (No Emojis) */}
             <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
               <button
                 className={`white-theme-btn ${logsSubTab === 'change' ? 'primary' : ''}`}
                 style={{ padding: '8px 16px', fontSize: '13px', borderRadius: '20px' }}
                 onClick={() => setLogsSubTab('change')}
               >
-                📝 Change Logs ({auditLogs.filter(l => l.action === 'UPDATE_LINK' || l.action === 'DELETE_LINK').length})
+                Change Logs ({auditLogs.filter(l => ['UPDATE_LINK', 'UPDATE_TAG'].includes(l.action)).length})
               </button>
               <button
                 className={`white-theme-btn ${logsSubTab === 'audit' ? 'primary' : ''}`}
                 style={{ padding: '8px 16px', fontSize: '13px', borderRadius: '20px' }}
                 onClick={() => setLogsSubTab('audit')}
               >
-                📋 Audit Logs ({auditLogs.length})
+                Audit Logs ({auditLogs.length})
               </button>
             </div>
 
             {auditLogsLoading ? (
-              <p style={{ color: 'var(--text-muted)', fontSize: '13px', textAlign: 'center', padding: '40px 0' }}>Loading activity logs…</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: '13px', textAlign: 'center', padding: '40px 0' }}>Loading activity logs...</p>
             ) : (
               <div>
                 {/* 1. Change Logs View */}
                 {logsSubTab === 'change' && (
                   <div>
-                    {auditLogs.filter(l => l.action === 'UPDATE_LINK' || l.action === 'DELETE_LINK').length === 0 ? (
-                      <p style={{ color: 'var(--text-muted)', fontSize: '13px', textAlign: 'center', padding: '40px 0' }}>No content or link changes recorded yet.</p>
+                    {auditLogs.filter(l => ['UPDATE_LINK', 'UPDATE_TAG'].includes(l.action)).length === 0 ? (
+                      <p style={{ color: 'var(--text-muted)', fontSize: '13px', textAlign: 'center', padding: '40px 0' }}>No change logs recorded yet.</p>
                     ) : (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         {auditLogs
-                          .filter(l => l.action === 'UPDATE_LINK' || l.action === 'DELETE_LINK')
+                          .filter(l => ['UPDATE_LINK', 'UPDATE_TAG'].includes(l.action))
                           .map((log) => (
                             <div
                               key={log.id}
@@ -2169,13 +2520,13 @@ function App() {
                                     fontWeight: '700',
                                     padding: '2px 8px',
                                     borderRadius: '20px',
-                                    backgroundColor: log.action === 'DELETE_LINK' ? 'rgba(217,83,79,0.15)' : 'rgba(26,115,232,0.15)',
-                                    color: log.action === 'DELETE_LINK' ? '#c0392b' : '#1a73e8',
+                                    backgroundColor: 'rgba(26,115,232,0.15)',
+                                    color: '#1a73e8',
                                     letterSpacing: '0.4px',
                                     textTransform: 'uppercase'
                                   }}
                                 >
-                                  {log.action === 'UPDATE_LINK' ? 'EDITED' : 'DELETED'}
+                                  EDITED
                                 </span>
                                 <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
                                   {new Date(log.timestamp).toLocaleString()}
@@ -2195,7 +2546,7 @@ function App() {
                 {logsSubTab === 'audit' && (
                   <div>
                     {auditLogs.length === 0 ? (
-                      <p style={{ color: 'var(--text-muted)', fontSize: '13px', textAlign: 'center', padding: '40px 0' }}>No activity logs recorded yet.</p>
+                      <p style={{ color: 'var(--text-muted)', fontSize: '13px', textAlign: 'center', padding: '40px 0' }}>No audit logs recorded yet.</p>
                     ) : (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         {auditLogs.map((log) => (
@@ -2217,12 +2568,12 @@ function App() {
                                   padding: '2px 8px',
                                   borderRadius: '20px',
                                   backgroundColor:
-                                    log.action === 'DELETE_LINK' ? 'rgba(217,83,79,0.15)' :
-                                    log.action === 'UPDATE_LINK' ? 'rgba(26,115,232,0.15)' :
+                                    log.action.includes('DELETE') ? 'rgba(217,83,79,0.15)' :
+                                    log.action.includes('UPDATE') ? 'rgba(26,115,232,0.15)' :
                                     'rgba(52,168,83,0.15)',
                                   color:
-                                    log.action === 'DELETE_LINK' ? '#c0392b' :
-                                    log.action === 'UPDATE_LINK' ? '#1a73e8' :
+                                    log.action.includes('DELETE') ? '#c0392b' :
+                                    log.action.includes('UPDATE') ? '#1a73e8' :
                                     '#1e8449',
                                   letterSpacing: '0.4px',
                                   textTransform: 'uppercase'
@@ -2314,7 +2665,7 @@ function App() {
               
               {editError && (
                 <div style={{ color: 'var(--danger)', fontSize: '13px', fontWeight: 'bold', marginBottom: '12px' }}>
-                  ⚠️ {editError}
+                  {editError}
                 </div>
               )}
 
@@ -2954,7 +3305,7 @@ function App() {
 
               {newTagError && (
                 <div style={{ color: 'var(--danger)', fontSize: '12px', fontWeight: 'bold', marginBottom: '12px' }}>
-                  ⚠️ {newTagError}
+                  {newTagError}
                 </div>
               )}
 
@@ -3013,7 +3364,7 @@ function App() {
 
               {newSourceError && (
                 <div style={{ color: 'var(--danger)', fontSize: '13px', fontWeight: 'bold', marginBottom: '12px' }}>
-                  ⚠️ {newSourceError}
+                  {newSourceError}
                 </div>
               )}
 
