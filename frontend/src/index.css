@@ -904,3 +904,28 @@ body {
   border-style: solid;
   border-color: #202124 transparent transparent transparent;
 }
+
+.profile-circle-btn {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  border: 2px solid var(--accent, #1a73e8) !important;
+  background-color: var(--accent, #1a73e8) !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  box-shadow: 0 0 0 2px var(--bg-header, #ffffff), 0 0 0 4px var(--accent, #1a73e8) !important;
+  padding: 0 !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  transition: all 0.15s ease !important;
+}
+
+.profile-circle-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 2px var(--bg-header, #ffffff), 0 0 0 5px var(--accent-hover, #1557b0) !important;
+}

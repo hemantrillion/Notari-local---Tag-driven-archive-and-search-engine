@@ -8,8 +8,8 @@ export default function ThemesDashboard({
 }) {
   return (
     <div id="themes-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>
-      {/* Pair of rounded rectangular theme cards with uniform text in simple boxes */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.85rem' }}>
+      {/* Pair of compact rounded rectangular theme boxes with uniform text */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
         {THEME_OPTIONS.map((theme) => {
           const isActive = appTheme === theme.id;
           return (
@@ -18,22 +18,23 @@ export default function ThemesDashboard({
               className={`theme-selection-card theme-${theme.id} mode-${themeMode}`}
               onClick={() => changeTheme(theme.id)}
               style={{
-                padding: '1rem 1.25rem',
-                borderRadius: '0.75rem',
-                border: isActive ? '2.5px solid var(--accent, #1a73e8)' : '1px solid var(--border)',
-                backgroundColor: 'var(--bg-card)',
-                color: 'var(--text)',
+                padding: '14px 20px',
+                borderRadius: '12px',
+                border: isActive ? '2px solid var(--accent, #1a73e8)' : '1px solid var(--border, #dadce0)',
+                backgroundColor: isActive ? 'var(--bg-card, #ffffff)' : 'var(--bg-card, #ffffff)',
+                color: 'var(--text, #202124)',
                 fontFamily: 'var(--font-family)',
                 cursor: 'pointer',
-                boxShadow: isActive ? '0 2px 8px rgba(26, 115, 232, 0.25)' : 'var(--box-shadow)',
+                boxShadow: isActive ? '0 2px 8px rgba(26, 115, 232, 0.25)' : '0 1px 3px rgba(0,0,0,0.06)',
                 transition: 'all 0.15s ease',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                textAlign: 'center'
+                textAlign: 'center',
+                boxSizing: 'border-box'
               }}
             >
-              <span style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--text)', fontFamily: 'inherit' }}>
+              <span style={{ fontWeight: isActive ? '700' : '600', fontSize: '14px', color: 'var(--text, #202124)', fontFamily: 'inherit' }}>
                 {theme.name}
               </span>
             </div>
