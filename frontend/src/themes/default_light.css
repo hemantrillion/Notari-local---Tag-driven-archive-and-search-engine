@@ -1,0 +1,16 @@
+/* Theme: Default | Mode: Light */
+.theme-default.mode-light,
+body.theme-default.mode-light {
+  --bg-app: #f8f9fa;
+  --bg-header: #ffffff;
+  --bg-card: #ffffff;
+  --bg-white: #ffffff;
+  --text: #202124;
+  --text-muted: #5f6368;
+  --border: #dadce0;
+  --accent: #1a73e8;
+  --accent-hover: #1557b0;
+  --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --card-radius: 8px;
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}

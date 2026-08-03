@@ -1,46 +1,26 @@
-/* 
- * Active Theme Engine Master Stylesheet
- * Imports individual stylesheets for each of the 8 active design environments.
- */
+/* Master Themes Index Stylesheet
+   Imports all 16 dedicated light & dark mode theme stylesheets */
 
-/* Import Google Fonts for themes */
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Outfit:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&family=Syne:wght@600;700&family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;600&display=swap');
+@import './default_light.css';
+@import './default_dark.css';
 
-/* Modular Individual Theme Imports */
-@import './default.css';
-@import './bento_grid.css';
-@import './brutalism.css';
-@import './maximalism.css';
-@import './minimalism.css';
-@import './claymorphism.css';
-@import './neomorphism.css';
-@import './skeumorphism.css';
+@import './bento_grid_light.css';
+@import './bento_grid_dark.css';
 
-/* Default Isolated Floating Windows Rule (ALWAYS default theme + Light/Dark mode) */
-.default-theme-isolated {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
-}
+@import './brutalism_light.css';
+@import './brutalism_dark.css';
 
-.mode-light .default-theme-isolated, .default-theme-isolated.mode-light {
-  --bg-primary: #ffffff !important;
-  --bg-card: #ffffff !important;
-  --text-color: #111827 !important;
-  --text: #111827 !important;
-  --text-muted: #6b7280 !important;
-  --border-color: #e5e7eb !important;
-  --border: #e5e7eb !important;
-  --accent-color: #1a73e8 !important;
-  color: #111827 !important;
-}
+@import './maximalism_light.css';
+@import './maximalism_dark.css';
 
-.mode-dark .default-theme-isolated, .default-theme-isolated.mode-dark {
-  --bg-primary: #18181b !important;
-  --bg-card: #18181b !important;
-  --text-color: #f4f4f5 !important;
-  --text: #f4f4f5 !important;
-  --text-muted: #a1a1aa !important;
-  --border-color: #27272a !important;
-  --border: #27272a !important;
-  --accent-color: #3b82f6 !important;
-  color: #f4f4f5 !important;
-}
+@import './minimalism_light.css';
+@import './minimalism_dark.css';
+
+@import './claymorphism_light.css';
+@import './claymorphism_dark.css';
+
+@import './neomorphism_light.css';
+@import './neomorphism_dark.css';
+
+@import './skeumorphism_light.css';
+@import './skeumorphism_dark.css';

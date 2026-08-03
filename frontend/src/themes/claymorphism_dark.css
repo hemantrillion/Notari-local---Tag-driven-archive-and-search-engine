@@ -1,0 +1,16 @@
+/* Theme: Claymorphism | Mode: Dark */
+.theme-claymorphism.mode-dark,
+body.theme-claymorphism.mode-dark {
+  --bg-app: #1e1b4b;
+  --bg-header: #2e2a72;
+  --bg-card: #312e81;
+  --bg-white: #4338ca;
+  --text: #e0e7ff;
+  --text-muted: #a5b4fc;
+  --border: #4338ca;
+  --accent: #818cf8;
+  --accent-hover: #a5b4fc;
+  --box-shadow: inset -6px -6px 12px rgba(0, 0, 0, 0.4), inset 6px 6px 12px rgba(255, 255, 255, 0.1), 10px 16px 28px rgba(0, 0, 0, 0.5);
+  --card-radius: 24px;
+  --font-family: 'Fredoka', 'Quicksand', sans-serif;
+}

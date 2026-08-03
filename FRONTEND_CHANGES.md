@@ -311,3 +311,19 @@ c:\Users\jai18\Desktop\link-archive-app\
   * Removed per-card theme overrides (`theme-${theme.id}`) from theme selector buttons in [ThemesDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/dashboards/ThemesDashboard.jsx), guaranteeing 100% uniform fonts, borders, shadows, and rounded rectangular box shapes across all theme options.
   * Restored the Preview canvas container with its "Preview" section heading below the theme cards (omitting only the 4 miniature structure cards inside).
   * Tested production compilation (`npx vite build` succeeded in 123ms with 36 modules transformed).
+
+### Change 17: 16 Dedicated Theme Files (8 Themes x 2 Modes: Light & Dark)
+* **Goal**: I wanted to restructure the theme system into 16 separate, dedicated CSS files under `frontend/src/themes/` (one for every theme and light/dark mode combination) reflecting the design language in the visual sample image.
+* **Actions**:
+  * Created 16 dedicated CSS files in [themes/](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/):
+    - `default_light.css` / `default_dark.css`
+    - `bento_grid_light.css` / `bento_grid_dark.css`
+    - `brutalism_light.css` / `brutalism_dark.css`
+    - `maximalism_light.css` / `maximalism_dark.css`
+    - `minimalism_light.css` / `minimalism_dark.css`
+    - `claymorphism_light.css` / `claymorphism_dark.css`
+    - `neomorphism_light.css` / `neomorphism_dark.css`
+    - `skeumorphism_light.css` / `skeumorphism_dark.css`
+  * Updated [themes.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/themes.css) to import all 16 theme files via `@import`.
+  * Preserved floating window modal isolation (`default-theme-isolated`), ensuring modals adapt cleanly to Light/Dark mode without visual theme distortions.
+  * Verified production build (`npx vite build` succeeded in 128ms with 36 modules transformed).

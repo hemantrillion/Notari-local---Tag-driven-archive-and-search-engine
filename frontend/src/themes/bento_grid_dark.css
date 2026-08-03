@@ -1,0 +1,16 @@
+/* Theme: Bento Grid | Mode: Dark */
+.theme-bento_grid.mode-dark,
+body.theme-bento_grid.mode-dark {
+  --bg-app: #0b0f19;
+  --bg-header: #111827;
+  --bg-card: #1f2937;
+  --bg-white: #374151;
+  --text: #f9fafb;
+  --text-muted: #9ca3af;
+  --border: #374151;
+  --accent: #818cf8;
+  --accent-hover: #a5b4fc;
+  --box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  --card-radius: 18px;
+  --font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+}

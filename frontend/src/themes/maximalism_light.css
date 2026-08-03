@@ -1,0 +1,16 @@
+/* Theme: Maximalism | Mode: Light */
+.theme-maximalism.mode-light,
+body.theme-maximalism.mode-light {
+  --bg-app: #fff0f5;
+  --bg-header: #ffffff;
+  --bg-card: #ffffff;
+  --bg-white: #ffffff;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --border: #f43f5e;
+  --accent: #d946ef;
+  --accent-hover: #c084fc;
+  --box-shadow: 0 10px 25px rgba(217, 70, 239, 0.2);
+  --card-radius: 14px;
+  --font-family: 'Syne', 'Impact', sans-serif;
+}
