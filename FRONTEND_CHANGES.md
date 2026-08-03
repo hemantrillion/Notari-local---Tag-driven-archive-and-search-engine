@@ -342,3 +342,18 @@ c:\Users\jai18\Desktop\link-archive-app\
     - `skeumorphism_light.css`: Tactile metallic silver gradients, beveled panels, and real-world inset shadows.
   * Preserved modal isolation (`default-theme-isolated`), keeping floating windows clean and unpolluted.
   * Verified production build (`npx vite build` succeeded in 148ms with 36 modules transformed).
+
+### Change 22: Complete 7-Theme Architectural Mapping & Light Mode Specifications
+* **Goal**: I wanted to document the complete 3-layer frontend architecture (Frontend Preset vs Theme Variables) and exact element-by-element specifications for all 7 Light Mode themes (`Bento Grid`, `Brutalism`, `Maximalism`, `Minimalism`, `Claymorphism`, `Skeumorphism`, `Neomorphism`) with Bento Grid canvas set to pure white `#ffffff`.
+* **Frontend Preset (Constant across themes)**:
+  - Table row architecture remains horizontal row wrappers (Tags & Sources dashboards stay rows, never columns).
+  - Modal floating windows (`SidebarDrawerModal`, `CreateTagModal`, `CreateSourceModal`, `TagEditorModal`, `MediaPlayerModal`) retain `default-theme-isolated` light/dark default styling.
+  - Toolbar action pills retain `border-radius: 30px` and single-line nowrap bounds; profile avatar retains `border-radius: 50%` circular boundary.
+* **7 Light Mode Theme Specifications**:
+  - **Bento Grid**: Pure white canvas (`#ffffff`), 20px pill rounded corners, zero borders, soft ambient drop shadow (`0 8px 24px rgba(0,0,0,0.05)`), 5 alternating pastel card background fills (lavender `#e9d5ff`, mint green `#d9f99d`, pink `#fbcfe8`, cyan `#bae6fd`, coral orange `#ffedd5`), Outfit font.
+  - **Brutalism**: Soft periwinkle canvas (`#e0e7ff`), 3px solid black borders (`#000000`), hard 4px black offset drop-shadows (`4px 4px 0px #000000`), 2px sharp corners, 3 circular window header dots (red, yellow, green), Space Grotesk font.
+  - **Maximalism**: 45-degree electric lime green & white diagonal chevron/stripe pattern (`repeating-linear-gradient(45deg, #00ff44, #ffffff)`), solid black header (`#000000`), 4px solid black borders, 6px solid black offset shadows (`6px 6px 0px #000000`), Syne font.
+  - **Minimalism**: Soft paper off-white canvas (`#fafafa`), thin 1px light gray borders (`#e5e5e5`), zero shadows (`none`), 4px minimal corners, Inter font.
+  - **Claymorphism**: Vibrant Sky Blue canvas (`#7dd3fc`), 3D inflated pure white clay cards (`#ffffff`) with 28px inflated corners and dual top-left white inset highlight glow + bottom-right soft blue drop shadow, Fredoka font.
+  - **Skeumorphism**: Metallic silver-gray control panel canvas (`linear-gradient(180deg, #e2e8f0, #cbd5e1)`), beveled card panels (`linear-gradient(180deg, #ffffff, #f1f5f9)`), 10px corners, inset white bevel highlights (`inset 0 1px 0 rgba(255,255,255,0.9)`), Georgia serif font.
+  - **Neomorphism**: Monochromatic soft plastic gray canvas (`#e0e5ec`), soft plastic cards sharing exact `#e0e5ec` color (`border: none`), 20px rounded corners, opposing dual light/dark soft extruded shadows (`9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff`), Nunito font.
