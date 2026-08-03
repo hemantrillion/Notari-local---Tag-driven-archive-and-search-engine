@@ -273,3 +273,12 @@ c:\Users\jai18\Desktop\link-archive-app\
   * Created [ErrorBoundary.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/ErrorBoundary.jsx) and wrapped `<App />` in [main.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/main.jsx) to prevent unhandled runtime exceptions from collapsing the React root tree into a white screen.
   * Added defensive default parameter values across all 8 modular dashboard components (`HomeDashboard`, `TaggedDashboard`, `UntaggedDashboard`, `TagsRegistryDashboard`, `SourcesRegistryDashboard`, `ProfileDashboard`, `ThemesDashboard`, `LogsDashboard`), ensuring safe fallback rendering under all prop conditions.
   * Verified 100% clean production compilation (`npx vite build` succeeded with 36 modules transformed in 114ms).
+
+### Change 12: Fix Delete Handler References, Clean Themes Preview & Profile Layout, Oval Toolbar Pills
+* **Goal**: I wanted to fix the missing delete handlers for Tags and Sources dashboards (`handleDeleteTag`, `handleDeleteSource`), remove unnecessary theme settings/preview sections from Profile and Themes dashboards, and restore single-line oval pill toolbar buttons in `WebsiteDetailView`.
+* **Actions**:
+  * Defined `handleDeleteTag` and `handleDeleteSource` in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) and passed them to `TagsRegistryDashboard` and `SourcesRegistryDashboard`, resolving the runtime `ReferenceError` crashes.
+  * Removed the miniature preview cards canvas from [ThemesDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/dashboards/ThemesDashboard.jsx).
+  * Removed the redundant Theme Settings section from [ProfileDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/dashboards/ProfileDashboard.jsx).
+  * Updated toolbar buttons in [WebsiteDetailView.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/WebsiteDetailView.jsx) with `borderRadius: '30px'` and `whiteSpace: 'nowrap'`, restoring single-line oval pill buttons ("Default View", "Design Page", "Edit").
+  * Tested production compilation (`npx vite build` succeeded in 250ms with 36 modules transformed).

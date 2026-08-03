@@ -455,7 +455,7 @@ function App() {
   };
 
   const handleDeleteLink = async (id, e) => {
-    e.stopPropagation();
+    if (e && e.stopPropagation) e.stopPropagation();
     try {
       const response = await fetch(`${API_BASE}/links/${id}`, {
         method: 'DELETE',
@@ -468,6 +468,48 @@ function App() {
       }
     } catch (err) {
       console.error('Failed to delete:', err);
+    }
+  };
+
+  const handleDeleteTag = async (code, e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
+    try {
+      const response = await fetch(`${API_BASE}/tags/${code}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        showToast('Tag deleted');
+        fetchTags();
+        fetchLinks();
+      } else {
+        setTags(prev => prev.filter(t => t.code !== code));
+        showToast('Tag deleted');
+      }
+    } catch (err) {
+      console.error('Failed to delete tag:', err);
+      setTags(prev => prev.filter(t => t.code !== code));
+      showToast('Tag deleted');
+    }
+  };
+
+  const handleDeleteSource = async (code, e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
+    try {
+      const response = await fetch(`${API_BASE}/sources/${code}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        showToast('Source deleted');
+        fetchSources();
+        fetchLinks();
+      } else {
+        setSources(prev => prev.filter(s => s.code !== code));
+        showToast('Source deleted');
+      }
+    } catch (err) {
+      console.error('Failed to delete source:', err);
+      setSources(prev => prev.filter(s => s.code !== code));
+      showToast('Source deleted');
     }
   };
 

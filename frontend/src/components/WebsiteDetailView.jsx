@@ -60,25 +60,25 @@ export default function WebsiteDetailView({
           marginBottom: '2rem' 
         }}
       >
-        <div className="web-mints-group" style={{ display: 'flex', gap: '3%' }}>
+        <div className="web-mints-group" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
           <button 
             className={`white-theme-btn ${detailMode === 'view' ? 'active' : ''}`}
             onClick={() => setDetailMode('view')}
-            style={{ fontSize: '0.85rem', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 600 }}
+            style={{ fontSize: '13px', padding: '8px 20px', borderRadius: '30px', fontWeight: 600, whiteSpace: 'nowrap' }}
           >
             Default View
           </button>
           <button 
             className={`white-theme-btn ${detailMode === 'design' ? 'active' : ''}`}
             onClick={() => setDetailMode('design')}
-            style={{ fontSize: '0.85rem', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 600 }}
+            style={{ fontSize: '13px', padding: '8px 20px', borderRadius: '30px', fontWeight: 600, whiteSpace: 'nowrap' }}
           >
             Design Page
           </button>
           <button 
             className={`white-theme-btn ${detailMode === 'edit' ? 'active' : ''}`}
             onClick={() => setDetailMode('edit')}
-            style={{ fontSize: '0.85rem', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 600 }}
+            style={{ fontSize: '13px', padding: '8px 20px', borderRadius: '30px', fontWeight: 600, whiteSpace: 'nowrap' }}
           >
             Edit
           </button>
