@@ -247,3 +247,9 @@ c:\Users\jai18\Desktop\link-archive-app\
     * [skeumorphism.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/skeumorphism.css)
   * Updated [themes.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/themes.css) to import all 8 theme CSS files via `@import`.
   * Added unique `id` attributes across all dashboard containers and interactive elements (`#search-input`, `#home-dashboard`, `#tagged-table`, `#untagged-table`, `#tags-registry-table`, `#sources-registry-table`, `#profile-dashboard`, `#themes-dashboard`, `#logs-dashboard`, `#website-detail-view`, `#web-mints-toolbar`) to guarantee 100% element detection by Selenium and automated testing tools.
+
+### Change 8: Fix Missing Component Imports for App Rendering
+* **Goal**: I wanted to fix the runtime rendering issue causing the app screen to fail to load in browser by restoring missing component imports in `App.jsx`.
+* **Actions**:
+  * Added missing imports for `WebsiteDetailView` (`import WebsiteDetailView from './components/WebsiteDetailView';`) and `MediaPlayerModal` (`import MediaPlayerModal from './components/MediaPlayerModal';`) at the top of [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx).
+  * Verified that Vite transforms all 34 component modules cleanly without runtime reference errors and tested production compilation (`npx vite build` succeeded in 120ms).

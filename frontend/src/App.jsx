@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import NavigationControls from './components/NavigationControls';
+import WebsiteDetailView from './components/WebsiteDetailView';
+import MediaPlayerModal from './components/MediaPlayerModal';
 import SidebarDrawerModal from './components/floating-windows/SidebarDrawerModal';
 import CreateTagModal from './components/floating-windows/CreateTagModal';
 import CreateSourceModal from './components/floating-windows/CreateSourceModal';
