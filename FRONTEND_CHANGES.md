@@ -282,3 +282,11 @@ c:\Users\jai18\Desktop\link-archive-app\
   * Removed the redundant Theme Settings section from [ProfileDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/dashboards/ProfileDashboard.jsx).
   * Updated toolbar buttons in [WebsiteDetailView.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/WebsiteDetailView.jsx) with `borderRadius: '30px'` and `whiteSpace: 'nowrap'`, restoring single-line oval pill buttons ("Default View", "Design Page", "Edit").
   * Tested production compilation (`npx vite build` succeeded in 250ms with 36 modules transformed).
+
+### Change 13: Restore Rich Themes Selector, Circular Profile Avatar & Proxy Web Previews
+* **Goal**: I wanted to restore the rich visual theme cards in `ThemesDashboard` with a clean `Preview` section header, fix circular profile avatar rendering and navigation, and bypass iframe `X-Frame-Options` blocks when opening web link previews in `MediaPlayerModal`.
+* **Actions**:
+  * Restored rich visual theme cards (with live theme style accents and Active badges) in [ThemesDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/dashboards/ThemesDashboard.jsx) while keeping the clean `Preview` section heading (omitting only the miniature structure cards).
+  * Styled `.avatar` in [index.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/index.css) as a clean, circular profile badge and added Profile navigation entry in [SidebarDrawerModal.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/floating-windows/SidebarDrawerModal.jsx).
+  * Updated web preview iframe in [MediaPlayerModal.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/MediaPlayerModal.jsx) to use `http://localhost:5005/api/proxy?url=...`, allowing external sites (like Hacker News `news.ycombinator.com`) to preview cleanly inside the modal.
+  * Verified production build (`npx vite build` succeeded in 130ms with 36 modules transformed).

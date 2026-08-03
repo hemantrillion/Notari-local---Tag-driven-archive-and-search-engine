@@ -14,7 +14,7 @@ export default function MediaPlayerModal({ url, onClose }) {
       return { type: 'instagram', src: `https://www.instagram.com/p/${insMatch[1]}/embed` };
     }
 
-    return { type: 'web', src: linkUrl };
+    return { type: 'web', src: `http://localhost:5005/api/proxy?url=${encodeURIComponent(linkUrl)}` };
   };
 
   const { type, src } = getEmbedInfo(url);

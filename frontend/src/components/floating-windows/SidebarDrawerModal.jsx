@@ -60,6 +60,7 @@ export default function SidebarDrawerModal({
             { id: 'tagged', label: 'Tagged' },
             { id: 'tags', label: 'Tags' },
             { id: 'sources', label: 'Sources' },
+            { id: 'profile', label: 'Profile' },
             { id: 'themes', label: 'Themes' },
             { id: 'logs', label: 'Logs' }
           ].map((item) => {
