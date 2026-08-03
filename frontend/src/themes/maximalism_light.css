@@ -1,17 +1,17 @@
 /* Theme: Maximalism | Mode: Light
-   Reference: High-contrast loud typography, green/pink accents */
+   Reference: High-frequency 45deg lime green & white chevron pattern, heavy 4px black borders, Syne typography */
 .theme-maximalism.mode-light,
 body.theme-maximalism.mode-light {
-  --bg-app: #fff0f5;
-  --bg-header: #ffffff;
+  --bg-app: repeating-linear-gradient(45deg, #00ff44 0px, #00ff44 24px, #ffffff 24px, #ffffff 48px);
+  --bg-header: #000000;
   --bg-card: #ffffff;
   --bg-white: #ffffff;
-  --text: #0f172a;
-  --text-muted: #334155;
-  --border: #22c55e;
-  --accent: #d946ef;
-  --accent-hover: #c084fc;
-  --box-shadow: 0 10px 25px rgba(217, 70, 239, 0.2);
-  --card-radius: 12px;
+  --text: #000000;
+  --text-muted: #333333;
+  --border: #000000;
+  --accent: #00ff44;
+  --accent-hover: #00cc33;
+  --box-shadow: 6px 6px 0px #000000;
+  --card-radius: 4px;
   --font-family: 'Syne', 'Impact', sans-serif;
 }

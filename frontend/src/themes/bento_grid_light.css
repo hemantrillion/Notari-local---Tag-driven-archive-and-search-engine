@@ -1,17 +1,17 @@
 /* Theme: Bento Grid | Mode: Light
-   Reference: Modular cards, soft shadows, rounded pill boundaries */
+   Reference: Multi-colored pastel tiles, 20px rounded pill boundaries, soft ambient depth */
 .theme-bento_grid.mode-light,
 body.theme-bento_grid.mode-light {
   --bg-app: #f3f4f6;
   --bg-header: #ffffff;
-  --bg-card: #ffffff;
+  --bg-card: #e9d5ff;
   --bg-white: #ffffff;
   --text: #1f2937;
   --text-muted: #6b7280;
-  --border: rgba(99, 102, 241, 0.15);
+  --border: transparent;
   --accent: #6366f1;
   --accent-hover: #4f46e5;
-  --box-shadow: 0 8px 24px rgba(99, 102, 241, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
   --card-radius: 20px;
   --font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
 }

@@ -987,25 +987,59 @@ body {
   font-family: 'Georgia', serif !important;
 }
 
-/* Maximalism: Loud green borders & pink glow */
+/* Maximalism: High-frequency 45deg lime green & white chevron pattern, heavy 4px black borders, Syne display typography */
+.theme-maximalism.mode-light .app-side {
+  background: repeating-linear-gradient(45deg, #00ff44 0px, #00ff44 24px, #ffffff 24px, #ffffff 48px) !important;
+}
+
 .theme-maximalism.mode-light .result-card,
 .theme-maximalism.mode-light .search-bar-wrapper,
 .theme-maximalism.mode-light .dashboard-table td,
 .theme-maximalism.mode-light .preview-canvas {
-  border: 2px solid #22c55e !important;
-  box-shadow: 0 10px 25px rgba(217, 70, 239, 0.2) !important;
+  background-color: #ffffff !important;
+  border: 4px solid #000000 !important;
+  box-shadow: 6px 6px 0px #000000 !important;
+  border-radius: 4px !important;
   font-family: 'Syne', 'Impact', sans-serif !important;
+  color: #000000 !important;
 }
 
-/* Bento Grid: Rounded 20px modular cards & indigo shadow */
+.theme-maximalism.mode-light .app-header {
+  background-color: #000000 !important;
+  color: #00ff44 !important;
+  border-bottom: 4px solid #000000 !important;
+}
+
+/* Bento Grid: Alternating pastel background cards matching reference image Card 1 */
 .theme-bento_grid.mode-light .result-card,
 .theme-bento_grid.mode-light .search-bar-wrapper,
 .theme-bento_grid.mode-light .dashboard-table td,
 .theme-bento_grid.mode-light .preview-canvas {
   border-radius: 20px !important;
-  border: 1px solid rgba(99, 102, 241, 0.15) !important;
-  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+  border: none !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05) !important;
   font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+}
+
+.theme-bento_grid.mode-light .result-card:nth-child(5n+1) {
+  background-color: #e9d5ff !important;
+  color: #581c87 !important;
+}
+.theme-bento_grid.mode-light .result-card:nth-child(5n+2) {
+  background-color: #d9f99d !important;
+  color: #1a2e05 !important;
+}
+.theme-bento_grid.mode-light .result-card:nth-child(5n+3) {
+  background-color: #fbcfe8 !important;
+  color: #831843 !important;
+}
+.theme-bento_grid.mode-light .result-card:nth-child(5n+4) {
+  background-color: #bae6fd !important;
+  color: #0c4a6e !important;
+}
+.theme-bento_grid.mode-light .result-card:nth-child(5n+5) {
+  background-color: #ffedd5 !important;
+  color: #7c2d12 !important;
 }
 
 /* Minimalism: Ultra-clean 1px thin border & zero shadow */
