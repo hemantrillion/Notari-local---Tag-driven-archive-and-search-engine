@@ -296,7 +296,7 @@ c:\Users\jai18\Desktop\link-archive-app\
 * **Actions**:
   * Updated [ThemesDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/dashboards/ThemesDashboard.jsx) to render a clean 2-column grid of rounded rectangular cards with uniform theme name text, removing header titles, active badges, and inner color bars.
   * Styled `profile-circle-btn` in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) header with explicit 36px circular dimensions (`borderRadius: '50%'`, `border: '2px solid var(--accent)'`, `boxShadow: '0 2px 6px rgba(26, 115, 232, 0.3)'`), placing a sharp circular boundary around the profile icon.
-  * Verified production build (`npx vite build` succeeded cleanly in 125ms with 36 modules transformed).
+  * Verified production build (`npx vite build` succeeded cleanly in 126ms with 36 modules transformed).
 
 ### Change 15: Clean Theme Box Cards & Double Ring Circular Profile Boundary
 * **Goal**: I wanted to refine the Themes Dashboard layout to render compact paired rounded rectangular boxes with uniform text and give the Profile header icon a high-visibility double ring circular boundary.
@@ -528,3 +528,12 @@ Typography: Clean soft sans-serif (Nunito / Poppins).
     - Added 6 clickable sample emojis (`📌`, `⭐`, `💡`, `🔥`, `✅`, `🚀`) right after the `• List` button to insert emojis directly into text at the cursor position.
     - Added descriptive tooltips (`title="Text Color (A = Font Color Picker)"` and `title="Text Highlight Color (H = Background Highlight Color Picker)"`) to `A` and `H` toolbar color pickers.
   * Verified production build (`npx vite build` succeeded cleanly in 126ms with 36 modules transformed).
+
+### Change 25: App Renaming to Notari (local), Modal White Space Removal, Standalone Android Folder & Portfolio Card
+* **Goal**: I wanted to rename the app to Notari (local) everywhere, eliminate unnecessary vertical whitespace in Create Tag and Create Source modals, create a parallel native Android app folder (`real-app-Notari-(local)`), setup Android Share Intent filters for accepting links from YouTube/Twitter/Instagram/browsers, and create a Portfolio Card component matching the hekugo.online and Zeitplan APK download pattern.
+* **Actions**:
+  * Fixed `.tag-editor-dialog` in [index.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/index.css) (`height: auto !important; max-height: 90vh !important`), completely eliminating empty vertical whitespace inside modals.
+  * Updated app title to `Notari (local)` across [index.html](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/index.html) and [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx).
+  * Created parallel directory `real-app-Notari-(local)` with full standalone Android React codebase, full-screen mobile layout (`width: 100vw; height: 100vh`), Capacitor config, and `AndroidManifest.xml` Share Intent filters (`SEND` text/plain) for accepting shared links from external Android apps (YouTube, Twitter/X, Instagram, browsers).
+  * Created [PortfolioAppsCard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/PortfolioAppsCard.jsx) matching the hekugo.online & Zeitplan APK download card pattern.
+  * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 136ms & 270ms with 0 errors).
