@@ -304,3 +304,10 @@ c:\Users\jai18\Desktop\link-archive-app\
   * Refined [ThemesDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/dashboards/ThemesDashboard.jsx) to render a clean 2-column grid of compact rounded rectangular boxes (`padding: 14px 20px`, `borderRadius: 12px`) with uniform theme name text, omitting titles, active badges, and inner dashed lines.
   * Added `.profile-circle-btn` in [index.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/index.css) with double ring circular boundary styling (`box-shadow: 0 0 0 2px var(--bg-header), 0 0 0 4px var(--accent)`), creating a sharp outer ring around the Profile avatar button.
   * Tested production compilation (`npx vite build` succeeded in 123ms with 36 modules transformed).
+
+### Change 16: Uniform Theme Cards & Restored Preview Section Container
+* **Goal**: I wanted to ensure that all 8 theme option cards have 100% identical uniform box styling and restore the Preview section container with its "Preview" heading below the theme cards.
+* **Actions**:
+  * Removed per-card theme overrides (`theme-${theme.id}`) from theme selector buttons in [ThemesDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/dashboards/ThemesDashboard.jsx), guaranteeing 100% uniform fonts, borders, shadows, and rounded rectangular box shapes across all theme options.
+  * Restored the Preview canvas container with its "Preview" section heading below the theme cards (omitting only the 4 miniature structure cards inside).
+  * Tested production compilation (`npx vite build` succeeded in 123ms with 36 modules transformed).
