@@ -1,10 +1,10 @@
 import React from 'react';
 
 export default function TagsRegistryDashboard({
-  tags,
-  links,
-  setNewTagOpen,
-  handleDeleteTag
+  tags = [],
+  links = [],
+  setNewTagOpen = () => {},
+  handleDeleteTag = () => {}
 }) {
   return (
     <div id="tags-registry-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>

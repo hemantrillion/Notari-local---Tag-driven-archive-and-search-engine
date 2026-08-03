@@ -1,10 +1,10 @@
 import React from 'react';
 
 export default function ThemesDashboard({
-  THEME_OPTIONS,
-  appTheme,
-  themeMode,
-  changeTheme
+  THEME_OPTIONS = [],
+  appTheme = 'default',
+  themeMode = 'light',
+  changeTheme = () => {}
 }) {
   return (
     <div id="themes-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>

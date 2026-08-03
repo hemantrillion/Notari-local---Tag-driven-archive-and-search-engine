@@ -1,11 +1,11 @@
 import React from 'react';
 
 export default function LogsDashboard({
-  auditLogs,
-  auditLogsLoading,
-  fetchAuditLogs,
-  logsSubTab,
-  setLogsSubTab
+  auditLogs = [],
+  auditLogsLoading = false,
+  fetchAuditLogs = () => {},
+  logsSubTab = 'change',
+  setLogsSubTab = () => {}
 }) {
   const changeLogs = auditLogs.filter(l => ['UPDATE_LINK', 'UPDATE_TAG'].includes(l.action));
 

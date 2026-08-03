@@ -1,12 +1,12 @@
 import React from 'react';
 
 export default function ProfileDashboard({
-  isLocalStorageEnabled,
-  setIsLocalStorageEnabled,
-  THEME_OPTIONS,
-  appTheme,
-  themeMode,
-  changeTheme
+  isLocalStorageEnabled = true,
+  setIsLocalStorageEnabled = () => {},
+  THEME_OPTIONS = [],
+  appTheme = 'default',
+  themeMode = 'light',
+  changeTheme = () => {}
 }) {
   return (
     <div id="profile-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>

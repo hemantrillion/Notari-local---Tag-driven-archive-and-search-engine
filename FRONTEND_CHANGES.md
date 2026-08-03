@@ -265,3 +265,11 @@ c:\Users\jai18\Desktop\link-archive-app\
 * **Actions**:
   * Added `DEFAULT_INITIAL_TAGS`, `DEFAULT_INITIAL_SOURCES`, and `DEFAULT_INITIAL_LINKS` to [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx).
   * Initialized `links`, `tags`, and `sources` React state using these preloaded datasets, guaranteeing that all dashboards (Home, Tagged, Tags Registry, Sources Registry, Detail View) display full interactive content immediately upon page load.
+
+### Change 11: 3-Layer Future-Proof Error Boundary, Shared Formatters & Defensive Default Props
+* **Goal**: I wanted to permanently eliminate the root cause of blank white screen collapses (`ReferenceError: displayUrl is not defined`) by creating a shared formatters utility, wrapping `<App />` in a top-level React `<ErrorBoundary>`, and adding defensive default props across all 8 dashboard components.
+* **Actions**:
+  * Created [formatters.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/utils/formatters.jsx) exporting `displayUrl`, `formatDate`, `formatTime`, and `getCleanTextExcerpt` utility functions.
+  * Created [ErrorBoundary.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/ErrorBoundary.jsx) and wrapped `<App />` in [main.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/main.jsx) to prevent unhandled runtime exceptions from collapsing the React root tree into a white screen.
+  * Added defensive default parameter values across all 8 modular dashboard components (`HomeDashboard`, `TaggedDashboard`, `UntaggedDashboard`, `TagsRegistryDashboard`, `SourcesRegistryDashboard`, `ProfileDashboard`, `ThemesDashboard`, `LogsDashboard`), ensuring safe fallback rendering under all prop conditions.
+  * Verified 100% clean production compilation (`npx vite build` succeeded with 36 modules transformed in 114ms).

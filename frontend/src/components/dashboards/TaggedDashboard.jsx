@@ -1,16 +1,16 @@
 import React from 'react';
 
 export default function TaggedDashboard({
-  taggedLinks,
-  formatDate,
-  formatTime,
-  copiedLinkId,
-  setCopiedLinkId,
-  setActiveEditLinkId,
-  handleDeleteLink,
-  setActiveViewLink,
-  setDetailMode,
-  setActivePlayerLink
+  taggedLinks = [],
+  formatDate = () => '',
+  formatTime = () => '',
+  copiedLinkId = null,
+  setCopiedLinkId = () => {},
+  setActiveEditLinkId = () => {},
+  handleDeleteLink = () => {},
+  setActiveViewLink = () => {},
+  setDetailMode = () => {},
+  setActivePlayerLink = () => {}
 }) {
   return (
     <div id="tagged-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>

@@ -1,13 +1,13 @@
 import React from 'react';
 
 export default function UntaggedDashboard({
-  untaggedLinks,
-  formatDate,
-  formatTime,
-  setActiveEditLinkId,
-  handleDeleteLink,
-  setActiveViewLink,
-  setDetailMode
+  untaggedLinks = [],
+  formatDate = () => '',
+  formatTime = () => '',
+  setActiveEditLinkId = () => {},
+  handleDeleteLink = () => {},
+  setActiveViewLink = () => {},
+  setDetailMode = () => {}
 }) {
   return (
     <div id="untagged-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>

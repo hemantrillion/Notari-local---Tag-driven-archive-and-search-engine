@@ -1,10 +1,10 @@
 import React from 'react';
 
 export default function SourcesRegistryDashboard({
-  sources,
-  links,
-  setNewSourceOpen,
-  handleDeleteSource
+  sources = [],
+  links = [],
+  setNewSourceOpen = () => {},
+  handleDeleteSource = () => {}
 }) {
   return (
     <div id="sources-registry-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>
