@@ -13,14 +13,14 @@ export default function TaggedDashboard({
   setActivePlayerLink
 }) {
   return (
-    <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
+    <div id="tagged-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>
       <div style={{ overflowX: 'auto', flex: 1 }}>
         {taggedLinks.length === 0 ? (
-          <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', padding: '40px 0' }}>
+          <div id="tagged-empty-msg" style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', padding: '40px 0' }}>
             No tagged records found.
           </div>
         ) : (
-          <table className="dashboard-table">
+          <table id="tagged-table" className="dashboard-table">
             <thead>
               <tr>
                 <th>URL ID</th>

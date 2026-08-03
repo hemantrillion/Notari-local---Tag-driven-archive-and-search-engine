@@ -7,9 +7,10 @@ export default function TagsRegistryDashboard({
   handleDeleteTag
 }) {
   return (
-    <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
+    <div id="tags-registry-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: '16px' }}>
         <button
+          id="create-tag-btn"
           className="white-theme-btn primary"
           style={{ padding: '6px 14px', fontSize: '12px' }}
           onClick={() => setNewTagOpen(true)}
@@ -20,11 +21,11 @@ export default function TagsRegistryDashboard({
 
       <div style={{ overflowX: 'auto', flex: 1 }}>
         {tags.length === 0 ? (
-          <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', padding: '40px 0' }}>
+          <div id="tags-empty-msg" style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', padding: '40px 0' }}>
             No tags registered. Click "+ Create Tag" to add one!
           </div>
         ) : (
-          <table className="dashboard-table">
+          <table id="tags-registry-table" className="dashboard-table">
             <thead>
               <tr>
                 <th>Tag Code</th>

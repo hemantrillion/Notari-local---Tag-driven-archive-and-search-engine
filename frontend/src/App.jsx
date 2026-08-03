@@ -16,14 +16,11 @@ import LogsDashboard from './components/dashboards/LogsDashboard';
 
 const THEME_OPTIONS = [
   { id: 'default', name: 'Default' },
-  { id: 'spatial_ui', name: 'Spatial UI' },
   { id: 'bento_grid', name: 'Bento Grid' },
-  { id: 'liquid_glass', name: 'Liquid Glass' },
   { id: 'brutalism', name: 'Brutalism' },
   { id: 'maximalism', name: 'Maximalism' },
   { id: 'minimalism', name: 'Minimalism' },
   { id: 'claymorphism', name: 'Claymorphism' },
-  { id: 'glassmorphism', name: 'Glassmorphism' },
   { id: 'neomorphism', name: 'Neomorphism' },
   { id: 'skeumorphism', name: 'Skeumorphism' },
 ];

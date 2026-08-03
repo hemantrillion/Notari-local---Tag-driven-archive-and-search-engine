@@ -1,0 +1,26 @@
+/* Brutalism Theme Stylesheet */
+.theme-brutalism.mode-light, .mode-light .theme-brutalism {
+  --bg-app: #fffbe6;
+  --bg-header: #ffffff;
+  --bg-card: #ffffff;
+  --text: #000000;
+  --text-muted: #333333;
+  --border: #000000;
+  --accent: #ff4757;
+  --box-shadow: 5px 5px 0px #000000;
+  --card-radius: 0px;
+  font-family: 'Space Grotesk', monospace;
+}
+
+.theme-brutalism.mode-dark, .mode-dark .theme-brutalism {
+  --bg-app: #121212;
+  --bg-header: #1e1e1e;
+  --bg-card: #1e1e1e;
+  --text: #ffffff;
+  --text-muted: #cccccc;
+  --border: #ffffff;
+  --accent: #ff6b81;
+  --box-shadow: 5px 5px 0px #ffffff;
+  --card-radius: 0px;
+  font-family: 'Space Grotesk', monospace;
+}

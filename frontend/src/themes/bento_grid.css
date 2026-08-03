@@ -1,0 +1,26 @@
+/* Bento Grid Theme Stylesheet */
+.theme-bento_grid.mode-light, .mode-light .theme-bento_grid {
+  --bg-app: #f1f5f9;
+  --bg-header: #ffffff;
+  --bg-card: #ffffff;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #cbd5e1;
+  --accent: #0284c7;
+  --card-radius: 20px;
+  --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.theme-bento_grid.mode-dark, .mode-dark .theme-bento_grid {
+  --bg-app: #090d16;
+  --bg-header: #0f172a;
+  --bg-card: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #334155;
+  --accent: #38bdf8;
+  --card-radius: 20px;
+  --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}

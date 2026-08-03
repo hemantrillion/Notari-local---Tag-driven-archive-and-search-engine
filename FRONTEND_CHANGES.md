@@ -231,3 +231,19 @@ c:\Users\jai18\Desktop\link-archive-app\
     * [ThemesDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/dashboards/ThemesDashboard.jsx): Compact 11-theme selection cards and miniature page structure previews.
     * [LogsDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/dashboards/LogsDashboard.jsx): Dual sub-tab (`Change Logs` & `Audit Logs`) activity feed without subtitles or emojis.
   * Updated [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) to import and render all 8 modular dashboard components cleanly, reducing file size from 2,650 lines down to ~1,350 lines while preserving clean compilation (`npx vite build` succeeded with 0 errors).
+
+### Change 7: Modular Per-Theme CSS Files, Theme Removal & Selenium Element Detection Fixes
+* **Goal**: I wanted to remove the 3 requested themes (`glassmorphism`, `spatial_ui`, `liquid_glass`), create a dedicated individual CSS file for each remaining theme under `frontend/src/themes/`, and add unique ID attributes across all dashboards to ensure 100% element visibility and reliable detection for Selenium and automated test suites.
+* **Actions**:
+  * Removed `spatial_ui`, `liquid_glass`, and `glassmorphism` from [themeRegistry.js](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/themeRegistry.js), [themes.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/themes.css), and `THEME_OPTIONS` in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx).
+  * Created 8 individual per-theme CSS files in [frontend/src/themes/](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/):
+    * [default.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/default.css)
+    * [bento_grid.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/bento_grid.css)
+    * [brutalism.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/brutalism.css)
+    * [maximalism.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/maximalism.css)
+    * [minimalism.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/minimalism.css)
+    * [claymorphism.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/claymorphism.css)
+    * [neomorphism.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/neomorphism.css)
+    * [skeumorphism.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/skeumorphism.css)
+  * Updated [themes.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/themes.css) to import all 8 theme CSS files via `@import`.
+  * Added unique `id` attributes across all dashboard containers and interactive elements (`#search-input`, `#home-dashboard`, `#tagged-table`, `#untagged-table`, `#tags-registry-table`, `#sources-registry-table`, `#profile-dashboard`, `#themes-dashboard`, `#logs-dashboard`, `#website-detail-view`, `#web-mints-toolbar`) to guarantee 100% element detection by Selenium and automated testing tools.

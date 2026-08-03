@@ -7,9 +7,10 @@ export default function SourcesRegistryDashboard({
   handleDeleteSource
 }) {
   return (
-    <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
+    <div id="sources-registry-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: '16px' }}>
         <button
+          id="create-source-btn"
           className="white-theme-btn primary"
           style={{ padding: '6px 14px', fontSize: '12px' }}
           onClick={() => setNewSourceOpen(true)}
@@ -20,11 +21,11 @@ export default function SourcesRegistryDashboard({
 
       <div style={{ overflowX: 'auto', flex: 1 }}>
         {sources.length === 0 ? (
-          <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', padding: '40px 0' }}>
+          <div id="sources-empty-msg" style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', padding: '40px 0' }}>
             No sources registered. Click "+ Create Source" to add one!
           </div>
         ) : (
-          <table className="dashboard-table">
+          <table id="sources-registry-table" className="dashboard-table">
             <thead>
               <tr>
                 <th>Source Code</th>

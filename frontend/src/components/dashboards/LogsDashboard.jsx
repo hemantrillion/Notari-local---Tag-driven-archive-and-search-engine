@@ -10,9 +10,10 @@ export default function LogsDashboard({
   const changeLogs = auditLogs.filter(l => ['UPDATE_LINK', 'UPDATE_TAG'].includes(l.action));
 
   return (
-    <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
+    <div id="logs-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: '16px' }}>
         <button
+          id="logs-refresh-btn"
           className="white-theme-btn"
           style={{ padding: '6px 14px', fontSize: '12px' }}
           onClick={fetchAuditLogs}

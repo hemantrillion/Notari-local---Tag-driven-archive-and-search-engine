@@ -1,0 +1,26 @@
+/* Claymorphism Theme Stylesheet */
+.theme-claymorphism.mode-light, .mode-light .theme-claymorphism {
+  --bg-app: #e0e5ec;
+  --bg-header: #e0e5ec;
+  --bg-card: #e0e5ec;
+  --text: #2d3748;
+  --text-muted: #718096;
+  --border: transparent;
+  --accent: #4299e1;
+  --card-radius: 24px;
+  --box-shadow: 8px 8px 16px #b8b9be, -8px -8px 16px #ffffff;
+  font-family: 'Fredoka', sans-serif;
+}
+
+.theme-claymorphism.mode-dark, .mode-dark .theme-claymorphism {
+  --bg-app: #1a202c;
+  --bg-header: #1a202c;
+  --bg-card: #1a202c;
+  --text: #f7fafc;
+  --text-muted: #a0aec0;
+  --border: transparent;
+  --card-radius: 24px;
+  --accent: #63b3ed;
+  --box-shadow: 8px 8px 16px #12161f, -8px -8px 16px #222a39;
+  font-family: 'Fredoka', sans-serif;
+}

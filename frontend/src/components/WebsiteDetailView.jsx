@@ -44,9 +44,10 @@ export default function WebsiteDetailView({
   };
 
   return (
-    <div className="website-detail-page animate-fade" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '0 24px 24px 24px', boxSizing: 'border-box', background: detailMode === 'edit' ? 'var(--bg-app)' : styles.backgroundColor, color: detailMode === 'edit' ? 'var(--text)' : styles.textColor, fontFamily: styles.fontFamily, transition: 'all 0.25s ease' }}>
+    <div id="website-detail-view" className="website-detail-page animate-fade" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '0 24px 24px 24px', boxSizing: 'border-box', background: detailMode === 'edit' ? 'var(--bg-app)' : styles.backgroundColor, color: detailMode === 'edit' ? 'var(--text)' : styles.textColor, fontFamily: styles.fontFamily, transition: 'all 0.25s ease' }}>
       {/* web mints Toolbar Container */}
       <div 
+        id="web-mints-toolbar"
         className="web-mints-toolbar"
         style={{ 
           display: 'flex', 

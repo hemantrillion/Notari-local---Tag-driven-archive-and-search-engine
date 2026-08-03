@@ -9,7 +9,7 @@ export default function ProfileDashboard({
   changeTheme
 }) {
   return (
-    <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
+    <div id="profile-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>
       
       {/* Profile Info Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '0 0 24px 0', borderBottom: '1px solid var(--border)', marginBottom: '24px' }}>

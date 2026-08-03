@@ -10,14 +10,14 @@ export default function UntaggedDashboard({
   setDetailMode
 }) {
   return (
-    <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
+    <div id="untagged-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>
       <div style={{ overflowX: 'auto', flex: 1 }}>
         {untaggedLinks.length === 0 ? (
-          <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', padding: '40px 0' }}>
+          <div id="untagged-empty-msg" style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', padding: '40px 0' }}>
             No untagged records found.
           </div>
         ) : (
-          <table className="dashboard-table">
+          <table id="untagged-table" className="dashboard-table">
             <thead>
               <tr>
                 <th>URL ID</th>

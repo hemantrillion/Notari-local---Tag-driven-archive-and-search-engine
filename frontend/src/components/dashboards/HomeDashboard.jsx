@@ -31,16 +31,18 @@ export default function HomeDashboard({
   activeTab
 }) {
   return (
-    <div className="home-scroll-layout">
+    <div id="home-dashboard" className="home-scroll-layout">
       {/* Search Box absolute centered */}
       <div 
+        id="search-container"
         className={`search-container ${searchMode ? 'focused' : ''}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="app-branding">A Sap Link</div>
+        <div id="app-branding" className="app-branding">A Sap Link</div>
         
         <div className="search-bar-wrapper" style={{ position: 'relative' }}>
           <input
+            id="search-input"
             type="text"
             className="search-input"
             placeholder="Search tags, URLs, or notes..."

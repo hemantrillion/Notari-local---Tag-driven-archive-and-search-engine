@@ -1,5 +1,5 @@
 /**
- * Theme Registry - Definitions for 11 Design Environments
+ * Theme Registry - Definitions for 8 Active Design Environments
  * Each theme supports both Light and Dark mode options.
  */
 
@@ -31,32 +31,6 @@ export const THEME_DEFINITIONS = [
     }
   },
   {
-    id: 'spatial_ui',
-    name: 'Spatial UI',
-    description: 'Elevated 3D depth, ambient glows and spatial layering',
-    fontFamily: "'Outfit', sans-serif",
-    light: {
-      bgApp: 'linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%)',
-      bgHeader: 'rgba(255, 255, 255, 0.85)',
-      bgCard: '#ffffff',
-      textColor: '#0f172a',
-      textMuted: '#475569',
-      borderColor: 'rgba(255, 255, 255, 0.6)',
-      accentColor: '#6366f1',
-      boxShadow: '0 20px 40px -15px rgba(99, 102, 241, 0.2)'
-    },
-    dark: {
-      bgApp: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)',
-      bgHeader: 'rgba(15, 23, 42, 0.85)',
-      bgCard: 'rgba(30, 27, 75, 0.6)',
-      textColor: '#f8fafc',
-      textMuted: '#94a3b8',
-      borderColor: 'rgba(99, 102, 241, 0.3)',
-      accentColor: '#818cf8',
-      boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.6)'
-    }
-  },
-  {
     id: 'bento_grid',
     name: 'Bento Grid',
     description: 'Structured grid cards with bold rounded pill boundaries',
@@ -80,32 +54,6 @@ export const THEME_DEFINITIONS = [
       borderColor: '#334155',
       accentColor: '#38bdf8',
       boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.4)'
-    }
-  },
-  {
-    id: 'liquid_glass',
-    name: 'Liquid Glass',
-    description: 'Fluid translucent mesh gradients with heavy blur',
-    fontFamily: "'DM Sans', sans-serif",
-    light: {
-      bgApp: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)',
-      bgHeader: 'rgba(255, 255, 255, 0.65)',
-      bgCard: 'rgba(255, 255, 255, 0.75)',
-      textColor: '#1e293b',
-      textMuted: '#475569',
-      borderColor: 'rgba(255, 255, 255, 0.8)',
-      accentColor: '#2563eb',
-      boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)'
-    },
-    dark: {
-      bgApp: 'linear-gradient(120deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
-      bgHeader: 'rgba(15, 32, 39, 0.75)',
-      bgCard: 'rgba(32, 58, 67, 0.65)',
-      textColor: '#f1f5f9',
-      textMuted: '#94a3b8',
-      borderColor: 'rgba(255, 255, 255, 0.18)',
-      accentColor: '#38bdf8',
-      boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.5)'
     }
   },
   {
@@ -210,32 +158,6 @@ export const THEME_DEFINITIONS = [
       borderColor: 'transparent',
       accentColor: '#63b3ed',
       boxShadow: '8px 8px 16px #12161f, -8px -8px 16px #222a39'
-    }
-  },
-  {
-    id: 'glassmorphism',
-    name: 'Glassmorphism',
-    description: 'Frosted glass translucency with glowing border highlights',
-    fontFamily: "'SF Pro Display', -apple-system, sans-serif",
-    light: {
-      bgApp: 'linear-gradient(135deg, #a8edd9 0%, #fed6e3 100%)',
-      bgHeader: 'rgba(255, 255, 255, 0.45)',
-      bgCard: 'rgba(255, 255, 255, 0.55)',
-      textColor: '#1e293b',
-      textMuted: '#475569',
-      borderColor: 'rgba(255, 255, 255, 0.7)',
-      accentColor: '#0d9488',
-      boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.12)'
-    },
-    dark: {
-      bgApp: 'linear-gradient(135deg, #111827 0%, #1f2937 100%)',
-      bgHeader: 'rgba(31, 41, 55, 0.5)',
-      bgCard: 'rgba(31, 41, 55, 0.6)',
-      textColor: '#f9fafb',
-      textMuted: '#9ca3af',
-      borderColor: 'rgba(255, 255, 255, 0.1)',
-      accentColor: '#14b8a6',
-      boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.5)'
     }
   },
   {

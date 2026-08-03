@@ -7,9 +7,9 @@ export default function ThemesDashboard({
   changeTheme
 }) {
   return (
-    <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
+    <div id="themes-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>
       
-      {/* 11 Theme Options in 2-Column Grid */}
+      {/* 8 Theme Options in 2-Column Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.85rem', marginBottom: '2rem' }}>
         {THEME_OPTIONS.map((theme) => {
           const isActive = appTheme === theme.id;
