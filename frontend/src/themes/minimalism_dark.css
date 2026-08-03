@@ -1,0 +1,16 @@
+/* Theme: Minimalism | Mode: Dark */
+.theme-minimalism.mode-dark,
+body.theme-minimalism.mode-dark {
+  --bg-app: #0a0a0a;
+  --bg-header: #121212;
+  --bg-card: #121212;
+  --bg-white: #121212;
+  --text: #ffffff;
+  --text-muted: #888888;
+  --border: #262626;
+  --accent: #ffffff;
+  --accent-hover: #e5e5e5;
+  --box-shadow: none;
+  --card-radius: 4px;
+  --font-family: 'Inter', 'Helvetica Neue', sans-serif;
+}

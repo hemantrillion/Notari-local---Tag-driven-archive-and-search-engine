@@ -428,3 +428,99 @@ Badges & Tags: Extruded soft gray pill badges with cerulean blue text.
 Buttons & Toolbar Pills: Soft extruded plastic action buttons (#e0e5ec fill) with cerulean blue accent text (#3182ce) and neomorphic outset shadows (6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff).
 Micro-Graphics: Soft circular toggle dots, pressed inset input slots.
 Typography: Clean soft sans-serif (Nunito / Poppins).
+
+# Element-by-Element Dark Mode Theme Specifications
+
+1. Default (Dark Mode)
+Background Canvas: Super Dark Gray backdrop (#121212).
+App Header Bar: Super Dark Gray (#1e1e1e), thin #3c4043 bottom border, 0px shadow.
+Search Bar: Dark Gray (#1e1e1e), 8px rounded corners, #3c4043 border, white text (#ffffff), placeholder #9aa0a6.
+Cards & Feed Containers: Dark Gray cards (#1e1e1e), 8px rounded corners, thin #3c4043 border, soft ambient drop shadow (0 2px 6px rgba(0,0,0,0.5)). Pure white text (#ffffff) for titles, light gray (#e8eaed) for body.
+Dashboard Tables & Rows: Single horizontal row wrapper, 8px rounded end-caps, dark gray background (#1e1e1e), thin #3c4043 border.
+Badges & Tags: Dark gray pill badges (#2d2f31) with light gray text (#e8eaed).
+Buttons & Toolbar Pills: Bright Blue action buttons (#8ab4f8) with dark text (#121212) for maximum contrast; secondary buttons use #2a2a2a with white text (#ffffff).
+Micro-Graphics: Google-style clean dark UI elements, subtle gray dividers.
+Typography: Modern sans-serif ('Inter', system-ui, sans-serif).
+
+2. Bento Grid (Dark Mode)
+Background Canvas: Deep Night Charcoal backdrop (#0b0f19).
+App Header Bar: Dark Charcoal (#111827), thin indigo bottom border (rgba(129, 140, 248, 0.2)), 0px shadow.
+Search Bar: Deep dark gray (#1f2937), 20px rounded pill corners, zero border, soft dark indigo shadow (0 8px 24px rgba(0,0,0,0.4)).
+Cards & Feed Containers: 20px rounded pill corners, zero border, soft ambient dark shadow (0 8px 24px rgba(0,0,0,0.5)). Cards cycle through 5 rich deep-toned dark pastel fills:
+Deep Dark Lavender (#2e1065 card, #e9d5ff text)
+Deep Dark Mint (#14532d card, #d9f99d text)
+Deep Dark Pink (#701a75 card, #fbcfe8 text)
+Deep Dark Cyan (#0c4a6e card, #bae6fd text)
+Deep Dark Coral (#7c2d12 card, #ffedd5 text)
+Dashboard Tables & Rows: Single horizontal row wrapper, 20px rounded end-caps, deep dark lavender background (#2e1065), zero border.
+Badges & Tags: Rounded dark pastel pill badges with light contrasting micro-text.
+Buttons & Toolbar Pills: Oval pill buttons (border-radius: 30px), bright indigo fill (#818cf8) with white text (#ffffff), soft hover lift (transform: translateY(-2px)).
+Micro-Graphics: Dark bento tiles, star/heart/check icon badges.
+Typography: Geometric sans-serif (Outfit / Plus Jakarta Sans).
+
+3. Brutalism (Dark Mode)
+Background Canvas: Dark Zinc canvas (#18181b).
+App Header Bar: Dark Zinc (#27272a), 3px solid white bottom border (#ffffff).
+Search Bar: Pure Dark Surface (#09090b), 2px sharp corners, 3px solid white border (#ffffff), hard white 4px offset box-shadow (4px 4px 0px #ffffff) with zero blur.
+Cards & Feed Containers: Rectangular card containers (#09090b) with 3px solid white borders (#ffffff), hard 4px white offset drop-shadows (4px 4px 0px #ffffff), 2px sharp corners. Cards cycle through rich dark Brutalist fills (#09090b, #18181b, #27272a).
+Dashboard Tables & Rows: Single horizontal row wrapper, 2px sharp end-caps, dark background (#09090b), 3px solid white border, hard 4px white offset shadow.
+Badges & Tags: Rectangular tags with 2px solid white borders and solid neon Rose or Cyan fills.
+Buttons & Toolbar Pills: Heavy rectangular buttons with 3px solid white borders, neon Rose (#f43f5e) or Cyan (#38bdf8) fills, hard 4px white offset shadows (4px 4px 0px #ffffff), and pure black text (#000000) for high contrast.
+Click physics: Button depresses by 4px (transform: translate(4px, 4px)), flattening the offset shadow to 0px on click.
+Micro-Graphics: 3 circular window header dots (red #ff5555, yellow #ffbd2e, green #27c93f) on card headers, thick white dividing lines.
+Typography: Monospaced display font (Space Grotesk / Courier).
+
+4. Maximalism (Dark Mode)
+Background Canvas: 45-degree Electric Lime Green & Super Dark Black/Purple chevron wallpaper pattern (repeating-linear-gradient(45deg, #00ff44 0px, #00ff44 24px, #090514 24px, #090514 48px)).
+App Header Bar: Deep Dark Purple (#130924), electric lime green logo text (#00ff44), 4px solid neon green bottom border (#00ff44).
+Search Bar: Deep Dark Surface (#1c0d36), 4px corner radius, 4px solid neon green border (#00ff44), 6px solid magenta offset shadow (6px 6px 0px #d946ef).
+Cards & Feed Containers: Deep dark containers (#1c0d36), 4px solid neon green borders (#00ff44), 6px solid magenta offset shadows (6px 6px 0px #d946ef), 4px border radius.
+Dashboard Tables & Rows: Single horizontal row wrapper, 4px rounded end-caps, deep dark background, 4px solid neon green border, 6px solid magenta shadow.
+Badges & Tags: High-contrast neon green outline badges with white text.
+Buttons & Toolbar Pills: Neon Magenta action buttons (#e879f9) with pure black text (#000000), 4px solid neon green borders, scale boost on hover (transform: scale(1.03)).
+Micro-Graphics: Neon green outline sponsor badges, giant display typography blocks.
+Typography: Massive display font (Syne / Impact), bold all-caps display text.
+
+5. Minimalism (Dark Mode)
+Background Canvas: Deep Pitch Black canvas (#0a0a0a).
+App Header Bar: Dark Charcoal (#121212), thin #262626 bottom border.
+Search Bar: Dark Charcoal (#121212), 4px minimal border radius, ultra-thin 1px dark border (#262626), zero box-shadow (none).
+Cards & Feed Containers: Dark Charcoal card containers (#121212), 4px minimal border radius, ultra-thin 1px dark border (#262626), zero box-shadow (none). Pure white text (#ffffff) for headlines, #888888 for body.
+Dashboard Tables & Rows: Single horizontal row wrapper, 4px minimal end-caps, dark charcoal background, thin 1px #262626 border, zero shadow.
+Badges & Tags: Minimal dark badges with thin gray borders and white text.
+Buttons & Toolbar Pills: Minimal pure white pill buttons (#ffffff) with pure black text (#000000), zero shadow, thin crisp outline.
+Micro-Graphics: Organic white pebble shapes, fine wireframe dark grid background lines.
+Typography: Neutral lightweight sans-serif (Inter / Helvetica Neue) with generous whitespace.
+
+6. Claymorphism (Dark Mode)
+Background Canvas: Deep Indigo backdrop canvas (#1e1b4b).
+App Header Bar: Dark Navy (#2e2a72), thin #4338ca bottom border.
+Search Bar: 3D inflated deep indigo clay wrapper (#312e81), 28px inflated rounded corners, 3D dark clay glow effect (box-shadow: inset -5px -5px 10px rgba(0,0,0,0.5), inset 5px 5px 10px rgba(255,255,255,0.1), 10px 16px 28px rgba(0,0,0,0.6)).
+Cards & Feed Containers: 3D inflated deep indigo clay cards (#312e81), 28px inflated rounded corners, signature dual top-left light inset highlight glow and bottom-right dark ambient drop shadow. Soft Ice Blue text (#e0e7ff).
+Dashboard Tables & Rows: Single horizontal row wrapper, 28px inflated rounded end-caps, deep indigo clay background, 3D dark clay shadow glow.
+Badges & Tags: Inflated dark clay pill badges with dark blue drop shadows.
+Buttons & Toolbar Pills: 3D inflated bright blue clay action buttons (#818cf8), 30px pill radius, with top-left light inset highlight and white text (#ffffff).
+Micro-Graphics: Friendly rounded badge pills, soft 3D floating icons.
+Typography: Soft rounded sans-serif (Fredoka / Quicksand).
+
+7. Skeumorphism (Dark Mode)
+Background Canvas: Dark Steel Slate control panel surface (linear-gradient(180deg, #0f172a 0%, #1e293b 100%)).
+App Header Bar: Metallic vertical dark gradient (linear-gradient(180deg, #1e293b 0%, #0f172a 100%)), #334155 bottom border.
+Search Bar: Dark metallic gradient container (linear-gradient(180deg, #1e293b 0%, #0f172a 100%)), 10px border radius, #334155 border, inset top white bevel highlight (inset 0 1px 0 rgba(255,255,255,0.15)).
+Cards & Feed Containers: Dark metallic slate card containers (linear-gradient(180deg, #1e293b 0%, #0f172a 100%)), 10px border radius, #334155 border, beveled inset panel highlights and tactile dark drop-shadow (box-shadow: 0 3px 8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(0,0,0,0.4)). Bright silver-white text (#f8fafc).
+Dashboard Tables & Rows: Single horizontal row wrapper, 10px beveled end-caps, dark metallic gradient fill, inset top white bevel highlight.
+Badges & Tags: Metallic dark badges with debossed borders and light slate text.
+Buttons & Toolbar Pills: Convex dark blue metallic action buttons (linear-gradient(180deg, #38bdf8 0%, #0284c7 100%)), top white bevel highlight, debossed border ring, with white text (#ffffff).
+Micro-Graphics: Debossed panel tracks, rotary dial tick marks, LED status dots (green #10b981, red #ef4444).
+Typography: Industrial serif (Georgia / Cinzel).
+
+8. Neomorphism (Dark Mode)
+Background Canvas: Monochromatic Dark Slate Plastic canvas (#1a202c).
+App Header Bar: Soft dark slate (#1a202c), zero bottom border.
+Search Bar: Soft dark slate inset field (#1a202c), inset neomorphic dark shadow (box-shadow: inset 6px 6px 10px #12161f, inset -6px -6px 10px #222a39), 20px rounded corners, zero border.
+Cards & Feed Containers: Soft dark plastic card containers sharing the exact same #1a202c color as the background canvas (border: none), neomorphic outset dark soft dual shadows (box-shadow: 8px 8px 16px #12161f, -8px -8px 16px #222a39), 20px smooth rounded corners. Soft slate white text (#edf2f7).
+Dashboard Tables & Rows: Single horizontal row wrapper, 20px rounded plastic end-caps, dark slate #1a202c background, extruded neomorphic dual shadows.
+Badges & Tags: Extruded dark slate pill badges with sky blue text (#63b3ed).
+Buttons & Toolbar Pills: Soft extruded dark plastic action buttons (#1a202c fill) with bright sky blue accent text (#63b3ed) and neomorphic dark outset shadows (6px 6px 12px #12161f, -6px -6px 12px #222a39).
+Micro-Graphics: Soft circular toggle dots, pressed inset input slots.
+Typography: Clean soft sans-serif (Nunito / Poppins).
