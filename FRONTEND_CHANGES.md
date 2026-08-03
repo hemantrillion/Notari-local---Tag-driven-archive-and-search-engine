@@ -290,3 +290,10 @@ c:\Users\jai18\Desktop\link-archive-app\
   * Styled `.avatar` in [index.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/index.css) as a clean, circular profile badge and added Profile navigation entry in [SidebarDrawerModal.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/floating-windows/SidebarDrawerModal.jsx).
   * Updated web preview iframe in [MediaPlayerModal.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/MediaPlayerModal.jsx) to use `http://localhost:5005/api/proxy?url=...`, allowing external sites (like Hacker News `news.ycombinator.com`) to preview cleanly inside the modal.
   * Verified production build (`npx vite build` succeeded in 130ms with 36 modules transformed).
+
+### Change 14: Minimalist Themes Grid Layout & Prominent Circular Profile Ring
+* **Goal**: I wanted to simplify `ThemesDashboard` into a clean grid of rounded rectangular cards with uniform text (removing "Theme Settings" text, "Active" badges, and inner preview boxes) and give the Profile header icon a prominent 36px circular boundary ring.
+* **Actions**:
+  * Updated [ThemesDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/dashboards/ThemesDashboard.jsx) to render a clean 2-column grid of rounded rectangular cards with uniform theme name text, removing header titles, active badges, and inner color bars.
+  * Styled `profile-circle-btn` in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) header with explicit 36px circular dimensions (`borderRadius: '50%'`, `border: '2px solid var(--accent)'`, `boxShadow: '0 2px 6px rgba(26, 115, 232, 0.3)'`), placing a sharp circular boundary around the profile icon.
+  * Verified production build (`npx vite build` succeeded cleanly in 125ms with 36 modules transformed).

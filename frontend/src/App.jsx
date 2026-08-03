@@ -1177,15 +1177,33 @@ function App() {
           
           <div className="header-right">
             <button 
-              className="header-btn" 
+              className="profile-circle-btn" 
               onClick={(e) => {
                 e.stopPropagation();
                 navigateTo('profile');
                 setSearchMode(false);
               }}
               title="Profile"
+              style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '50%',
+                border: '2px solid var(--accent, #1a73e8)',
+                backgroundColor: 'var(--accent, #1a73e8)',
+                color: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 'bold',
+                fontSize: '13px',
+                cursor: 'pointer',
+                boxShadow: '0 2px 6px rgba(26, 115, 232, 0.3)',
+                padding: 0,
+                outline: 'none',
+                transition: 'all 0.15s ease'
+              }}
             >
-              <div className="avatar">u</div>
+              u
             </button>
           </div>
         </header>
