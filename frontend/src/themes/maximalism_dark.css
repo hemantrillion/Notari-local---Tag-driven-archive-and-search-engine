@@ -11,6 +11,6 @@ body.theme-maximalism.mode-dark {
   --accent: #e879f9;
   --accent-hover: #f0abfc;
   --box-shadow: 0 10px 30px rgba(217, 70, 239, 0.35);
-  --card-radius: 14px;
+  --card-radius: 12px;
   --font-family: 'Syne', 'Impact', sans-serif;
 }

@@ -929,3 +929,92 @@ body {
   transform: scale(1.05);
   box-shadow: 0 0 0 2px var(--bg-header, #ffffff), 0 0 0 5px var(--accent-hover, #1557b0) !important;
 }
+
+/* ========================================================
+   THEME RENDER OVERRIDES (Light Mode)
+   Applies full visual theme rendering across all cards, headers, tables, search bar & feeds
+   ======================================================== */
+
+/* Brutalism: Hard black borders & 4px hard black offset shadows */
+.theme-brutalism.mode-light .result-card,
+.theme-brutalism.mode-light .search-bar-wrapper,
+.theme-brutalism.mode-light .dashboard-table td,
+.theme-brutalism.mode-light .white-theme-btn,
+.theme-brutalism.mode-light .preview-canvas {
+  border: 3px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  border-radius: 2px !important;
+  font-family: 'Space Grotesk', 'Courier New', monospace !important;
+}
+
+.theme-brutalism.mode-light .app-header {
+  border-bottom: 3px solid #000000 !important;
+  background-color: #ffffff !important;
+}
+
+/* Claymorphism: 3D Inflated soft cards with dual inner/outer glow */
+.theme-claymorphism.mode-light .result-card,
+.theme-claymorphism.mode-light .search-bar-wrapper,
+.theme-claymorphism.mode-light .dashboard-table td,
+.theme-claymorphism.mode-light .preview-canvas {
+  border-radius: 28px !important;
+  border: 1px solid #bae6fd !important;
+  box-shadow: inset -5px -5px 10px rgba(37, 99, 235, 0.08), inset 5px 5px 10px rgba(255, 255, 255, 0.95), 10px 16px 28px rgba(37, 99, 235, 0.15) !important;
+  font-family: 'Fredoka', 'Quicksand', sans-serif !important;
+}
+
+/* Neomorphism: Monochromatic soft gray plastic with opposing dual light/dark soft shadows */
+.theme-neomorphism.mode-light .result-card,
+.theme-neomorphism.mode-light .search-bar-wrapper,
+.theme-neomorphism.mode-light .dashboard-table td,
+.theme-neomorphism.mode-light .preview-canvas {
+  border-radius: 20px !important;
+  border: none !important;
+  background-color: #e0e5ec !important;
+  box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff !important;
+  font-family: 'Nunito', 'Poppins', sans-serif !important;
+}
+
+/* Skeumorphism: Metallic bevel, inset panel shadows & real-world texture */
+.theme-skeumorphism.mode-light .result-card,
+.theme-skeumorphism.mode-light .search-bar-wrapper,
+.theme-skeumorphism.mode-light .dashboard-table td,
+.theme-skeumorphism.mode-light .preview-canvas {
+  border-radius: 10px !important;
+  border: 1px solid #cbd5e1 !important;
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%) !important;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+  font-family: 'Georgia', serif !important;
+}
+
+/* Maximalism: Loud green borders & pink glow */
+.theme-maximalism.mode-light .result-card,
+.theme-maximalism.mode-light .search-bar-wrapper,
+.theme-maximalism.mode-light .dashboard-table td,
+.theme-maximalism.mode-light .preview-canvas {
+  border: 2px solid #22c55e !important;
+  box-shadow: 0 10px 25px rgba(217, 70, 239, 0.2) !important;
+  font-family: 'Syne', 'Impact', sans-serif !important;
+}
+
+/* Bento Grid: Rounded 20px modular cards & indigo shadow */
+.theme-bento_grid.mode-light .result-card,
+.theme-bento_grid.mode-light .search-bar-wrapper,
+.theme-bento_grid.mode-light .dashboard-table td,
+.theme-bento_grid.mode-light .preview-canvas {
+  border-radius: 20px !important;
+  border: 1px solid rgba(99, 102, 241, 0.15) !important;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+}
+
+/* Minimalism: Ultra-clean 1px thin border & zero shadow */
+.theme-minimalism.mode-light .result-card,
+.theme-minimalism.mode-light .search-bar-wrapper,
+.theme-minimalism.mode-light .dashboard-table td,
+.theme-minimalism.mode-light .preview-canvas {
+  border-radius: 4px !important;
+  border: 1px solid #e5e5e5 !important;
+  box-shadow: none !important;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif !important;
+}

@@ -12,5 +12,5 @@ body.theme-default.mode-dark {
   --accent-hover: #aecbfa;
   --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   --card-radius: 8px;
-  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
