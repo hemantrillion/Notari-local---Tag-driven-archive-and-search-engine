@@ -1,26 +1,2 @@
 /* Master Themes Index Stylesheet
-   Imports all 16 dedicated light & dark mode theme stylesheets */
-
-@import './default_light.css';
-@import './default_dark.css';
-
-@import './bento_grid_light.css';
-@import './bento_grid_dark.css';
-
-@import './brutalism_light.css';
-@import './brutalism_dark.css';
-
-@import './maximalism_light.css';
-@import './maximalism_dark.css';
-
-@import './minimalism_light.css';
-@import './minimalism_dark.css';
-
-@import './claymorphism_light.css';
-@import './claymorphism_dark.css';
-
-@import './neomorphism_light.css';
-@import './neomorphism_dark.css';
-
-@import './skeumorphism_light.css';
-@import './skeumorphism_dark.css';
+   Waiting for user signal to recreate themes */
