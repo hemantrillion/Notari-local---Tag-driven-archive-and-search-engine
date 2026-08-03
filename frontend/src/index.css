@@ -90,6 +90,14 @@ body {
   z-index: 80;
 }
 
+.app-header button,
+.app-header .header-btn,
+.app-header svg,
+.app-header .header-title {
+  color: inherit !important;
+  stroke: currentColor !important;
+}
+
 .header-left {
   display: flex;
   align-items: center;
@@ -1004,10 +1012,23 @@ body {
   color: #000000 !important;
 }
 
-.theme-maximalism.mode-light .app-header {
+.theme-maximalism.mode-light .app-header,
+.theme-maximalism.mode-dark .app-header {
   background-color: #000000 !important;
   color: #00ff44 !important;
   border-bottom: 4px solid #000000 !important;
+}
+
+.theme-maximalism.mode-light .app-header button,
+.theme-maximalism.mode-light .app-header .header-btn,
+.theme-maximalism.mode-light .app-header svg,
+.theme-maximalism.mode-light .app-header .header-title,
+.theme-maximalism.mode-dark .app-header button,
+.theme-maximalism.mode-dark .app-header .header-btn,
+.theme-maximalism.mode-dark .app-header svg,
+.theme-maximalism.mode-dark .app-header .header-title {
+  color: #00ff44 !important;
+  stroke: #00ff44 !important;
 }
 
 /* Bento Grid: Alternating pastel background cards matching reference image Card 1 */

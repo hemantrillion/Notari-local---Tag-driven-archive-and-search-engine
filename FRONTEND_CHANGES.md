@@ -422,20 +422,6 @@ Typography: Industrial serif (Georgia / Cinzel).
 Background Canvas: Monochromatic soft plastic gray canvas (#e0e5ec).
 App Header Bar: Soft gray (#e0e5ec), zero bottom border.
 Search Bar: Soft gray inset field (#e0e5ec), inset neomorphic shadow (box-shadow: inset 6px 6px 10px #a3b1c6, inset -6px -6px 10px #ffffff), 20px rounded corners, zero border.
-Cards & Feed Containers: Soft plastic card containers sharing the exact same #e0e5ec color as the background canvas (border: none), neomorphic outset soft dual shadows (box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff), 20px smooth rounded corners.
-Dashboard Tables & Rows: Single horizontal row wrapper, 20px rounded plastic end-caps, soft gray #e0e5ec background, extruded neomorphic dual shadows.
-Badges & Tags: Extruded soft gray pill badges with cerulean blue text.
-Buttons & Toolbar Pills: Soft extruded plastic action buttons (#e0e5ec fill) with cerulean blue accent text (#3182ce) and neomorphic outset shadows (6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff).
-Micro-Graphics: Soft circular toggle dots, pressed inset input slots.
-Typography: Clean soft sans-serif (Nunito / Poppins).
-
-# Element-by-Element Dark Mode Theme Specifications
-
-1. Default (Dark Mode)
-Background Canvas: Super Dark Gray backdrop (#121212).
-App Header Bar: Super Dark Gray (#1e1e1e), thin #3c4043 bottom border, 0px shadow.
-Search Bar: Dark Gray (#1e1e1e), 8px rounded corners, #3c4043 border, white text (#ffffff), placeholder #9aa0a6.
-Cards & Feed Containers: Dark Gray cards (#1e1e1e), 8px rounded corners, thin #3c4043 border, soft ambient drop shadow (0 2px 6px rgba(0,0,0,0.5)). Pure white text (#ffffff) for titles, light gray (#e8eaed) for body.
 Dashboard Tables & Rows: Single horizontal row wrapper, 8px rounded end-caps, dark gray background (#1e1e1e), thin #3c4043 border.
 Badges & Tags: Dark gray pill badges (#2d2f31) with light gray text (#e8eaed).
 Buttons & Toolbar Pills: Bright Blue action buttons (#8ab4f8) with dark text (#121212) for maximum contrast; secondary buttons use #2a2a2a with white text (#ffffff).
@@ -524,3 +510,10 @@ Badges & Tags: Extruded dark slate pill badges with sky blue text (#63b3ed).
 Buttons & Toolbar Pills: Soft extruded dark plastic action buttons (#1a202c fill) with bright sky blue accent text (#63b3ed) and neomorphic dark outset shadows (6px 6px 12px #12161f, -6px -6px 12px #222a39).
 Micro-Graphics: Soft circular toggle dots, pressed inset input slots.
 Typography: Clean soft sans-serif (Nunito / Poppins).
+
+### Change 23: Header Icon Contrast Fix for Maximalism & All Themes
+* **Goal**: I wanted to ensure that header navigation buttons (back button, home button, hamburger menu icon) remain brightly visible across all themes, specifically fixing Maximalism where black icons previously blended into the black header background.
+* **Actions**:
+  * Added base `.app-header` button contrast inheritance rules in [index.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/index.css) so header buttons and SVGs inherit the active header text color (`color: inherit !important; stroke: currentColor !important`).
+  * Added explicit rules for Maximalism theme in Light and Dark modes (`.theme-maximalism .app-header button`, `.theme-maximalism .app-header svg`) setting text and stroke color to electric lime green (`#00ff44 !important`) against the black header background (`#000000`).
+  * Tested production compilation (`npx vite build` succeeded in 117ms with 36 modules transformed).
