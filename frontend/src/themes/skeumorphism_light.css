@@ -1,4 +1,5 @@
-/* Theme: Skeumorphism | Mode: Light */
+/* Theme: Skeumorphism | Mode: Light
+   Reference: Real-world tactile interface, metallic gradient background, beveled panels & inset shadows */
 .theme-skeumorphism.mode-light,
 body.theme-skeumorphism.mode-light {
   --bg-app: #e2e8f0;
@@ -10,7 +11,7 @@ body.theme-skeumorphism.mode-light {
   --border: #cbd5e1;
   --accent: #0284c7;
   --accent-hover: #0369a1;
-  --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  --box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
   --card-radius: 10px;
-  --font-family: 'Cinzel', 'Georgia', serif;
+  --font-family: 'Georgia', serif;
 }

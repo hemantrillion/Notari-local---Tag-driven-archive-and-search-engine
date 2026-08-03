@@ -1,16 +1,17 @@
-/* Theme: Claymorphism | Mode: Light */
+/* Theme: Claymorphism | Mode: Light
+   Reference: Sky blue background canvas, 3D inflated white clay cards with inner/outer glow */
 .theme-claymorphism.mode-light,
 body.theme-claymorphism.mode-light {
-  --bg-app: #e0e7ff;
-  --bg-header: #eef2ff;
+  --bg-app: #7dd3fc;
+  --bg-header: #e0f2fe;
   --bg-card: #ffffff;
   --bg-white: #ffffff;
-  --text: #1e1b4b;
-  --text-muted: #4338ca;
-  --border: #c7d2fe;
-  --accent: #4f46e5;
-  --accent-hover: #4338ca;
-  --box-shadow: inset -6px -6px 12px rgba(79, 70, 229, 0.1), inset 6px 6px 12px rgba(255, 255, 255, 0.9), 10px 16px 24px rgba(79, 70, 229, 0.12);
-  --card-radius: 24px;
+  --text: #0369a1;
+  --text-muted: #0284c7;
+  --border: #bae6fd;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --box-shadow: inset -5px -5px 10px rgba(37, 99, 235, 0.08), inset 5px 5px 10px rgba(255, 255, 255, 0.95), 10px 16px 28px rgba(37, 99, 235, 0.15);
+  --card-radius: 28px;
   --font-family: 'Fredoka', 'Quicksand', sans-serif;
 }

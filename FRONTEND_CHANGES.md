@@ -327,3 +327,18 @@ c:\Users\jai18\Desktop\link-archive-app\
   * Updated [themes.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/themes/themes.css) to import all 16 theme files via `@import`.
   * Preserved floating window modal isolation (`default-theme-isolated`), ensuring modals adapt cleanly to Light/Dark mode without visual theme distortions.
   * Verified production build (`npx vite build` succeeded in 128ms with 36 modules transformed).
+
+### Change 18: High-Fidelity Light Mode Theme Refinement
+* **Goal**: I wanted to refine all 8 Light Mode theme CSS files (`default_light.css`, `bento_grid_light.css`, `brutalism_light.css`, `maximalism_light.css`, `minimalism_light.css`, `claymorphism_light.css`, `neomorphism_light.css`, `skeumorphism_light.css`) to match the visual reference sample cards, while keeping floating modals isolated with default styling.
+* **Actions**:
+  * Refined 8 Light Mode theme files:
+    - `default_light.css`: Modern Google-style baseline system.
+    - `bento_grid_light.css`: Modular grid cards, indigo soft shadows (`0 8px 24px rgba(99,102,241,0.08)`), Outfit font.
+    - `brutalism_light.css`: Vibrant yellow canvas (`#fef08a`), 3px solid black borders, hard 4px offset black shadows.
+    - `maximalism_light.css`: Loud typography, pink/green accents (`#d946ef`), Syne font.
+    - `minimalism_light.css`: Ultra-clean monochrome whitespace, 1px thin borders (`#e5e5e5`), zero shadows.
+    - `claymorphism_light.css`: Sky blue backdrop (`#7dd3fc`), 3D inflated white clay cards with dual inset/outset glows.
+    - `neomorphism_light.css`: Seamless monochromatic soft gray canvas (`#e0e5ec`), soft extruded dual light/dark shadows.
+    - `skeumorphism_light.css`: Tactile metallic silver gradients, beveled panels, and real-world inset shadows.
+  * Preserved modal isolation (`default-theme-isolated`), keeping floating windows clean and unpolluted.
+  * Verified production build (`npx vite build` succeeded in 148ms with 36 modules transformed).

@@ -1,4 +1,5 @@
-/* Theme: Maximalism | Mode: Light */
+/* Theme: Maximalism | Mode: Light
+   Reference: High-contrast loud typography, green/pink accents */
 .theme-maximalism.mode-light,
 body.theme-maximalism.mode-light {
   --bg-app: #fff0f5;
@@ -6,11 +7,11 @@ body.theme-maximalism.mode-light {
   --bg-card: #ffffff;
   --bg-white: #ffffff;
   --text: #0f172a;
-  --text-muted: #475569;
-  --border: #f43f5e;
+  --text-muted: #334155;
+  --border: #22c55e;
   --accent: #d946ef;
   --accent-hover: #c084fc;
   --box-shadow: 0 10px 25px rgba(217, 70, 239, 0.2);
-  --card-radius: 14px;
+  --card-radius: 12px;
   --font-family: 'Syne', 'Impact', sans-serif;
 }

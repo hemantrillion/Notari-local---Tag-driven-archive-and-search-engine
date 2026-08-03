@@ -1,4 +1,5 @@
-/* Theme: Neomorphism | Mode: Light */
+/* Theme: Neomorphism | Mode: Light
+   Reference: Soft monochromatic gray plastic, light/dark dual soft shadows */
 .theme-neomorphism.mode-light,
 body.theme-neomorphism.mode-light {
   --bg-app: #e0e5ec;
@@ -10,7 +11,7 @@ body.theme-neomorphism.mode-light {
   --border: transparent;
   --accent: #3182ce;
   --accent-hover: #2b6cb0;
-  --box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
+  --box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff;
   --card-radius: 20px;
-  --font-family: 'Nunito', sans-serif;
+  --font-family: 'Nunito', 'Poppins', sans-serif;
 }

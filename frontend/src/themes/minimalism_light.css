@@ -1,4 +1,5 @@
-/* Theme: Minimalism | Mode: Light */
+/* Theme: Minimalism | Mode: Light
+   Reference: Pure monochrome whitespace, thin 1px border, zero shadow */
 .theme-minimalism.mode-light,
 body.theme-minimalism.mode-light {
   --bg-app: #fafafa;
@@ -7,7 +8,7 @@ body.theme-minimalism.mode-light {
   --bg-white: #ffffff;
   --text: #111111;
   --text-muted: #777777;
-  --border: #eeeeee;
+  --border: #e5e5e5;
   --accent: #111111;
   --accent-hover: #333333;
   --box-shadow: none;
