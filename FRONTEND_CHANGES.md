@@ -537,3 +537,12 @@ Typography: Clean soft sans-serif (Nunito / Poppins).
   * Created parallel directory `real-app-Notari-(local)` with full standalone Android React codebase, full-screen mobile layout (`width: 100vw; height: 100vh`), Capacitor config, and `AndroidManifest.xml` Share Intent filters (`SEND` text/plain) for accepting shared links from external Android apps (YouTube, Twitter/X, Instagram, browsers).
   * Created [PortfolioAppsCard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/PortfolioAppsCard.jsx) matching the hekugo.online & Zeitplan APK download card pattern.
   * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 136ms & 270ms with 0 errors).
+
+### Change 26: Homepage Branding to Notari (local) & hekugo.online Portfolio Card Integration
+* **Goal**: I wanted to replace the legacy "A Sap Link" text on the Home Dashboard search bar with "Notari (local)" and integrate the Notari (local) app card and APK download page into the hekugo.online repository.
+* **Actions**:
+  * Replaced `<div id="app-branding">A Sap Link</div>` with `<div id="app-branding">Notari (local)</div>` in both [frontend/src/components/dashboards/HomeDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/dashboards/HomeDashboard.jsx) and [real-app-Notari-(local)/src/components/dashboards/HomeDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)/src/components/dashboards/HomeDashboard.jsx).
+  * Updated `hekugo.online/index.html` to add the **Notari (local)** project card (`href="/notari-local"`) alongside Zeitplan and Xebia Intern LMS.
+  * Created `hekugo.online/notari-local/index.html` providing a dedicated APK download page matching the Zeitplan download layout.
+  * Committed and pushed `hekugo.online` repository updates to `origin main`.
+  * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded cleanly in ~130ms).

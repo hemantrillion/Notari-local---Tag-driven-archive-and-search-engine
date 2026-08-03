@@ -38,7 +38,7 @@ export default function HomeDashboard({
         className={`search-container ${searchMode ? 'focused' : ''}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div id="app-branding" className="app-branding">A Sap Link</div>
+        <div id="app-branding" className="app-branding">Notari (local)</div>
         
         <div className="search-bar-wrapper" style={{ position: 'relative' }}>
           <input
