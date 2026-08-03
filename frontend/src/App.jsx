@@ -40,11 +40,69 @@ const YOUTUBE_VIDEOS = [
   { id: 'fX7tPZ2qB-4', title: 'Science of Gravity and Spacetime explained simply', category: 'science' },
 ];
 
+const DEFAULT_INITIAL_TAGS = [
+  { code: '0000', label: 'untagged' },
+  { code: '0001', label: 'music video' },
+  { code: '0002', label: 'coding' },
+  { code: '0003', label: 'cooking' },
+  { code: '0004', label: 'science' }
+];
+
+const DEFAULT_INITIAL_SOURCES = [
+  { code: 'ytb', name: 'YouTube', urlPattern: 'youtube.com' },
+  { code: 'ins', name: 'Instagram', urlPattern: 'instagram.com' },
+  { code: 'gfg', name: 'GeeksforGeeks', urlPattern: 'geeksforgeeks.org' },
+  { code: 'git', name: 'GitHub', urlPattern: 'github.com' },
+  { code: 'web', name: 'Web', urlPattern: 'http' }
+];
+
+const DEFAULT_INITIAL_LINKS = [
+  {
+    id: 'link-1',
+    readableCode: 'ytb-vid-0001-030826-01',
+    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    title: 'Rick Astley - Never Gonna Give You Up (Official Music Video)',
+    notes: 'Classic iconic music video saved to archive.',
+    from: 'YouTube',
+    sourceCode: 'ytb',
+    typeCode: 'vid',
+    primaryTagLabel: 'music video',
+    tags: [{ code: '0001', label: 'music video' }],
+    createdAt: new Date().toISOString()
+  },
+  {
+    id: 'link-2',
+    readableCode: 'git-doc-0002-030826-02',
+    url: 'https://github.com/hemantrillion/Notari-local---Tag-driven-archive-and-search-engine',
+    title: 'Express.js & React App Architecture Walkthrough',
+    notes: 'Tag-driven archive engine and frontend dashboard repository.',
+    from: 'GitHub',
+    sourceCode: 'git',
+    typeCode: 'doc',
+    primaryTagLabel: 'coding',
+    tags: [{ code: '0002', label: 'coding' }],
+    createdAt: new Date().toISOString()
+  },
+  {
+    id: 'link-3',
+    readableCode: 'ins-pos-0003-030826-03',
+    url: 'https://www.instagram.com/p/C9_GarlicPotatoes/',
+    title: 'Crispy Garlic Butter Potatoes Recipe!',
+    notes: 'Delicious garlic butter potatoes cooking reel.',
+    from: 'Instagram',
+    sourceCode: 'ins',
+    typeCode: 'pos',
+    primaryTagLabel: 'cooking',
+    tags: [{ code: '0003', label: 'cooking' }],
+    createdAt: new Date().toISOString()
+  }
+];
+
 function App() {
   // Navigation & Data States (Right Panel)
   const [activeTab, setActiveTab] = useState('home'); // 'home' | 'untagged' | 'profile'
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [links, setLinks] = useState([]);
+  const [links, setLinks] = useState(DEFAULT_INITIAL_LINKS);
   const [recentShowCount, setRecentShowCount] = useState(10);
   const [activeEditLinkId, setActiveEditLinkId] = useState(null);
   const [isLocalStorageEnabled, setIsLocalStorageEnabled] = useState(true);
@@ -75,7 +133,7 @@ function App() {
   const [editError, setEditError] = useState('');
 
   // Tags Registry Database state
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(DEFAULT_INITIAL_TAGS);
 
   // Create Tag states
   const [newTagOpen, setNewTagOpen] = useState(false);
@@ -172,7 +230,7 @@ function App() {
   });
 
   // Sources Registry Database states
-  const [sources, setSources] = useState([]);
+  const [sources, setSources] = useState(DEFAULT_INITIAL_SOURCES);
   const [editingSourceCode, setEditingSourceCode] = useState(null);
   const [newSourceCodeValue, setNewSourceCodeValue] = useState('');
   const [sourceEditError, setSourceEditError] = useState('');

@@ -259,3 +259,9 @@ c:\Users\jai18\Desktop\link-archive-app\
 * **Actions**:
   * Updated `:root` in [index.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/index.css) to define baseline default tokens (`--bg-app`, `--bg-header`, `--bg-card`, `--text-color`, `--border-color`, `--accent-color`, `--box-shadow`, `--font-family`), preventing blank or unrendered screens even if an unknown or legacy theme class is present.
   * Updated `appTheme` state initialization in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) to validate saved local storage values against `THEME_OPTIONS`, cleanly defaulting to `'default'` if a previously selected theme was removed.
+
+### Change 10: Preloaded Fallback Initial State & Backend Offline Resilience
+* **Goal**: I wanted to ensure that the application dashboard renders rich, populated data immediately upon launch (even if the backend database is empty or offline) by initializing `links`, `tags`, and `sources` state with preloaded demo datasets.
+* **Actions**:
+  * Added `DEFAULT_INITIAL_TAGS`, `DEFAULT_INITIAL_SOURCES`, and `DEFAULT_INITIAL_LINKS` to [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx).
+  * Initialized `links`, `tags`, and `sources` React state using these preloaded datasets, guaranteeing that all dashboards (Home, Tagged, Tags Registry, Sources Registry, Detail View) display full interactive content immediately upon page load.
