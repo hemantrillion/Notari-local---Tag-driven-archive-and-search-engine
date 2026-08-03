@@ -5,6 +5,15 @@ import CreateTagModal from './components/floating-windows/CreateTagModal';
 import CreateSourceModal from './components/floating-windows/CreateSourceModal';
 import TagEditorModal from './components/floating-windows/TagEditorModal';
 
+import HomeDashboard from './components/dashboards/HomeDashboard';
+import UntaggedDashboard from './components/dashboards/UntaggedDashboard';
+import TaggedDashboard from './components/dashboards/TaggedDashboard';
+import TagsRegistryDashboard from './components/dashboards/TagsRegistryDashboard';
+import SourcesRegistryDashboard from './components/dashboards/SourcesRegistryDashboard';
+import ProfileDashboard from './components/dashboards/ProfileDashboard';
+import ThemesDashboard from './components/dashboards/ThemesDashboard';
+import LogsDashboard from './components/dashboards/LogsDashboard';
+
 const THEME_OPTIONS = [
   { id: 'default', name: 'Default' },
   { id: 'spatial_ui', name: 'Spatial UI' },
@@ -930,7 +939,6 @@ function App() {
 
               {/* Reels Feed using actual embed layouts */}
               <div className="mock-app-body" style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                
                 {/* Reel Post 1 */}
                 <div style={{ border: '1px solid #222', borderRadius: '12px', padding: '12px', background: '#111' }}>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
@@ -938,7 +946,6 @@ function App() {
                     <span style={{ fontSize: '12px', fontWeight: 'bold' }}>cooking_delights</span>
                   </div>
                   
-                  {/* Real Instagram photo source simulation */}
                   <img 
                     src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=300&auto=format&fit=crop" 
                     alt="Cooking Reel" 
@@ -1097,9 +1104,8 @@ function App() {
           {/* Dim backdrop overlay behind search */}
           <div className={`search-backdrop ${searchMode ? 'visible' : ''}`} />
 
-        {/* Home Feed Content (Search Box & Recent Additions) */}
-        {activeTab === 'home' && (
-          activeViewLink ? (
+          {/* Global Webpage Detail View */}
+          {activeViewLink ? (
             <WebsiteDetailView 
               link={activeViewLink}
               detailMode={detailMode}
@@ -1119,1413 +1125,117 @@ function App() {
               }}
             />
           ) : (
-            <div className="home-scroll-layout">
-{/* Search Box absolute centered */}
-            <div 
-              className={`search-container ${searchMode ? 'focused' : ''}`}
-              onClick={(e) => e.stopPropagation()} // Prevent closing on click inside search
-            >
-              <div className="app-branding">A Sap Link</div>
-              
-              <div className="search-bar-wrapper" style={{ position: 'relative' }}>
-                <input
-                  type="text"
-                  className="search-input"
-                  placeholder="Search tags, URLs, or notes..."
-                  value={searchQuery}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    setSearchQuery(val);
-                    if (!val.trim()) {
-                      setSearchResults([]);
-                      setIsSearchSubmitted(false);
-                    } else {
-                      setIsSearchSubmitted(false);
-                    }
-                    setShowHomeSuggestions(true);
-                    setHomeActiveSuggestionIndex(-1);
-                  }}
-                  onFocus={() => {
-                    setSearchMode(true);
-                    setIsVirtualKeyboardOpen(true);
-                    setShowHomeSuggestions(true);
-                  }}
-                  onBlur={() => setTimeout(() => setShowHomeSuggestions(false), 200)}
-                  onKeyDown={(e) => {
-                    const lastPart = searchQuery.split(/[|,]/).pop().trim().toLowerCase();
-                    const currentTokens = searchQuery.split(/[|,]/).map(p => p.trim().toLowerCase()).filter(Boolean);
-                    const filtered = tags.filter(t => 
-                      lastPart && 
-                      t.label.toLowerCase().includes(lastPart) &&
-                      !currentTokens.slice(0, -1).includes(t.label.toLowerCase())
-                    );
-                    if (filtered.length > 0) {
-                      if (e.key === 'ArrowDown') {
-                        e.preventDefault();
-                        setHomeActiveSuggestionIndex(prev => {
-                          const nextIndex = prev + 1;
-                          return nextIndex >= filtered.length ? 0 : nextIndex;
-                        });
-                      } else if (e.key === 'ArrowUp') {
-                        e.preventDefault();
-                        setHomeActiveSuggestionIndex(prev => {
-                          const nextIndex = prev - 1;
-                          return nextIndex < 0 ? filtered.length - 1 : nextIndex;
-                        });
-                      } else if (e.key === 'Enter') {
-                        if (homeActiveSuggestionIndex >= 0 && homeActiveSuggestionIndex < filtered.length) {
-                          e.preventDefault();
-                          const selectedTag = filtered[homeActiveSuggestionIndex];
-                          const parts = searchQuery.split(/[|,]/);
-                          parts.pop();
-                          parts.push(selectedTag.label);
-                          const newQuery = parts.map(p => p.trim()).filter(Boolean).join(' | ') + ' | ';
-                          setSearchQuery(newQuery);
-                          setShowHomeSuggestions(false);
-                          setHomeActiveSuggestionIndex(-1);
-                        } else {
-                          // Submit search and close keyboard!
-                          setIsVirtualKeyboardOpen(false);
-                          setShowHomeSuggestions(false);
-                          setIsSearchSubmitted(true);
-                          handleSearch(searchQuery);
-                        }
-                      } else if (e.key === 'Escape') {
-                        setShowHomeSuggestions(false);
-                        setHomeActiveSuggestionIndex(-1);
-                      }
-                    } else if (e.key === 'Enter') {
-                      // Submit search and close keyboard even if no suggestions match!
-                      setIsVirtualKeyboardOpen(false);
-                      setShowHomeSuggestions(false);
-                      setIsSearchSubmitted(true);
-                      handleSearch(searchQuery);
-                    }
-                  }}
+            <>
+              {activeTab === 'home' && (
+                <HomeDashboard
+                  searchMode={searchMode}
+                  setSearchMode={setSearchMode}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                  searchResults={searchResults}
+                  setSearchResults={setSearchResults}
+                  isSearchSubmitted={isSearchSubmitted}
+                  setIsSearchSubmitted={setIsSearchSubmitted}
+                  showHomeSuggestions={showHomeSuggestions}
+                  setShowHomeSuggestions={setShowHomeSuggestions}
+                  homeActiveSuggestionIndex={homeActiveSuggestionIndex}
+                  setHomeActiveSuggestionIndex={setHomeActiveSuggestionIndex}
+                  activeSearchTab={activeSearchTab}
+                  setActiveSearchTab={setActiveSearchTab}
+                  tags={tags}
+                  taggedLinks={taggedLinks}
+                  recentShowCount={recentShowCount}
+                  setRecentShowCount={setRecentShowCount}
+                  handleSearch={handleSearch}
+                  setIsVirtualKeyboardOpen={setIsVirtualKeyboardOpen}
+                  setActiveViewLink={setActiveViewLink}
+                  setDetailMode={setDetailMode}
+                  displayUrl={displayUrl}
+                  formatDate={formatDate}
+                  formatTime={formatTime}
+                  getCleanTextExcerpt={getCleanTextExcerpt}
+                  navigateTo={navigateTo}
+                  activeTab={activeTab}
                 />
-                {searchQuery && (
-                  <button 
-                    className="search-send-btn" 
-                    title="Submit Search"
-                    onClick={() => {
-                      setShowHomeSuggestions(false);
-                      setIsVirtualKeyboardOpen(false);
-                      setSearchMode(true);
-                      setIsSearchSubmitted(true);
-                      handleSearch(searchQuery);
-                    }}
-                  >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="22" y1="2" x2="11" y2="13"></line>
-                      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                  </button>
-                )}
-
-                {showHomeSuggestions && searchQuery.trim() !== '' && (
-                  <div 
-                    className="suggestions-overlay-list"
-                    style={{
-                      position: 'absolute',
-                      top: '100%',
-                      left: 0,
-                      right: 0,
-                      backgroundColor: '#ffffff',
-                      border: '1px solid var(--border)',
-                      borderRadius: '6px',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                      maxHeight: '150px',
-                      overflowY: 'auto',
-                      zIndex: 110,
-                      marginTop: '4px'
-                    }}
-                  >
-                    {(() => {
-                      const lastPart = searchQuery.split(/[|,]/).pop().trim().toLowerCase();
-                      const currentTokens = searchQuery.split(/[|,]/).map(p => p.trim().toLowerCase()).filter(Boolean);
-                      const filtered = tags.filter(t => 
-                        lastPart && 
-                        t.label.toLowerCase().includes(lastPart) &&
-                        !currentTokens.slice(0, -1).includes(t.label.toLowerCase())
-                      );
-                      if (filtered.length === 0) return null;
-                      return filtered.map((t, idx) => {
-                        const isSelected = idx === homeActiveSuggestionIndex;
-                        return (
-                          <div 
-                            key={t.code}
-                            style={{
-                              padding: '8px 12px',
-                              fontSize: '13px',
-                              cursor: 'pointer',
-                              backgroundColor: isSelected ? '#e8f0fe' : '#ffffff',
-                              borderBottom: '1px solid #f1f3f4',
-                              display: 'flex',
-                              justifyContent: 'space-between',
-                              alignItems: 'center',
-                              textAlign: 'left'
-                            }}
-                            onMouseDown={(e) => {
-                              e.preventDefault();
-                            }}
-                            onClick={() => {
-                              const parts = searchQuery.split(/[|,]/);
-                              parts.pop();
-                              parts.push(t.label);
-                              const newQuery = parts.map(p => p.trim()).filter(Boolean).join(' | ') + ' | ';
-                              setSearchQuery(newQuery);
-                              setShowHomeSuggestions(false);
-                              setHomeActiveSuggestionIndex(-1);
-                            }}
-                            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f1f3f4'; }}
-                            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = isSelected ? '#e8f0fe' : '#ffffff'; }}
-                          >
-                            <span style={{ fontWeight: '500', color: 'var(--text)' }}>{t.label}</span>
-                            <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Tag ({t.code})</span>
-                          </div>
-                        );
-                      });
-                    })()}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Recent Additions / Search results starting at 75% height */}
-            <div 
-              className={`recent-feed-container ${searchMode && !isSearchSubmitted ? 'hidden' : ''}`}
-              onClick={(e) => e.stopPropagation()} // Prevent background dismiss
-            >
-              {isSearchSubmitted ? (
-                /* GOOGLE-STYLE SEARCH RESULTS */
-                <div>
-                  {/* Google-style Tabs */}
-                  <div 
-                    style={{ 
-                      display: 'flex', 
-                      gap: '32px', 
-                      borderBottom: '1px solid #ebebeb', 
-                      paddingBottom: '8px', 
-                      marginBottom: '16px',
-                      overflowX: 'auto',
-                      scrollbarWidth: 'none'
-                    }}
-                  >
-                    {[
-                      { id: 'all', label: 'All' },
-                      { id: 'images', label: 'Images' },
-                      { id: 'videos', label: 'Videos' }
-                    ].map(t => {
-                      const isActive = activeSearchTab === t.id;
-                      return (
-                        <span 
-                          key={t.id}
-                          onClick={() => setActiveSearchTab(t.id)}
-                          style={{
-                            fontSize: '13px',
-                            fontWeight: isActive ? '600' : '400',
-                            color: isActive ? '#1a73e8' : '#70757a',
-                            cursor: 'pointer',
-                            paddingBottom: '8px',
-                            borderBottom: isActive ? '3px solid #1a73e8' : '3px solid transparent',
-                            transition: 'all 0.15s ease',
-                            whiteSpace: 'nowrap'
-                          }}
-                        >
-                          {t.label}
-                        </span>
-                      );
-                    })}
-                  </div>
-
-                  {(() => {
-                    const filteredSearchResults = searchResults.filter(link => {
-                      if (activeSearchTab === 'images') {
-                        return (
-                          link.typeCode === 'img' || 
-                          /\.(jpg|jpeg|png|gif|webp|svg)/i.test(link.url) ||
-                          /<img[^>]+src=/i.test(link.notes || '')
-                        );
-                      }
-                      if (activeSearchTab === 'videos') {
-                        return (
-                          link.typeCode === 'vid' || 
-                          /youtube\.com|youtu\.be|vimeo\.com/i.test(link.url) ||
-                          /<(video|iframe)[^>]+src=/i.test(link.notes || '')
-                        );
-                      }
-                      if (activeSearchTab === 'new') {
-                        const sevenDaysAgo = new Date();
-                        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-                        return new Date(link.createdAt) >= sevenDaysAgo;
-                      }
-                      return true;
-                    });
-                    return (
-                      <>
-                        {filteredSearchResults.length === 0 ? (
-                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100px', padding: '40px 0' }}>
-                            <p style={{ fontSize: '14px', color: 'var(--text-color)', margin: 0, fontWeight: '500' }}>
-                              Did not find and relatable content.
-                            </p>
-                          </div>
-                        ) : (
-                          filteredSearchResults.map(link => {
-                            const imageSrc = activeSearchTab === 'images' ? (
-                              /\.(jpg|jpeg|png|gif|webp|svg)/i.test(link.url) ? link.url :
-                              (link.notes || '').match(/<img[^>]+src=["']([^"']+)["']/i)?.[1] ||
-                              'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&auto=format&fit=crop'
-                            ) : null;
-
-                            const videoEmbedSrc = activeSearchTab === 'videos' ? (
-                              /youtube\.com|youtu\.be/i.test(link.url) ? (
-                                `https://www.youtube.com/embed/${link.url.includes('v=') ? link.url.split('v=')[1].split('&')[0] : link.url.split('/').pop()}`
-                              ) : (link.notes || '').match(/<(video|iframe)[^>]+src=["']([^"']+)["']/i)?.[1]
-                            ) : null;
-
-                            return (
-                              <div 
-                                key={link.id} 
-                                className="result-card animate-fade"
-                                onClick={() => {
-                                  navigateTo(activeTab, link);
-                                  setDetailMode('view');
-                                }}
-                                style={{ cursor: 'pointer' }}
-                              >
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '6px' }}>
-                                  <span className="result-breadcrumb" style={{ margin: 0 }}>
-                                    {link.from} &gt; {link.tags && link.tags.length > 0 ? link.tags.map(t => t.label).join(' | ') : (link.tagLabel || 'untagged')}
-                                  </span>
-                                  <span style={{ color: '#70757a', fontSize: '12px' }}>•</span>
-                                  <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{link.readableCode}</span>
-                                </div>
-
-                                {/* Media Rendering for Images / Videos Search Tabs */}
-                                {activeSearchTab === 'images' && imageSrc && (
-                                  <div style={{ marginBottom: '10px' }}>
-                                    <img 
-                                      src={imageSrc} 
-                                      alt={link.title || 'Image Preview'} 
-                                      style={{ width: '100%', maxHeight: '240px', objectFit: 'cover', borderRadius: '8px', border: '1px solid var(--border)' }} 
-                                    />
-                                  </div>
-                                )}
-
-                                {activeSearchTab === 'videos' && videoEmbedSrc && (
-                                  <div style={{ marginBottom: '10px' }}>
-                                    <iframe 
-                                      src={videoEmbedSrc} 
-                                      title={link.title || 'Video Player'}
-                                      style={{ width: '100%', height: '220px', borderRadius: '8px', border: 'none' }}
-                                      allowFullScreen
-                                    />
-                                  </div>
-                                )}
-
-                                <div style={{ marginBottom: '4px' }}>
-                                  <a 
-                                    href="#" 
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      e.stopPropagation();
-                                      navigateTo(activeTab, link);
-                                      setDetailMode('view');
-                                    }}
-                                    className="result-title-link" 
-                                    style={{ fontSize: '15px', fontWeight: '600', color: '#1a73e8', textDecoration: 'none' }}
-                                  >
-                                    {link.title || 'Untitled Page'}
-                                  </a>
-                                </div>
-                                <div 
-                                  className="result-excerpt" 
-                                  style={{ fontSize: '13px', color: 'var(--text-muted, #5f6368)', lineHeight: '1.5', marginTop: '6px' }}
-                                >
-                                  {getCleanTextExcerpt(link.notes)}
-                                </div>
-                              </div>
-                            );
-                          })
-                        )}
-                      </>
-                    );
-                  })()}
-                </div>
-              ) : (
-                /* RECENT ADDITIONS FEED */
-                <div>
-                  <div className="feed-header">Recent Additions</div>
-                  {taggedLinks.length === 0 ? (
-                    <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', padding: '24px 0' }}>
-                      No tagged links saved. Use the simulated phone to share posts!
-                    </div>
-                  ) : (
-                    <>
-                      {taggedLinks.slice(0, recentShowCount).map((link) => (
-                        <div 
-                          key={link.id} 
-                          className="result-card animate-fade"
-                          onClick={() => {
-                            setActiveViewLink(link);
-                            setDetailMode('view');
-                          }}
-                          style={{ cursor: 'pointer' }}
-                        >
-                          <span className="result-breadcrumb">
-                            {link.from} &gt; {link.tags && link.tags.length > 0 ? link.tags.map(t => t.label).join(' | ') : (link.tagLabel || 'untagged')}
-                          </span>
-                          <div style={{ marginBottom: '4px' }}>
-                            <a 
-                              href="#" 
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                setActiveViewLink(link);
-                                setDetailMode('view');
-                              }}
-                              className="result-title-link" 
-                              style={{ fontSize: '15px', fontWeight: '600', color: '#1a73e8', textDecoration: 'none' }}
-                            >
-                              {link.title || 'Untitled Page'}
-                            </a>
-                          </div>
-                          <div style={{ marginBottom: '8px' }}>
-                            <a 
-                              href="#" 
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                setActiveViewLink(link);
-                                setDetailMode('view');
-                              }}
-                              style={{ fontSize: '12px', color: '#70757a', textDecoration: 'none', wordBreak: 'break-all' }}
-                            >
-                              {displayUrl(link.url)}
-                            </a>
-                          </div>
-                          <div className="result-meta" style={{ fontSize: '11px', color: '#70757a' }}>
-                            <span>{formatDate(link.createdAt)} {formatTime(link.createdAt)}</span>
-                          </div>
-                        </div>
-                      ))}
-
-                      {taggedLinks.length > recentShowCount && recentShowCount < 20 && (
-                        <button 
-                          className="white-theme-btn" 
-                          style={{ width: '100%', marginTop: '12px', padding: '8px' }}
-                          onClick={() => setRecentShowCount(20)}
-                        >
-                          Show More
-                        </button>
-                      )}
-                    </>
-                  )}
-                </div>
               )}
-            </div>
-            </div>
-          )
-        )}
 
-        {/* Untagged Table Screen */}
-        {activeTab === 'untagged' && (
-          <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
-
-
-            <div style={{ overflowX: 'auto', flex: 1 }}>
-              {untaggedLinks.length === 0 ? (
-                <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', padding: '40px 0' }}>
-                  No untagged records found.
-                </div>
-              ) : (
-                <table className="dashboard-table">
-                  <thead>
-                    <tr>
-                      <th>URL ID</th>
-                      <th>Clean URL</th>
-                      <th>Date Added</th>
-                      <th>Time Added</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {untaggedLinks.map((link) => (
-                      <tr key={link.id}>
-                        <td>
-                          <div style={{ fontWeight: 'bold', fontFamily: 'monospace' }}>{link.readableCode}</div>
-                        </td>
-                        <td>
-                          <a 
-                            href={link.url} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            style={{ fontSize: '12px', color: '#1a73e8', textDecoration: 'none', wordBreak: 'break-all' }}
-                          >
-                            {link.url}
-                          </a>
-                        </td>
-                        <td>{formatDate(link.createdAt)}</td>
-                        <td>{formatTime(link.createdAt)}</td>
-                        <td>
-                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                            <button 
-                              className="btn-sm"
-                              onClick={() => setActiveEditLinkId(link.id)}
-                            >
-                              Add Tag
-                            </button>
-                            <button 
-                              className="btn-sm-danger"
-                              onClick={(e) => handleDeleteLink(link.id, e)}
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              {activeTab === 'untagged' && (
+                <UntaggedDashboard
+                  untaggedLinks={untaggedLinks}
+                  formatDate={formatDate}
+                  formatTime={formatTime}
+                  setActiveEditLinkId={setActiveEditLinkId}
+                  handleDeleteLink={handleDeleteLink}
+                  setActiveViewLink={setActiveViewLink}
+                  setDetailMode={setDetailMode}
+                />
               )}
-            </div>
-          </div>
-        )}
 
-        {/* Tagged Table Screen */}
-        {activeTab === 'tagged' && (
-          <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
-
-
-            <div style={{ overflowX: 'auto', flex: 1 }}>
-              {taggedLinks.length === 0 ? (
-                <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', padding: '40px 0' }}>
-                  No tagged records found.
-                </div>
-              ) : (
-                <table className="dashboard-table">
-                  <thead>
-                    <tr>
-                      <th>URL ID</th>
-                      <th>Heading</th>
-                      <th>Clean URL</th>
-                      <th>Tag</th>
-                      <th>Date Added</th>
-                      <th>Time Added</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {taggedLinks.map((link) => (
-                      <tr key={link.id}>
-                        <td>
-                          <div style={{ fontWeight: 'bold', fontFamily: 'monospace' }}>{link.readableCode}</div>
-                        </td>
-                        <td>
-                          {(() => {
-                            const titleText = link.title || 'No Title';
-                            const truncatedTitle = titleText.length > 25 ? titleText.substring(0, 25) + '...' : titleText;
-                            return (
-                              <div className="text-hover-container" style={{ fontSize: '12px', fontWeight: '500', maxWidth: '180px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                {truncatedTitle}
-                                <div className="text-tooltip-box">
-                                  {titleText}
-                                </div>
-                              </div>
-                            );
-                          })()}
-                        </td>
-                        <td>
-                          {(() => {
-                            const truncatedUrl = link.url.length > 30 ? link.url.substring(0, 30) + '...' : link.url;
-                            const isCopied = copiedLinkId === link.id;
-                            return (
-                              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', maxWidth: '240px' }}>
-                                <div className="text-hover-container" style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                  <a 
-                                    href={link.url} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer" 
-                                    style={{ fontSize: '12px', color: '#1a73e8', textDecoration: 'none' }}
-                                  >
-                                    {truncatedUrl}
-                                  </a>
-                                  <div className="text-tooltip-box">
-                                    {link.url}
-                                  </div>
-                                </div>
-                                <button
-                                  title={isCopied ? "Copied!" : "Copy URL"}
-                                  style={{
-                                    border: 'none',
-                                    background: 'transparent',
-                                    cursor: 'pointer',
-                                    padding: '2px',
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    opacity: isCopied ? 1 : 0.6,
-                                    transition: 'opacity 0.2s'
-                                  }}
-                                  onMouseEnter={(e) => { if (!isCopied) e.currentTarget.style.opacity = 1; }}
-                                  onMouseLeave={(e) => { if (!isCopied) e.currentTarget.style.opacity = 0.6; }}
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    navigator.clipboard.writeText(link.url);
-                                    setCopiedLinkId(link.id);
-                                    setTimeout(() => setCopiedLinkId(null), 1500);
-                                  }}
-                                >
-                                  {isCopied ? (
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0f9d58" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                      <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
-                                  ) : (
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1a73e8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                    </svg>
-                                  )}
-                                </button>
-                                <button
-                                  title="Open Preview Player"
-                                  style={{
-                                    border: 'none',
-                                    background: 'transparent',
-                                    cursor: 'pointer',
-                                    padding: '2px',
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    opacity: 0.6,
-                                    transition: 'opacity 0.2s',
-                                    marginLeft: '4px'
-                                  }}
-                                  onMouseEnter={(e) => { e.currentTarget.style.opacity = 1; }}
-                                  onMouseLeave={(e) => { e.currentTarget.style.opacity = 0.6; }}
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    setActivePlayerLink(link.url);
-                                  }}
-                                >
-                                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1a73e8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                                  </svg>
-                                </button>
-                              </div>
-                            );
-                          })()}
-                        </td>
-                        <td>
-                          {(() => {
-                            const activeTags = link.tags && link.tags.length > 0
-                              ? link.tags
-                              : (link.tagLabel && link.tagLabel !== 'untagged'
-                                  ? [{ code: link.primaryTag || '0000', label: link.tagLabel }]
-                                  : []);
-
-                            return (
-                              <div 
-                                className="tags-hover-container" 
-                                style={{ display: 'inline-flex', gap: '4px', flexWrap: 'wrap', alignItems: 'center', position: 'relative', cursor: 'pointer' }}
-                              >
-                                {activeTags.length > 0 ? (
-                                  <>
-                                    {activeTags.slice(0, 2).map(t => (
-                                      <span key={t.code} style={{ backgroundColor: '#e8f0fe', color: '#1a73e8', padding: '2px 8px', borderRadius: '12px', fontSize: '11px', fontWeight: '500', whiteSpace: 'nowrap' }}>
-                                        {t.label}
-                                      </span>
-                                    ))}
-                                    {activeTags.length > 2 && (
-                                      <span style={{ fontSize: '11px', color: '#1a73e8', backgroundColor: '#e8f0fe', padding: '2px 8px', borderRadius: '12px', fontWeight: 'bold' }}>
-                                        +{activeTags.length - 2}
-                                      </span>
-                                    )}
-                                    <div className="tags-tooltip-box">
-                                      {activeTags.map(t => t.label).join(' | ')}
-                                    </div>
-                                  </>
-                                ) : (
-                                  <span style={{ backgroundColor: '#f1f3f4', color: '#5f6368', padding: '2px 8px', borderRadius: '12px', fontSize: '11px', fontWeight: '500', whiteSpace: 'nowrap' }}>
-                                    untagged
-                                  </span>
-                                )}
-                              </div>
-                            );
-                          })()}
-                        </td>
-                        <td>{formatDate(link.createdAt)}</td>
-                        <td>{formatTime(link.createdAt)}</td>
-                        <td>
-                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                            <button 
-                              className="btn-sm"
-                              onClick={() => setActiveEditLinkId(link.id)}
-                            >
-                              Edit Tag
-                            </button>
-                            <button 
-                              className="btn-sm-danger"
-                              onClick={(e) => handleDeleteLink(link.id, e)}
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              {activeTab === 'tagged' && (
+                <TaggedDashboard
+                  taggedLinks={taggedLinks}
+                  formatDate={formatDate}
+                  formatTime={formatTime}
+                  copiedLinkId={copiedLinkId}
+                  setCopiedLinkId={setCopiedLinkId}
+                  setActiveEditLinkId={setActiveEditLinkId}
+                  handleDeleteLink={handleDeleteLink}
+                  setActiveViewLink={setActiveViewLink}
+                  setDetailMode={setDetailMode}
+                  setActivePlayerLink={setActivePlayerLink}
+                />
               )}
-            </div>
-          </div>
-        )}
 
-        {/* Tags Database Registry Screen */}
-        {activeTab === 'tags' && (
-          <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
-
-
-            {tagEditError && (
-              <div style={{ color: 'var(--danger)', fontSize: '13px', fontWeight: 'bold', marginTop: '12px' }}>
-                {tagEditError}
-              </div>
-            )}
-
-            <div style={{ overflowX: 'auto', flex: 1 }}>
-              {tags.length === 0 ? (
-                <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', padding: '40px 0' }}>
-                  No tags found in registry.
-                </div>
-              ) : (
-                <table className="dashboard-table">
-                  <thead>
-                    <tr>
-                      <th>Tag ID</th>
-                      <th>Tag Label</th>
-                      <th>Number of Links</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {tags.map((tag) => {
-                      const uses = links.filter((l) => {
-                        if (l.primaryTag === tag.code) return true;
-                        if (l.tags && l.tags.some(t => t.code === tag.code)) return true;
-                        return false;
-                      }).length;
-                      const isEditing = editingTagCode === tag.code;
-
-                      return (
-                        <tr key={tag.code}>
-                          <td>
-                            <span style={{ fontWeight: 'bold', fontFamily: 'monospace', color: tag.code === '0000' ? '#888' : '#1a73e8' }}>
-                              {tag.code}
-                            </span>
-                          </td>
-                          <td>
-                            {isEditing ? (
-                              <input 
-                                type="text"
-                                className="input-field"
-                                style={{ width: '120px', padding: '4px', fontSize: '12px' }}
-                                value={newTagLabelValue}
-                                onChange={(e) => {
-                                  setNewTagLabelValue(e.target.value);
-                                  setTagEditError('');
-                                }}
-                              />
-                            ) : (
-                              <span style={{ fontWeight: '500' }}>
-                                {tag.label || 'untagged'}
-                              </span>
-                            )}
-                          </td>
-                          <td>{uses}</td>
-                          <td>
-                            {tag.code === '0000' ? (
-                              <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Default (Locked)</span>
-                            ) : isEditing ? (
-                              <div style={{ display: 'flex', gap: '6px' }}>
-                                <button 
-                                  className="btn-sm" 
-                                  style={{ backgroundColor: '#34a853', padding: '4px 8px' }}
-                                  onClick={async () => {
-                                    const cleanLabel = newTagLabelValue.trim().toLowerCase();
-                                    if (!cleanLabel) {
-                                      setTagEditError('Tag label cannot be empty');
-                                      return;
-                                    }
-                                    try {
-                                      const response = await fetch(`${API_BASE}/tags/${tag.code}`, {
-                                        method: 'PUT',
-                                        headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({ label: cleanLabel })
-                                      });
-                                      const resData = await response.json();
-                                      if (response.ok && resData.success) {
-                                        setEditingTagCode(null);
-                                        fetchTags();
-                                        fetchLinks();
-                                      } else {
-                                        setTagEditError(resData.error || 'Failed to edit tag');
-                                      }
-                                    } catch (err) {
-                                      setTagEditError('Server connection error');
-                                    }
-                                  }}
-                                >
-                                  Save
-                                </button>
-                                <button 
-                                  className="btn-sm" 
-                                  style={{ backgroundColor: '#888', padding: '4px 8px' }}
-                                  onClick={() => setEditingTagCode(null)}
-                                >
-                                  Cancel
-                                </button>
-                              </div>
-                            ) : uses === 0 ? (
-                              <div style={{ display: 'flex', gap: '8px' }}>
-                                <button 
-                                  className="btn-sm" 
-                                  style={{ padding: '4px 8px' }}
-                                  onClick={() => {
-                                    setEditingTagCode(tag.code);
-                                    setNewTagLabelValue(tag.label);
-                                    setTagEditError('');
-                                  }}
-                                >
-                                  Edit Tag
-                                </button>
-                                <button 
-                                  className="btn-sm-danger" 
-                                  style={{ padding: '4px 8px' }}
-                                  onClick={async () => {
-                                    try {
-                                      const response = await fetch(`${API_BASE}/tags/${tag.code}`, {
-                                        method: 'DELETE'
-                                      });
-                                      const resData = await response.json();
-                                      if (response.ok && resData.success) {
-                                        showToast('Tag deleted');
-                                        fetchTags();
-                                      } else {
-                                        setTagEditError(resData.error || 'Failed to delete tag');
-                                      }
-                                    } catch (err) {
-                                      setTagEditError('Server connection error');
-                                    }
-                                  }}
-                                >
-                                  Delete
-                                </button>
-                              </div>
-                            ) : (
-                              <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Locked (In Use)</span>
-                            )}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+              {activeTab === 'tags' && (
+                <TagsRegistryDashboard
+                  tags={tags}
+                  links={links}
+                  setNewTagOpen={setNewTagOpen}
+                  handleDeleteTag={handleDeleteTag}
+                />
               )}
-            </div>
 
-            {/* Hovering action button to add new tag */}
-            <button 
-              className="floating-btn add-tag-btn" 
-              style={{
-                position: 'absolute',
-                bottom: '48px',
-                right: '48px',
-                backgroundColor: '#1a73e8',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '50%',
-                width: '56px',
-                height: '56px',
-                fontSize: '24px',
-                boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                zIndex: 10
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                setNewTagOpen(true);
-                setNewTagLabel('');
-                setNewTagError('');
-              }}
-            >
-              ＋
-            </button>
-          </div>
-        )}
-        {/* Sources Database Registry Screen */}
-        {activeTab === 'sources' && (
-          <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
-
-
-            {sourceEditError && (
-              <div style={{ color: 'var(--danger)', fontSize: '13px', fontWeight: 'bold', marginTop: '12px' }}>
-                {sourceEditError}
-              </div>
-            )}
-
-            <div style={{ overflowX: 'auto', flex: 1 }}>
-              {sources.length === 0 ? (
-                <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', padding: '40px 0' }}>
-                  No sources found in registry.
-                </div>
-              ) : (
-                <table className="dashboard-table">
-                  <thead>
-                    <tr>
-                      <th>Source Code</th>
-                      <th>Source Name</th>
-                      <th>Number of Uses</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sources.map((source) => {
-                      const uses = links.filter((l) => l.sourceCode === source.code).length;
-                      const isEditing = editingSourceCode === source.code;
-
-                      return (
-                        <tr key={source.code}>
-                          <td>
-                            {isEditing ? (
-                              <input 
-                                type="text"
-                                className="input-field"
-                                style={{ width: '60px', padding: '4px', fontSize: '12px', fontFamily: 'monospace' }}
-                                value={newSourceCodeValue}
-                                maxLength={3}
-                                onChange={(e) => {
-                                  setNewSourceCodeValue(e.target.value.toLowerCase().replace(/[^a-z]/g, ''));
-                                  setSourceEditError('');
-                                }}
-                              />
-                            ) : (
-                              <span style={{ fontWeight: 'bold', fontFamily: 'monospace', color: '#1a73e8' }}>
-                                {source.code}
-                              </span>
-                            )}
-                          </td>
-                          <td>
-                            <span style={{ textTransform: 'capitalize', fontWeight: '500' }}>
-                              {source.name}
-                            </span>
-                          </td>
-                          <td>{uses}</td>
-                          <td>
-                            {isEditing ? (
-                              <div style={{ display: 'flex', gap: '6px' }}>
-                                <button 
-                                  className="btn-sm" 
-                                  style={{ backgroundColor: '#34a853', padding: '4px 8px' }}
-                                  onClick={async () => {
-                                    if (newSourceCodeValue.length !== 3) {
-                                      setSourceEditError('Code must be exactly 3 lowercase letters');
-                                      return;
-                                    }
-                                    try {
-                                      const response = await fetch(`${API_BASE}/sources/${source.code}`, {
-                                        method: 'PUT',
-                                        headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({ newCode: newSourceCodeValue })
-                                      });
-                                      const resData = await response.json();
-                                      if (response.ok && resData.success) {
-                                        setEditingSourceCode(null);
-                                        fetchSources();
-                                        fetchLinks();
-                                      } else {
-                                        setSourceEditError(resData.error || 'Failed to edit code');
-                                      }
-                                    } catch (err) {
-                                      setSourceEditError('Server connection error');
-                                    }
-                                  }}
-                                >
-                                  Save
-                                </button>
-                                <button 
-                                  className="btn-sm" 
-                                  style={{ backgroundColor: '#888', padding: '4px 8px' }}
-                                  onClick={() => setEditingSourceCode(null)}
-                                >
-                                  Cancel
-                                </button>
-                              </div>
-                            ) : (
-                              uses === 0 ? (
-                                <div style={{ display: 'flex', gap: '8px' }}>
-                                  <button 
-                                    className="btn-sm" 
-                                    style={{ padding: '4px 8px' }}
-                                    onClick={() => {
-                                      setEditingSourceCode(source.code);
-                                      setNewSourceCodeValue(source.code);
-                                      setSourceEditError('');
-                                    }}
-                                  >
-                                    Edit Code
-                                  </button>
-                                  <button 
-                                    className="btn-sm-danger" 
-                                    style={{ padding: '4px 8px' }}
-                                    onClick={async () => {
-                                      try {
-                                        const response = await fetch(`${API_BASE}/sources/${source.code}`, {
-                                          method: 'DELETE'
-                                        });
-                                        const resData = await response.json();
-                                        if (response.ok && resData.success) {
-                                          showToast('Source deleted');
-                                          fetchSources();
-                                        } else {
-                                          setSourceEditError(resData.error || 'Failed to delete source');
-                                        }
-                                      } catch (err) {
-                                        setSourceEditError('Server connection error');
-                                      }
-                                    }}
-                                  >
-                                    Delete
-                                  </button>
-                                </div>
-                              ) : (
-                                <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Locked (In Use)</span>
-                              )
-                            )}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+              {activeTab === 'sources' && (
+                <SourcesRegistryDashboard
+                  sources={sources}
+                  links={links}
+                  setNewSourceOpen={setNewSourceOpen}
+                  handleDeleteSource={handleDeleteSource}
+                />
               )}
-            </div>
 
-            {/* Hovering action button to add new source */}
-            <button 
-              className="floating-btn add-source-btn" 
-              style={{
-                position: 'absolute',
-                bottom: '48px',
-                right: '48px',
-                backgroundColor: '#1a73e8',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '50%',
-                width: '56px',
-                height: '56px',
-                fontSize: '24px',
-                boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                zIndex: 10
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                setNewSourceOpen(true);
-                setNewSourceName('');
-                setNewSourceCode('');
-                setNewSourceUrl('');
-                setNewSourceError('');
-              }}
-            >
-              ＋
-            </button>
-          </div>
-        )}
+              {activeTab === 'profile' && (
+                <ProfileDashboard
+                  isLocalStorageEnabled={isLocalStorageEnabled}
+                  setIsLocalStorageEnabled={setIsLocalStorageEnabled}
+                  THEME_OPTIONS={THEME_OPTIONS}
+                  appTheme={appTheme}
+                  themeMode={themeMode}
+                  changeTheme={changeTheme}
+                />
+              )}
 
-        {/* User Profile View */}
-        {activeTab === 'profile' && (
-          <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
+              {activeTab === 'themes' && (
+                <ThemesDashboard
+                  THEME_OPTIONS={THEME_OPTIONS}
+                  appTheme={appTheme}
+                  themeMode={themeMode}
+                  changeTheme={changeTheme}
+                />
+              )}
 
-            <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '24px' }}>
-              Simulating Link Keeper settings page.
-            </p>
-            
-            <div style={{ borderTop: '1px solid var(--border)', padding: '16px 0' }}>
-              <strong>Username:</strong> LinkKeeperTester
-            </div>
-            <div style={{ borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: '16px 0', marginBottom: '24px' }}>
-              <strong>Device Connected:</strong> Desktop Simulator
-            </div>
-
-            {/* Storage Settings Section */}
-            <div style={{ padding: '0 0 24px 0', borderBottom: '1px solid var(--border)', marginBottom: '24px' }}>
-              <h3 style={{ margin: '0 0 8px', fontSize: '15px', fontWeight: 'bold' }}>Storage Settings</h3>
-              <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: '0 0 16px' }}>
-                Manage local storage archiving configuration.
-              </p>
-
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'space-between', 
-                padding: '14px 16px', 
-                backgroundColor: 'var(--bg-card)', 
-                borderRadius: '8px', 
-                border: 'var(--card-border)', 
-                boxShadow: 'var(--box-shadow)'
-              }}>
-                <div>
-                  <div style={{ fontWeight: '600', fontSize: '13px' }}>Local Storage Archiving</div>
-                  <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>
-                    Status: {isLocalStorageEnabled ? 'Enabled (Active)' : 'Disabled'}
-                  </div>
-                </div>
-                
-                <button
-                  className={`white-theme-btn ${isLocalStorageEnabled ? 'primary' : ''}`}
-                  style={{ padding: '6px 14px', fontSize: '12px', fontWeight: '600' }}
-                  onClick={() => {
-                    const nextVal = !isLocalStorageEnabled;
-                    setIsLocalStorageEnabled(nextVal);
-                    localStorage.setItem('isLocalStorageEnabled', String(nextVal));
-                    showToast(nextVal ? 'Local Storage Enabled' : 'Local Storage Disabled');
-                  }}
-                >
-                  {isLocalStorageEnabled ? 'Disable' : 'Enable'}
-                </button>
-              </div>
-            </div>
-
-            {/* Theme Settings Section in Profile */}
-            <div style={{ padding: '0 0 24px 0', marginBottom: '24px' }}>
-              <h3 style={{ margin: '0 0 8px', fontSize: '15px', fontWeight: 'bold' }}>Theme Settings</h3>
-              <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: '0 0 16px' }}>
-                Select visual style theme with live app previews.
-              </p>
-
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px' }}>
-                {THEME_OPTIONS.map((theme) => {
-                  const isActive = appTheme === theme.id;
-                  return (
-                    <div
-                      key={theme.id}
-                      className={`theme-${theme.id} mode-${themeMode}`}
-                      onClick={() => changeTheme(theme.id)}
-                      style={{
-                        padding: '16px',
-                        borderRadius: '12px',
-                        border: isActive ? '2px solid #1a73e8' : '1px solid var(--border)',
-                        backgroundColor: 'var(--bg-card)',
-                        cursor: 'pointer',
-                        boxShadow: 'var(--box-shadow)',
-                        transition: 'all 0.2s ease',
-                        position: 'relative'
-                      }}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                        <span style={{ fontWeight: '700', fontSize: '14px', color: 'var(--text-color)' }}>
-                          {theme.name}
-                        </span>
-                        {isActive && (
-                          <span style={{ fontSize: '10px', fontWeight: 'bold', color: '#ffffff', backgroundColor: '#1a73e8', padding: '2px 10px', borderRadius: '12px' }}>
-                            Active
-                          </span>
-                        )}
-                      </div>
-
-                      <div style={{ padding: '10px', borderRadius: '8px', border: '1px dashed var(--border)', backgroundColor: 'var(--bg-app)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                        <div style={{ height: '8px', width: '65%', backgroundColor: 'var(--accent, #1a73e8)', borderRadius: '4px' }} />
-                        <div style={{ height: '6px', width: '90%', backgroundColor: 'var(--text-muted, #888)', borderRadius: '4px', opacity: 0.5 }} />
-                        <div style={{ height: '6px', width: '40%', backgroundColor: 'var(--text-muted, #888)', borderRadius: '4px', opacity: 0.3 }} />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Themes Dashboard View */}
-        {activeTab === 'themes' && (
-          <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
-            
-            {/* 11 Theme Options in 2-Column Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.85rem', marginBottom: '2rem' }}>
-              {THEME_OPTIONS.map((theme) => {
-                const isActive = appTheme === theme.id;
-                return (
-                  <div
-                    key={theme.id}
-                    className="theme-selection-card"
-                    onClick={() => changeTheme(theme.id)}
-                    style={{
-                      padding: '0.85rem 1.25rem',
-                      borderRadius: '0.75rem',
-                      border: isActive ? '2.5px solid var(--accent, #1a73e8)' : '1px solid var(--border)',
-                      backgroundColor: 'var(--bg-card)',
-                      color: 'var(--text)',
-                      fontFamily: 'var(--font-family)',
-                      cursor: 'pointer',
-                      boxShadow: isActive ? '0 2px 8px rgba(26, 115, 232, 0.25)' : 'var(--box-shadow)',
-                      transition: 'all 0.15s ease',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text)', fontFamily: 'inherit' }}>
-                      {theme.name}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Preview Section (Header simply 'Preview', 4 Miniature Page Cards below) */}
-            <div style={{ marginTop: '2rem' }}>
-              <h2 style={{ margin: '0 0 1.25rem 0', fontSize: '1.2rem', fontWeight: 700, color: 'var(--text)', fontFamily: 'var(--font-family)' }}>
-                Preview
-              </h2>
-
-              <div 
-                className={`preview-canvas theme-${appTheme} mode-${themeMode}`}
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(2, 1fr)',
-                  gap: '1.25rem',
-                  padding: '1.5rem',
-                  borderRadius: '1rem',
-                  border: '1px solid var(--border)',
-                  backgroundColor: 'var(--bg-app)',
-                  color: 'var(--text)',
-                  transition: 'all 0.25s ease'
-                }}
-              >
-                
-                {/* 1. Miniature Homepage View Card */}
-                <div style={{ padding: '0.85rem', borderRadius: '0.75rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', fontFamily: 'var(--font-family)' }}>
-                  <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
-                    Homepage Structure
-                  </div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 800, textAlign: 'center', marginBottom: '0.4rem' }}>
-                    A Sap Link
-                  </div>
-                  <div style={{ padding: '0.35rem', borderRadius: '1rem', border: '1px solid var(--border)', backgroundColor: 'var(--bg-app)', fontSize: '0.65rem', color: 'var(--text-muted)', textAlign: 'center', marginBottom: '0.5rem' }}>
-                    Search tags, URLs, or notes...
-                  </div>
-                  <div style={{ padding: '0.4rem', borderRadius: '0.4rem', border: '1px solid var(--border)', backgroundColor: 'var(--bg-app)' }}>
-                    <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--accent)' }}>New page horaganaaaaa</div>
-                    <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>youtube &gt; music video | song</div>
-                  </div>
-                </div>
-
-                {/* 2. Miniature Webpage Detail View Card */}
-                <div style={{ padding: '0.85rem', borderRadius: '0.75rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', fontFamily: 'var(--font-family)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
-                    <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Webpage Structure</span>
-                    <div style={{ display: 'flex', gap: '0.2rem' }}>
-                      <span style={{ fontSize: '0.55rem', padding: '0.1rem 0.3rem', borderRadius: '0.2rem', backgroundColor: 'var(--accent)', color: '#fff' }}>web mints</span>
-                    </div>
-                  </div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 800, marginBottom: '0.25rem' }}>
-                    New page horaganaaaaa
-                  </div>
-                  <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginBottom: '0.4rem' }}>
-                    Url: https://www.youtube.com/watch...
-                  </div>
-                  <div style={{ fontSize: '0.65rem', color: 'var(--text)', lineHeight: 1.3, opacity: 0.85 }}>
-                    first try out page what
-                  </div>
-                </div>
-
-                {/* 3. Miniature Tagged Dashboard Table Card */}
-                <div style={{ padding: '0.85rem', borderRadius: '0.75rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', fontFamily: 'var(--font-family)' }}>
-                  <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase' }}>
-                    Tagged Structure
-                  </div>
-                  <div style={{ fontSize: '0.6rem', borderCollapse: 'collapse', width: '100%' }}>
-                    <div style={{ display: 'flex', fontWeight: 700, borderBottom: '1px solid var(--border)', paddingBottom: '0.2rem', color: 'var(--text-muted)' }}>
-                      <span style={{ flex: 1 }}>URL ID</span>
-                      <span style={{ flex: 1 }}>HEADING</span>
-                      <span style={{ flex: 1 }}>TAG</span>
-                    </div>
-                    <div style={{ display: 'flex', paddingTop: '0.2rem', color: 'var(--text)' }}>
-                      <span style={{ flex: 1, fontSize: '0.55rem' }}>ytb-vid-0003...</span>
-                      <span style={{ flex: 1, fontWeight: 600 }}>New page...</span>
-                      <span style={{ flex: 1, color: 'var(--accent)' }}>music video</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 4. Miniature Logs Dashboard Card */}
-                <div style={{ padding: '0.85rem', borderRadius: '0.75rem', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', fontFamily: 'var(--font-family)' }}>
-                  <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase' }}>
-                    Logs Structure
-                  </div>
-                  <div style={{ display: 'flex', gap: '0.3rem', marginBottom: '0.4rem' }}>
-                    <span style={{ fontSize: '0.55rem', padding: '0.15rem 0.4rem', borderRadius: '0.8rem', backgroundColor: 'var(--accent)', color: '#fff', fontWeight: 600 }}>Change Logs (25)</span>
-                    <span style={{ fontSize: '0.55rem', padding: '0.15rem 0.4rem', borderRadius: '0.8rem', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>Audit Logs (55)</span>
-                  </div>
-                  <div style={{ padding: '0.3rem', borderRadius: '0.3rem', backgroundColor: 'var(--bg-app)', fontSize: '0.55rem' }}>
-                    <span style={{ fontWeight: 700, color: 'var(--accent)' }}>EDITED </span>
-                    <span style={{ color: 'var(--text-muted)' }}>Link 'New page horaganaaaaa' was updated.</span>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-        )}
-
-        {/* Logs View (Dual Sub-Tabs: Change Logs & Audit Logs - NO EMOJIS) */}
-        {activeTab === 'logs' && (
-          <div className="dashboard-container" onClick={(e) => e.stopPropagation()}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: '16px' }}>
-              <button
-                className="white-theme-btn"
-                style={{ padding: '6px 14px', fontSize: '12px' }}
-                onClick={fetchAuditLogs}
-                disabled={auditLogsLoading}
-              >
-                {auditLogsLoading ? 'Loading...' : 'Refresh'}
-              </button>
-            </div>
-
-            {/* Sub-Tab Navigation Toggle with Live Counts (No Emojis) */}
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', borderBottom: '1px solid var(--border)', paddingBottom: '12px' }}>
-              <button
-                className={`white-theme-btn ${logsSubTab === 'change' ? 'primary' : ''}`}
-                style={{ padding: '8px 16px', fontSize: '13px', borderRadius: '20px' }}
-                onClick={() => setLogsSubTab('change')}
-              >
-                Change Logs ({auditLogs.filter(l => ['UPDATE_LINK', 'UPDATE_TAG'].includes(l.action)).length})
-              </button>
-              <button
-                className={`white-theme-btn ${logsSubTab === 'audit' ? 'primary' : ''}`}
-                style={{ padding: '8px 16px', fontSize: '13px', borderRadius: '20px' }}
-                onClick={() => setLogsSubTab('audit')}
-              >
-                Audit Logs ({auditLogs.length})
-              </button>
-            </div>
-
-            {auditLogsLoading ? (
-              <p style={{ color: 'var(--text-muted)', fontSize: '13px', textAlign: 'center', padding: '40px 0' }}>Loading activity logs...</p>
-            ) : (
-              <div>
-                {/* 1. Change Logs View */}
-                {logsSubTab === 'change' && (
-                  <div>
-                    {auditLogs.filter(l => ['UPDATE_LINK', 'UPDATE_TAG'].includes(l.action)).length === 0 ? (
-                      <p style={{ color: 'var(--text-muted)', fontSize: '13px', textAlign: 'center', padding: '40px 0' }}>No change logs recorded yet.</p>
-                    ) : (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        {auditLogs
-                          .filter(l => ['UPDATE_LINK', 'UPDATE_TAG'].includes(l.action))
-                          .map((log) => (
-                            <div
-                              key={log.id}
-                              style={{
-                                padding: '14px 16px',
-                                backgroundColor: 'var(--bg-card)',
-                                borderRadius: '10px',
-                                border: 'var(--card-border)',
-                                boxShadow: 'var(--box-shadow)'
-                              }}
-                            >
-                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', marginBottom: '6px' }}>
-                                <span
-                                  style={{
-                                    fontSize: '10px',
-                                    fontWeight: '700',
-                                    padding: '2px 8px',
-                                    borderRadius: '20px',
-                                    backgroundColor: 'rgba(26,115,232,0.15)',
-                                    color: '#1a73e8',
-                                    letterSpacing: '0.4px',
-                                    textTransform: 'uppercase'
-                                  }}
-                                >
-                                  EDITED
-                                </span>
-                                <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-                                  {new Date(log.timestamp).toLocaleString()}
-                                </span>
-                              </div>
-                              <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-primary)', lineHeight: 1.4, fontWeight: '500' }}>
-                                {log.details}
-                              </p>
-                            </div>
-                          ))}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* 2. Full Audit Logs View */}
-                {logsSubTab === 'audit' && (
-                  <div>
-                    {auditLogs.length === 0 ? (
-                      <p style={{ color: 'var(--text-muted)', fontSize: '13px', textAlign: 'center', padding: '40px 0' }}>No audit logs recorded yet.</p>
-                    ) : (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        {auditLogs.map((log) => (
-                          <div
-                            key={log.id}
-                            style={{
-                              padding: '14px 16px',
-                              backgroundColor: 'var(--bg-card)',
-                              borderRadius: '10px',
-                              border: 'var(--card-border)',
-                              boxShadow: 'var(--box-shadow)'
-                            }}
-                          >
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', marginBottom: '6px' }}>
-                              <span
-                                style={{
-                                  fontSize: '10px',
-                                  fontWeight: '700',
-                                  padding: '2px 8px',
-                                  borderRadius: '20px',
-                                  backgroundColor:
-                                    log.action.includes('DELETE') ? 'rgba(217,83,79,0.15)' :
-                                    log.action.includes('UPDATE') ? 'rgba(26,115,232,0.15)' :
-                                    'rgba(52,168,83,0.15)',
-                                  color:
-                                    log.action.includes('DELETE') ? '#c0392b' :
-                                    log.action.includes('UPDATE') ? '#1a73e8' :
-                                    '#1e8449',
-                                  letterSpacing: '0.4px',
-                                  textTransform: 'uppercase'
-                                }}
-                              >
-                                {log.action.replace('_', ' ')}
-                              </span>
-                              <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-                                {new Date(log.timestamp).toLocaleString()}
-                              </span>
-                            </div>
-                            <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-primary)', lineHeight: 1.4 }}>
-                              {log.details}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        )}
+              {activeTab === 'logs' && (
+                <LogsDashboard
+                  auditLogs={auditLogs}
+                  auditLogsLoading={auditLogsLoading}
+                  fetchAuditLogs={fetchAuditLogs}
+                  logsSubTab={logsSubTab}
+                  setLogsSubTab={setLogsSubTab}
+                />
+              )}
+            </>
+          )}
+        </div>
 
         {/* Transparent keyboard backdrop overlay */}
         {isVirtualKeyboardOpen && (
@@ -2642,7 +1352,6 @@ function App() {
         )}
         </div>
       </div>
-    </div>
   );
 }
 
