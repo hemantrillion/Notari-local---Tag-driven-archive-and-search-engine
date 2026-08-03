@@ -39,12 +39,14 @@ export default function CreateSourceModal({
         className="tag-editor-dialog" 
         style={{
           width: '90%',
-          maxWidth: '440px',
+          maxWidth: '420px',
+          maxHeight: '90vh',
+          overflowY: 'auto',
           backgroundColor: 'var(--bg-card, #ffffff)',
           color: 'var(--text-color, #111111)',
-          borderRadius: '1.25rem',
-          padding: '5% 6%',
-          boxShadow: '0 12px 32px rgba(0,0,0,0.2)',
+          borderRadius: '1rem',
+          padding: '24px',
+          boxShadow: '0 12px 32px rgba(0,0,0,0.25)',
           boxSizing: 'border-box'
         }}
         onClick={(e) => e.stopPropagation()}

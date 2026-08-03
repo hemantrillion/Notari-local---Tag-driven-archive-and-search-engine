@@ -335,12 +335,48 @@ export default function WordEditor({ value, onChange, placeholder = "Write notes
         
         <div style={{ width: '1px', height: '16px', backgroundColor: '#ccc', margin: '0 4px' }} />
 
-        {/* Text Color Picker */}
-        <label style={{ display: 'inline-flex', alignItems: 'center', gap: '2px', cursor: 'pointer', fontSize: '11px' }} title="Font Color">
-          <span style={{ fontWeight: 'bold', color: 'var(--text-color)' }}>A</span>
+        {/* 6 Sample Emojis Right After List Option */}
+        <div style={{ display: 'inline-flex', gap: '2px', alignItems: 'center' }}>
+          {['📌', '⭐', '💡', '🔥', '✅', '🚀'].map((emoji) => (
+            <button
+              key={emoji}
+              type="button"
+              style={{
+                background: 'none',
+                border: 'none',
+                fontSize: '13px',
+                cursor: 'pointer',
+                padding: '2px 4px',
+                borderRadius: '4px',
+                lineHeight: 1
+              }}
+              title={`Insert ${emoji} emoji`}
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => {
+                const selection = window.getSelection();
+                let savedRange = null;
+                if (selection.rangeCount && editorRef.current) {
+                  const range = selection.getRangeAt(0);
+                  if (editorRef.current.contains(range.commonAncestorContainer)) {
+                    savedRange = range.cloneRange();
+                  }
+                }
+                insertHTMLAtSavedRange(emoji, savedRange);
+              }}
+            >
+              {emoji}
+            </button>
+          ))}
+        </div>
+
+        <div style={{ width: '1px', height: '16px', backgroundColor: '#ccc', margin: '0 4px' }} />
+
+        {/* Text Color Picker: A color block */}
+        <label style={{ display: 'inline-flex', alignItems: 'center', gap: '2px', cursor: 'pointer', fontSize: '11px' }} title="Text Color (A = Font Color Picker)">
+          <span style={{ fontWeight: 'bold', color: 'var(--text-color, #111111)', padding: '0 2px' }}>A</span>
           <input 
             type="color" 
-            style={{ width: '20px', height: '20px', padding: 0, border: 'none', background: 'none', cursor: 'pointer' }}
+            style={{ width: '18px', height: '18px', padding: 0, border: 'none', background: 'none', cursor: 'pointer' }}
             onChange={(e) => {
               document.execCommand('foreColor', false, e.target.value);
               if (editorRef.current) onChange(editorRef.current.innerHTML);
@@ -348,12 +384,12 @@ export default function WordEditor({ value, onChange, placeholder = "Write notes
           />
         </label>
 
-        {/* Highlight / Background Color Picker */}
-        <label style={{ display: 'inline-flex', alignItems: 'center', gap: '2px', cursor: 'pointer', fontSize: '11px' }} title="Highlight Color">
-          <span style={{ backgroundColor: '#ffeb3b', color: '#000', padding: '0 4px', borderRadius: '2px', fontWeight: 'bold' }}>H</span>
+        {/* Highlight / Background Color Picker: H color block */}
+        <label style={{ display: 'inline-flex', alignItems: 'center', gap: '2px', cursor: 'pointer', fontSize: '11px' }} title="Text Highlight Color (H = Background Highlight Color Picker)">
+          <span style={{ backgroundColor: '#ffeb3b', color: '#000000', padding: '0 4px', borderRadius: '2px', fontWeight: 'bold' }}>H</span>
           <input 
             type="color" 
-            style={{ width: '20px', height: '20px', padding: 0, border: 'none', background: 'none', cursor: 'pointer' }}
+            style={{ width: '18px', height: '18px', padding: 0, border: 'none', background: 'none', cursor: 'pointer' }}
             onChange={(e) => {
               document.execCommand('hiliteColor', false, e.target.value);
               if (editorRef.current) onChange(editorRef.current.innerHTML);

@@ -995,6 +995,26 @@ body {
   font-family: 'Georgia', serif !important;
 }
 
+.theme-skeumorphism.mode-dark .result-card,
+.theme-skeumorphism.mode-dark .search-bar-wrapper,
+.theme-skeumorphism.mode-dark .dashboard-table td,
+.theme-skeumorphism.mode-dark .preview-canvas {
+  border-radius: 10px !important;
+  border: 1px solid #334155 !important;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.4) !important;
+  font-family: 'Georgia', serif !important;
+}
+
+.theme-skeumorphism.mode-dark input,
+.theme-skeumorphism.mode-dark textarea,
+.theme-skeumorphism.mode-dark select {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border: 1px solid #334155 !important;
+}
+
 /* Maximalism: High-frequency 45deg lime green & white chevron pattern, heavy 4px black borders, Syne display typography */
 .theme-maximalism.mode-light .app-side {
   background: repeating-linear-gradient(45deg, #00ff44 0px, #00ff44 24px, #ffffff 24px, #ffffff 48px) !important;

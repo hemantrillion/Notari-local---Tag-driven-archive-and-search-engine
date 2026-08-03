@@ -517,3 +517,14 @@ Typography: Clean soft sans-serif (Nunito / Poppins).
   * Added base `.app-header` button contrast inheritance rules in [index.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/index.css) so header buttons and SVGs inherit the active header text color (`color: inherit !important; stroke: currentColor !important`).
   * Added explicit rules for Maximalism theme in Light and Dark modes (`.theme-maximalism .app-header button`, `.theme-maximalism .app-header svg`) setting text and stroke color to electric lime green (`#00ff44 !important`) against the black header background (`#000000`).
   * Tested production compilation (`npx vite build` succeeded in 117ms with 36 modules transformed).
+
+### Change 24: Compact Modal Dialog Sizing, Skeumorphism Dark Mode Contrast & Word Editor Emojis
+* **Goal**: I wanted to fix vertical stretching on Create Source and Create Tag dialog modals, resolve white-on-white text contrast issues in Skeumorphism Dark Mode, explain A and H color pickers in the Word Editor toolbar, and add 6 quick-insert emojis after the list option.
+* **Actions**:
+  * Updated [CreateSourceModal.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/floating-windows/CreateSourceModal.jsx) and [CreateTagModal.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/floating-windows/CreateTagModal.jsx) to use fixed 24px padding (`padding: '24px'`), compact max-width (`400px–420px`), and max-height (`maxHeight: '90vh'`) so dialog boxes sit compactly centered without vertical stretching.
+  * Updated [TagEditorModal.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/floating-windows/TagEditorModal.jsx) padding to 24px (`padding: '24px'`).
+  * Added Skeumorphism Dark Mode overrides in [index.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/index.css) (`.theme-skeumorphism.mode-dark`) to force dark metallic slate backgrounds (`linear-gradient(180deg, #1e293b, #0f172a)`) with silver-white text (`#f8fafc`).
+  * Updated [WordEditor.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/WordEditor.jsx) toolbar:
+    - Added 6 clickable sample emojis (`📌`, `⭐`, `💡`, `🔥`, `✅`, `🚀`) right after the `• List` button to insert emojis directly into text at the cursor position.
+    - Added descriptive tooltips (`title="Text Color (A = Font Color Picker)"` and `title="Text Highlight Color (H = Background Highlight Color Picker)"`) to `A` and `H` toolbar color pickers.
+  * Verified production build (`npx vite build` succeeded cleanly in 126ms with 36 modules transformed).

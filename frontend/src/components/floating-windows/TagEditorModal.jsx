@@ -74,7 +74,7 @@ export default function TagEditorModal({
           backgroundColor: 'var(--bg-card, #ffffff)',
           color: 'var(--text-color, #111111)',
           borderRadius: '1.25rem',
-          padding: '4% 5%',
+          padding: '24px',
           boxShadow: '0 16px 40px rgba(0,0,0,0.25)',
           display: 'flex',
           flexDirection: 'column',
