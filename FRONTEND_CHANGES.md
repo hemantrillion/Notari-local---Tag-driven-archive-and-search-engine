@@ -253,3 +253,9 @@ c:\Users\jai18\Desktop\link-archive-app\
 * **Actions**:
   * Added missing imports for `WebsiteDetailView` (`import WebsiteDetailView from './components/WebsiteDetailView';`) and `MediaPlayerModal` (`import MediaPlayerModal from './components/MediaPlayerModal';`) at the top of [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx).
   * Verified that Vite transforms all 34 component modules cleanly without runtime reference errors and tested production compilation (`npx vite build` succeeded in 120ms).
+
+### Change 9: CSS Root Fallback Tokens & Saved Theme State Validation
+* **Goal**: I wanted to ensure that the screen rendering is 100% reliable and guaranteed under all circumstances by adding complete fallback CSS variable tokens to `:root` in `index.css` and validating local storage theme state against active theme definitions.
+* **Actions**:
+  * Updated `:root` in [index.css](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/index.css) to define baseline default tokens (`--bg-app`, `--bg-header`, `--bg-card`, `--text-color`, `--border-color`, `--accent-color`, `--box-shadow`, `--font-family`), preventing blank or unrendered screens even if an unknown or legacy theme class is present.
+  * Updated `appTheme` state initialization in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) to validate saved local storage values against `THEME_OPTIONS`, cleanly defaulting to `'default'` if a previously selected theme was removed.

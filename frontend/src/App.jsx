@@ -100,7 +100,10 @@ function App() {
   const [detailTitle, setDetailTitle] = useState('');
   const [detailNotes, setDetailNotes] = useState('');
   const [activePlayerLink, setActivePlayerLink] = useState(null);
-  const [appTheme, setAppTheme] = useState(() => localStorage.getItem('appTheme') || 'default');
+  const [appTheme, setAppTheme] = useState(() => {
+    const saved = localStorage.getItem('appTheme');
+    return THEME_OPTIONS.some(t => t.id === saved) ? saved : 'default';
+  });
   const [themeMode, setThemeMode] = useState(() => localStorage.getItem('themeMode') || 'light');
   const [toast, setToast] = useState(null);
 
