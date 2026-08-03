@@ -343,17 +343,88 @@ c:\Users\jai18\Desktop\link-archive-app\
   * Preserved modal isolation (`default-theme-isolated`), keeping floating windows clean and unpolluted.
   * Verified production build (`npx vite build` succeeded in 148ms with 36 modules transformed).
 
-### Change 22: Complete 7-Theme Architectural Mapping & Light Mode Specifications
-* **Goal**: I wanted to document the complete 3-layer frontend architecture (Frontend Preset vs Theme Variables) and exact element-by-element specifications for all 7 Light Mode themes (`Bento Grid`, `Brutalism`, `Maximalism`, `Minimalism`, `Claymorphism`, `Skeumorphism`, `Neomorphism`) with Bento Grid canvas set to pure white `#ffffff`.
-* **Frontend Preset (Constant across themes)**:
-  - Table row architecture remains horizontal row wrappers (Tags & Sources dashboards stay rows, never columns).
-  - Modal floating windows (`SidebarDrawerModal`, `CreateTagModal`, `CreateSourceModal`, `TagEditorModal`, `MediaPlayerModal`) retain `default-theme-isolated` light/dark default styling.
-  - Toolbar action pills retain `border-radius: 30px` and single-line nowrap bounds; profile avatar retains `border-radius: 50%` circular boundary.
-* **7 Light Mode Theme Specifications**:
-  - **Bento Grid**: Pure white canvas (`#ffffff`), 20px pill rounded corners, zero borders, soft ambient drop shadow (`0 8px 24px rgba(0,0,0,0.05)`), 5 alternating pastel card background fills (lavender `#e9d5ff`, mint green `#d9f99d`, pink `#fbcfe8`, cyan `#bae6fd`, coral orange `#ffedd5`), Outfit font.
-  - **Brutalism**: Soft periwinkle canvas (`#e0e7ff`), 3px solid black borders (`#000000`), hard 4px black offset drop-shadows (`4px 4px 0px #000000`), 2px sharp corners, 3 circular window header dots (red, yellow, green), Space Grotesk font.
-  - **Maximalism**: 45-degree electric lime green & white diagonal chevron/stripe pattern (`repeating-linear-gradient(45deg, #00ff44, #ffffff)`), solid black header (`#000000`), 4px solid black borders, 6px solid black offset shadows (`6px 6px 0px #000000`), Syne font.
-  - **Minimalism**: Soft paper off-white canvas (`#fafafa`), thin 1px light gray borders (`#e5e5e5`), zero shadows (`none`), 4px minimal corners, Inter font.
-  - **Claymorphism**: Vibrant Sky Blue canvas (`#7dd3fc`), 3D inflated pure white clay cards (`#ffffff`) with 28px inflated corners and dual top-left white inset highlight glow + bottom-right soft blue drop shadow, Fredoka font.
-  - **Skeumorphism**: Metallic silver-gray control panel canvas (`linear-gradient(180deg, #e2e8f0, #cbd5e1)`), beveled card panels (`linear-gradient(180deg, #ffffff, #f1f5f9)`), 10px corners, inset white bevel highlights (`inset 0 1px 0 rgba(255,255,255,0.9)`), Georgia serif font.
-  - **Neomorphism**: Monochromatic soft plastic gray canvas (`#e0e5ec`), soft plastic cards sharing exact `#e0e5ec` color (`border: none`), 20px rounded corners, opposing dual light/dark soft extruded shadows (`9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff`), Nunito font.
+# Element-by-Element Light Mode Theme Specifications
+This document outlines the exact 3-layer visual theme specifications for all 7 Light Mode themes based on the reference image (with Bento Grid canvas set to pure white #ffffff), awaiting your explicit signal before writing any code.
+
+1. Bento Grid (Top Left in Image)
+Background Canvas: Pure white backdrop (#ffffff).
+App Header Bar: Pure white (#ffffff), thin indigo bottom border (rgba(99, 102, 241, 0.15)), 0px shadow.
+Search Bar: Pure white (#ffffff), 20px rounded pill corners, zero border, soft indigo ambient drop shadow (0 8px 24px rgba(99,102,241,0.08)).
+Cards & Feed Containers: 20px rounded pill corners, zero border, soft ambient drop shadow (0 8px 24px rgba(0,0,0,0.05)). Cards cycle through 5 alternating pastel background fills:
+Pastel Lavender (#e9d5ff card, #581c87 text)
+Pastel Mint Green (#d9f99d card, #1a2e05 text)
+Pastel Pink (#fbcfe8 card, #831843 text)
+Pastel Cyan (#bae6fd card, #0c4a6e text)
+Pastel Coral Orange (#ffedd5 card, #7c2d12 text)
+Dashboard Tables & Rows: Single horizontal row wrapper, 20px rounded end-caps, pastel lavender background (#e9d5ff), zero border.
+Badges & Tags: Rounded pastel pill badges with dark contrasting micro-text.
+Buttons & Toolbar Pills: Oval pill buttons (border-radius: 30px), indigo fill (#6366f1), soft hover lift (transform: translateY(-2px)).
+Micro-Graphics: Modular bento tiles, star/heart/check icon badges.
+Typography: Geometric sans-serif (Outfit / Plus Jakarta Sans).
+
+2. Brutalism (Top Right in Image)
+Background Canvas: Soft periwinkle canvas (#e0e7ff).
+App Header Bar: Pure white (#ffffff), 3px solid black bottom border (#000000).
+Search Bar: Pure white (#ffffff), 2px sharp corners, 3px solid black border (#000000), hard black 4px offset box-shadow (4px 4px 0px #000000) with zero blur.
+Cards & Feed Containers: Rectangular card containers with 3px solid black borders (#000000), hard 4px black offset drop-shadows (4px 4px 0px #000000), 2px sharp corners. Cards cycle through vibrant Brutalist card fills (pure white #ffffff, sunny yellow #ffe600, mint green #4ade80, cyan #38bdf8, neon pink #ff3366).
+Dashboard Tables & Rows: Single horizontal row wrapper, 2px sharp end-caps, white background, 3px solid black border, hard 4px black offset shadow.
+Badges & Tags: Rectangular tags with 2px solid black borders and solid yellow or neon pink fills.
+Buttons & Toolbar Pills: Heavy rectangular buttons with 3px solid black borders, neon pink/cyan/green fills, and hard 4px black offset shadows (4px 4px 0px #000000).
+Click physics: Button depresses by 4px (transform: translate(4px, 4px)), flattening the offset shadow to 0px on click.
+Micro-Graphics: 3 circular window header dots (red #ff5555, yellow #ffbd2e, green #27c93f) on card headers, thick black dividing lines.
+Typography: Monospaced display font (Space Grotesk / Courier).
+
+3. Maximalism (Middle Left in Image)
+Background Canvas: 45-degree electric lime green & white diagonal chevron/stripe wallpaper pattern (repeating-linear-gradient(45deg, #00ff44 0px, #00ff44 24px, #ffffff 24px, #ffffff 48px)).
+App Header Bar: Pure black (#000000), electric lime green logo text (#00ff44), 4px solid black bottom border.
+Search Bar: Pure white (#ffffff), 4px corner radius, 4px solid black border, 6px solid black offset shadow (6px 6px 0px #000000).
+Cards & Feed Containers: Pure white card containers (#ffffff), 4px solid black borders, 6px solid black offset shadows (6px 6px 0px #000000), 4px border radius.
+Dashboard Tables & Rows: Single horizontal row wrapper, 4px rounded end-caps, white background, 4px solid black border, 6px solid black shadow.
+Badges & Tags: High-contrast black outline badges with lime green or magenta text.
+Buttons & Toolbar Pills: Solid black action buttons with lime green/magenta text, 4px solid borders, scale boost on hover (transform: scale(1.03)).
+Micro-Graphics: Black outline sponsor badges, giant display typography blocks.
+Typography: Massive display font (Syne / Impact), bold all-caps display text.
+
+4. Minimalism (Middle Center in Image)
+Background Canvas: Soft warm paper off-white canvas (#f4f4f4 / #fafafa).
+App Header Bar: Pure white (#ffffff), thin #e5e5e5 bottom border.
+Search Bar: Pure white (#ffffff), 4px minimal border radius, ultra-thin 1px light gray border (#e5e5e5), zero box-shadow (none).
+Cards & Feed Containers: Pure white card containers (#ffffff), 4px minimal border radius, ultra-thin 1px light gray border (#e5e5e5), zero box-shadow (none).
+Dashboard Tables & Rows: Single horizontal row wrapper, 4px minimal end-caps, pure white background, thin 1px #e5e5e5 border, zero shadow.
+Badges & Tags: Minimal white badges with thin gray borders and black text.
+Buttons & Toolbar Pills: Minimal solid black pill buttons (#111111) with white text, zero shadow, thin crisp outline.
+Micro-Graphics: Organic black pebble shapes, fine wireframe grid background lines, elegant serif header accents.
+Typography: Neutral lightweight sans-serif (Inter / Helvetica Neue) with generous whitespace.
+
+5. Claymorphism (Middle Right in Image)
+Background Canvas: Vibrant Sky Blue backdrop canvas (#38bdf8 / #7dd3fc).
+App Header Bar: Ice blue (#e0f2fe), thin #bae6fd bottom border.
+Search Bar: 3D inflated pure white clay wrapper (#ffffff), 28px inflated rounded corners, dual 3D clay glow effect (box-shadow: inset -5px -5px 10px rgba(37,99,235,0.08), inset 5px 5px 10px rgba(255,255,255,0.95), 10px 16px 28px rgba(37,99,235,0.15)).
+Cards & Feed Containers: 3D inflated pure white clay cards (#ffffff), 28px inflated rounded corners, signature dual top-left white inset highlight glow and bottom-right soft blue drop shadow.
+Dashboard Tables & Rows: Single horizontal row wrapper, 28px inflated rounded end-caps, pure white clay background, dual 3D shadow glow.
+Badges & Tags: Inflated clay pill badges with soft blue drop shadows.
+Buttons & Toolbar Pills: 3D inflated blue clay action buttons (#2563eb), 30px pill radius, with top-left white inset highlight and soft blue drop shadow.
+Micro-Graphics: Friendly rounded badge pills, soft 3D floating icons.
+Typography: Soft rounded sans-serif (Fredoka / Quicksand).
+
+6. Skeumorphism (Bottom Center in Image)
+Background Canvas: Metallic silver-gray control panel surface (linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%)).
+App Header Bar: Metallic vertical gradient (linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%)), #cbd5e1 bottom border.
+Search Bar: Metallic silver gradient container (linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%)), 10px border radius, #cbd5e1 border, inset top white bevel highlight (inset 0 1px 0 rgba(255,255,255,0.9)).
+Cards & Feed Containers: Metallic silver gradient card containers (linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%)), 10px border radius, #cbd5e1 border, beveled inset panel highlights and tactile drop shadow (box-shadow: 0 3px 6px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 0 rgba(0,0,0,0.1)).
+Dashboard Tables & Rows: Single horizontal row wrapper, 10px beveled end-caps, metallic gradient fill, inset top white bevel highlight.
+Badges & Tags: Metallic badges with debossed borders and steel blue text.
+Buttons & Toolbar Pills: Convex metallic action buttons (linear-gradient(180deg, #0284c7 0%, #0369a1 100%)), top white bevel highlight, debossed border ring.
+Micro-Graphics: Debossed panel tracks, rotary dial tick marks, LED status dots (green #10b981, red #ef4444).
+Typography: Industrial serif (Georgia / Cinzel).
+
+7. Neomorphism (Bottom Right in Image)
+Background Canvas: Monochromatic soft plastic gray canvas (#e0e5ec).
+App Header Bar: Soft gray (#e0e5ec), zero bottom border.
+Search Bar: Soft gray inset field (#e0e5ec), inset neomorphic shadow (box-shadow: inset 6px 6px 10px #a3b1c6, inset -6px -6px 10px #ffffff), 20px rounded corners, zero border.
+Cards & Feed Containers: Soft plastic card containers sharing the exact same #e0e5ec color as the background canvas (border: none), neomorphic outset soft dual shadows (box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff), 20px smooth rounded corners.
+Dashboard Tables & Rows: Single horizontal row wrapper, 20px rounded plastic end-caps, soft gray #e0e5ec background, extruded neomorphic dual shadows.
+Badges & Tags: Extruded soft gray pill badges with cerulean blue text.
+Buttons & Toolbar Pills: Soft extruded plastic action buttons (#e0e5ec fill) with cerulean blue accent text (#3182ce) and neomorphic outset shadows (6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff).
+Micro-Graphics: Soft circular toggle dots, pressed inset input slots.
+Typography: Clean soft sans-serif (Nunito / Poppins).
