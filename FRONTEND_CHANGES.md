@@ -790,3 +790,9 @@ Typography: Clean soft sans-serif (Nunito / Poppins).
 * **Actions**:
   * Added `onOpenManualUrlModal={() => setIsManualUrlModalOpen(true)}` to the `<UntaggedDashboard />` render call in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) across both `frontend` and `real-app-Notari-(local)`.
   * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 115ms & 138ms with 0 errors).
+
+### Change 34: Workflow Preservation of Native Android Code & Share Intent Filters
+* **Goal**: I wanted to remove `rm -rf android` from .github/workflows/build-apk.yml so that custom MainActivity.java and AndroidManifest.xml intent-filters are preserved during CI builds.
+* **Actions**:
+  * Removed `rm -rf android` and `npx cap add android` from [.github/workflows/build-apk.yml](file:///c:/Users/jai18/Desktop/link-archive-app/.github/workflows/build-apk.yml), replacing them with `npx cap copy android`.
+  * Preserved native [MainActivity.java](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)/android/app/src/main/java/online/hekugo/notarilocal/MainActivity.java) and [AndroidManifest.xml](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)/android/app/src/main/AndroidManifest.xml) during APK compilation.
