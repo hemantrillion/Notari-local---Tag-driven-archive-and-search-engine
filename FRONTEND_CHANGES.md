@@ -1013,3 +1013,9 @@ Typography: Clean soft sans-serif (Nunito / Poppins).
   * Updated [.github/workflows/build-apk.yml](file:///c:/Users/jai18/Desktop/link-archive-app/.github/workflows/build-apk.yml) with automatic `gradlew` initialization and native Java share intent script injection.
   * Created root Gradle files in [real-app-Notari-(local)/android](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)/android).
   * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 132ms & 129ms with 0 errors).
+
+### Change 38: Fix Capacitor Platform Already Exists Error in Build Workflow
+* **Goal**: I wanted to fix the android platform already exists error in CI by running npx cap sync android and generating gradlew via gradle wrapper if missing.
+* **Actions**:
+  * Updated [.github/workflows/build-apk.yml](file:///c:/Users/jai18/Desktop/link-archive-app/.github/workflows/build-apk.yml) step to use `npx cap sync android` and automated `gradle wrapper --gradle-version 8.2.1` fallback generation.
+  * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 122ms & 125ms with 0 errors).
