@@ -1414,6 +1414,7 @@ function App() {
                   handleDeleteLink={handleDeleteLink}
                   setActiveViewLink={setActiveViewLink}
                   setDetailMode={setDetailMode}
+                  onOpenManualUrlModal={() => setIsManualUrlModalOpen(true)}
                 />
               )}
 

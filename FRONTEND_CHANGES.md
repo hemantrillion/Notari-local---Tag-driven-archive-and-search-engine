@@ -784,3 +784,9 @@ Typography: Clean soft sans-serif (Nunito / Poppins).
   * Created [MainActivity.java](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)/android/app/src/main/java/online/hekugo/notarilocal/MainActivity.java) extending `BridgeActivity` to intercept Android system `ACTION_SEND` intents and evaluate JavaScript `window.handleAndroidIncomingShare(url)`.
   * Added `useEffect` in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)/src/App.jsx) to listen for `handleAndroidIncomingShare`, parse URLs, generate URL IDs, and save shared links directly into Untagged.
   * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 120ms & 117ms with 0 errors).
+
+### Change 32: Untagged Dashboard onOpenManualUrlModal Prop Binding Fix
+* **Goal**: I wanted to pass onOpenManualUrlModal prop to UntaggedDashboard in App.jsx so that clicking the + Add Manual URL button opens the modal.
+* **Actions**:
+  * Added `onOpenManualUrlModal={() => setIsManualUrlModalOpen(true)}` to the `<UntaggedDashboard />` render call in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) across both `frontend` and `real-app-Notari-(local)`.
+  * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 115ms & 138ms with 0 errors).
