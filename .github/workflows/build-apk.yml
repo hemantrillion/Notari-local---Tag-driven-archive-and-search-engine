@@ -181,9 +181,11 @@ jobs:
           echo "    }" >> android/build.gradle
           echo "}" >> android/build.gradle
 
-      - name: Build Android APK with Gradle
+      - name: Enable AndroidX in Gradle Properties & Build APK
         run: |
           cd "real-app-Notari-(local)/android"
+          echo "android.useAndroidX=true" > gradle.properties
+          echo "android.enableJetifier=true" >> gradle.properties
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
 
