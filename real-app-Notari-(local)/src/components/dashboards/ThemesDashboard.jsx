@@ -7,7 +7,7 @@ export default function ThemesDashboard({
   changeTheme = () => {}
 }) {
   return (
-    <div id="themes-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>
+    <div id="themes-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()} style={{ overflowY: 'auto', maxHeight: '100%', paddingBottom: '60px' }}>
       {/* 8 Theme Options in clean uniform 2-column grid of rounded rectangular cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.85rem' }}>
         {THEME_OPTIONS.map((theme) => {

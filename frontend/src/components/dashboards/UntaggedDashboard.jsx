@@ -12,12 +12,20 @@ export default function UntaggedDashboard({
 }) {
   return (
     <div id="untagged-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-        <h2 style={{ fontSize: '18px', fontWeight: 600, margin: 0, color: 'var(--text-color)' }}>Untagged Records</h2>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '16px' }}>
         <button 
-          className="btn-primary"
+          type="button"
           onClick={onOpenManualUrlModal}
-          style={{ padding: '8px 16px', borderRadius: '6px', fontSize: '13px', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', backgroundColor: 'var(--accent, #1a73e8)', color: '#fff', border: 'none' }}
+          style={{ 
+            padding: '6px 16px', 
+            borderRadius: '20px', 
+            fontSize: '13px', 
+            fontWeight: 600, 
+            cursor: 'pointer', 
+            backgroundColor: 'transparent', 
+            color: 'var(--accent, #1a73e8)', 
+            border: '1px solid var(--accent, #1a73e8)' 
+          }}
         >
           + Add Manual URL
         </button>

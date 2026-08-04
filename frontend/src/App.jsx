@@ -96,6 +96,36 @@ const DEFAULT_INITIAL_LINKS = [
     primaryTagLabel: 'cooking',
     tags: [{ code: '0003', label: 'cooking' }],
     createdAt: new Date().toISOString()
+  },
+  {
+    id: 'link-4',
+    readableCode: 'web-web-0000-01-0826-004',
+    url: 'https://en.wikipedia.org/wiki/Artificial_intelligence',
+    title: 'Artificial intelligence - Wikipedia',
+    notes: 'Untagged article reference on AI.',
+    from: 'Web',
+    sourceCode: 'web',
+    typeCode: 'web',
+    primaryTag: '0000',
+    primaryTagLabel: 'untagged',
+    tagLabel: 'untagged',
+    tags: [],
+    createdAt: new Date().toISOString()
+  },
+  {
+    id: 'link-5',
+    readableCode: 'ytb-vid-0000-01-0826-005',
+    url: 'https://www.youtube.com/watch?v=s2mDyMS19t4',
+    title: 'React JS Full Course for Beginners - 2026 Edition',
+    notes: 'Untagged video tutorial link.',
+    from: 'YouTube',
+    sourceCode: 'ytb',
+    typeCode: 'vid',
+    primaryTag: '0000',
+    primaryTagLabel: 'untagged',
+    tagLabel: 'untagged',
+    tags: [],
+    createdAt: new Date().toISOString()
   }
 ];
 
@@ -449,23 +479,23 @@ function App() {
   };
 
   const handleUpdateLinkContent = async (id, title, notes, styleSettings = null) => {
+    const updatedFields = { title, notes };
+    if (styleSettings) {
+      updatedFields.styleSettings = styleSettings;
+    }
+
+    setLinks(prev => prev.map(l => l.id === id ? { ...l, ...updatedFields } : l));
+    setActiveViewLink(prev => prev && prev.id === id ? { ...prev, ...updatedFields } : prev);
+    showToast('Changes saved successfully!');
+
     try {
-      const payload = { title, notes };
-      if (styleSettings) {
-        payload.styleSettings = styleSettings;
-      }
-      const response = await fetch(`${API_BASE}/links/${id}`, {
+      await fetch(`${API_BASE}/links/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(updatedFields)
       });
-      const resData = await response.json();
-      if (resData.success) {
-        setLinks(prev => prev.map(l => l.id === id ? { ...l, ...resData.data } : l));
-        setActiveViewLink(prev => prev && prev.id === id ? { ...prev, ...resData.data } : prev);
-      }
     } catch (err) {
-      console.error('Failed to update page content:', err);
+      console.error('Failed to sync page content update with backend:', err);
     }
   };
 
@@ -682,31 +712,28 @@ function App() {
       return;
     }
 
+    const updatedLinkData = {
+      readableCode: finalReadableCode,
+      tags: finalTags,
+      notes: finalNotes,
+      title: editTitle,
+      primaryTag: firstTag.code,
+      primaryTagLabel: firstTag.label,
+      tagLabel: firstTag.label
+    };
+
+    setLinks(prev => prev.map(l => l.id === activeEditLinkId ? { ...l, ...updatedLinkData } : l));
+    setActiveEditLinkId(null);
+    showToast('Changes saved successfully!');
+
     try {
-      const response = await fetch(`${API_BASE}/links/${activeEditLinkId}`, {
+      await fetch(`${API_BASE}/links/${activeEditLinkId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          readableCode: finalReadableCode,
-          tags: finalTags,
-          notes: finalNotes,
-          title: editTitle
-        })
+        body: JSON.stringify(updatedLinkData)
       });
-      const resData = await response.json();
-      if (response.ok && resData.success) {
-        setActiveEditLinkId(null);
-        showToast('Tag saved successfully!');
-        fetchLinks();
-        fetchTags();
-        fetchSources();
-      } else {
-        setEditError(resData.error || 'Cannot be tagged');
-        showToast(resData.error || 'Cannot be tagged', 'error');
-      }
     } catch (err) {
-      setEditError('Cannot be tagged');
-      showToast('Cannot be tagged', 'error');
+      console.error('Failed to sync tag edit with backend:', err);
     }
   };
 
@@ -1373,55 +1400,33 @@ function App() {
           )}
         </div>
 
-        {/* Transparent keyboard backdrop overlay */}
-        {isVirtualKeyboardOpen && (
-          <div 
-            className="keyboard-overlay-backdrop animate-fade"
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsVirtualKeyboardOpen(false);
-              document.querySelector('.search-input')?.blur();
-            }}
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.45)',
-              zIndex: 9,
-              pointerEvents: 'auto',
-              cursor: 'pointer'
-            }}
-          />
+        {/* Add Manual URL Modal */}
+        {isManualUrlModalOpen && (
+          <div className="modal-overlay" onClick={() => setIsManualUrlModalOpen(false)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className="modal-container tag-editor-dialog" onClick={(e) => e.stopPropagation()} style={{ width: '420px', maxWidth: '90vw', backgroundColor: 'var(--bg-card, #fff)', padding: '20px', borderRadius: '12px', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: 'var(--text-color)' }}>Add Manual URL</h3>
+                <button type="button" onClick={() => setIsManualUrlModalOpen(false)} style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer', color: 'var(--text-color)' }}>×</button>
+              </div>
+              <form onSubmit={handleManualUrlSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <input 
+                  type="url" 
+                  className="input-field"
+                  style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid var(--border, #ccc)', boxSizing: 'border-box' }}
+                  placeholder="Enter URL (e.g. https://www.youtube.com/...)"
+                  value={manualUrlInput}
+                  onChange={(e) => setManualUrlInput(e.target.value)}
+                  autoFocus
+                  required
+                />
+                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '8px' }}>
+                  <button type="button" onClick={() => setIsManualUrlModalOpen(false)} style={{ padding: '8px 16px', borderRadius: '20px', border: '1px solid #ccc', background: 'none', cursor: 'pointer', fontWeight: 600 }}>Cancel</button>
+                  <button type="submit" style={{ padding: '8px 18px', borderRadius: '20px', border: 'none', backgroundColor: '#1a73e8', color: '#fff', cursor: 'pointer', fontWeight: 600 }}>Add URL</button>
+                </div>
+              </form>
+            </div>
+          </div>
         )}
-
-        {/* Virtual Keyboard Mockup */}
-        <div 
-          className={`virtual-keyboard ${isVirtualKeyboardOpen ? 'visible' : ''}`}
-          onClick={(e) => e.stopPropagation()} // Prevent dismiss when tapping keyboard
-        >
-          <div className="keyboard-row">
-            {['Q','W','E','R','T','Y','U','I','O','P'].map(k => (
-              <div key={k} className="key" onClick={() => handleKeyboardPress(k)}>{k}</div>
-            ))}
-          </div>
-          <div className="keyboard-row">
-            {['A','S','D','F','G','H','J','K','L'].map(k => (
-              <div key={k} className="key" onClick={() => handleKeyboardPress(k)}>{k}</div>
-            ))}
-          </div>
-          <div className="keyboard-row">
-            <div className="key special" onClick={() => handleKeyboardPress('BACKSPACE')}>⌫</div>
-            {['Z','X','C','V','B','N','M'].map(k => (
-              <div key={k} className="key" onClick={() => handleKeyboardPress(k)}>{k}</div>
-            ))}
-            <div className="key special" onClick={() => handleKeyboardPress('DONE')}>DONE</div>
-          </div>
-          <div className="keyboard-row">
-            <div className="key space" onClick={() => handleKeyboardPress('SPACE')}>SPACE</div>
-          </div>
-        </div>
 
         {/* Modular Floating Window: Tag Editor */}
         <TagEditorModal
