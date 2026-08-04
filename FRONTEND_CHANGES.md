@@ -1019,3 +1019,10 @@ Typography: Clean soft sans-serif (Nunito / Poppins).
 * **Actions**:
   * Updated [.github/workflows/build-apk.yml](file:///c:/Users/jai18/Desktop/link-archive-app/.github/workflows/build-apk.yml) step to use `npx cap sync android` and automated `gradle wrapper --gradle-version 8.2.1` fallback generation.
   * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 122ms & 125ms with 0 errors).
+
+### Change 43: Remove Desktop Mock Phone Simulator from Standalone Mobile App
+* **Goal**: I wanted to remove the mock phone screen simulator, YouTube/browser simulator panels, and split layout from the mobile application so the real Android app renders 100% full-screen directly on native phone displays.
+* **Actions**:
+  * Removed `phone-side` mockup split container from [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)/src/App.jsx) in `real-app-Notari-(local)`.
+  * Updated main app container to render `app-side` 100% full-screen (`100vw` by `100vh`).
+  * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 130ms & 141ms with 0 errors).
