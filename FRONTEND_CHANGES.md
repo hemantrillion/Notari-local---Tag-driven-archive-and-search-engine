@@ -1006,3 +1006,10 @@ Typography: Clean soft sans-serif (Nunito / Poppins).
   * Created native [MainActivity.java](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)/android/app/src/main/java/online/hekugo/notarilocal/MainActivity.java) share intent handler bridge.
   * Created [.github/workflows/build-apk.yml](file:///c:/Users/jai18/Desktop/link-archive-app/.github/workflows/build-apk.yml) workflow for automated APK building.
   * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 121ms & 122ms with 0 errors).
+
+### Change 37: Fix Gradle Wrapper & Inline Native Java Share Injection in Workflow
+* **Goal**: I wanted to fix the chmod: cannot access 'gradlew' CI error by making the GitHub Actions workflow automatically generate the Gradle wrapper and inject native MainActivity.java and AndroidManifest.xml intent filters during build time.
+* **Actions**:
+  * Updated [.github/workflows/build-apk.yml](file:///c:/Users/jai18/Desktop/link-archive-app/.github/workflows/build-apk.yml) with automatic `gradlew` initialization and native Java share intent script injection.
+  * Created root Gradle files in [real-app-Notari-(local)/android](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)/android).
+  * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 132ms & 129ms with 0 errors).
