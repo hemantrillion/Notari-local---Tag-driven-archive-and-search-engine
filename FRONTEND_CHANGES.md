@@ -770,3 +770,10 @@ Typography: Clean soft sans-serif (Nunito / Poppins).
   * Fixed `handleUpdateLinkContent` and `handleSaveTagEditor` in `App.jsx` to update local `links` state permanently and display bottom-right toast `"Changes saved successfully!"`.
   * Added `overflow-y: auto` to [ThemesDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/dashboards/ThemesDashboard.jsx) to eliminate clipping at bottom.
   * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 122ms & 126ms with 0 errors).
+
+### Change 30: State Definition Fix for isManualUrlModalOpen in App.jsx
+* **Goal**: I wanted to fix the runtime ReferenceError where isManualUrlModalOpen was referenced in JSX without being declared in App.jsx state.
+* **Actions**:
+  * Added `const [isManualUrlModalOpen, setIsManualUrlModalOpen] = useState(false)` and `const [manualUrlInput, setManualUrlInput] = useState('')` in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) across both `frontend` and `real-app-Notari-(local)`.
+  * Added `handleManualUrlSubmit` form handler to parse URL domains, generate `readableCode` URL IDs, insert untagged links, and display a success toast.
+  * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 124ms & 120ms with 0 errors).

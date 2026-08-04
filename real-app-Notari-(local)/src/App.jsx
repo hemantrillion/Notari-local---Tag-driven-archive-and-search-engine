@@ -137,6 +137,45 @@ function App() {
   const [recentShowCount, setRecentShowCount] = useState(10);
   const [activeEditLinkId, setActiveEditLinkId] = useState(null);
   const [isLocalStorageEnabled, setIsLocalStorageEnabled] = useState(true);
+  const [isManualUrlModalOpen, setIsManualUrlModalOpen] = useState(false);
+  const [manualUrlInput, setManualUrlInput] = useState('');
+
+  const handleManualUrlSubmit = (e) => {
+    e.preventDefault();
+    if (!manualUrlInput.trim()) return;
+    let url = manualUrlInput.trim();
+    if (!/^https?:\/\//i.test(url)) {
+      url = 'https://' + url;
+    }
+    let sourceCode = 'web';
+    if (/youtube\.com|youtu\.be/i.test(url)) sourceCode = 'ytb';
+    else if (/instagram\.com/i.test(url)) sourceCode = 'ins';
+    else if (/twitter\.com|x\.com/i.test(url)) sourceCode = 'twt';
+
+    const count = links.length + 1;
+    const readableCode = `${sourceCode}-web-0000-01-0826-${String(count).padStart(3, '0')}`;
+
+    const newLink = {
+      id: String(Date.now()),
+      readableCode,
+      url,
+      title: url,
+      notes: '',
+      from: sourceCode === 'ytb' ? 'YouTube' : sourceCode === 'ins' ? 'Instagram' : sourceCode === 'twt' ? 'Twitter' : 'Web',
+      sourceCode,
+      typeCode: 'web',
+      primaryTag: '0000',
+      primaryTagLabel: 'untagged',
+      tagLabel: 'untagged',
+      tags: [],
+      createdAt: new Date().toISOString()
+    };
+
+    setLinks((prev) => [newLink, ...prev]);
+    setManualUrlInput('');
+    setIsManualUrlModalOpen(false);
+    showToast('Manual URL added to Untagged');
+  };
 
   // Search States (Right Panel)
   const [searchQuery, setSearchQuery] = useState('');
