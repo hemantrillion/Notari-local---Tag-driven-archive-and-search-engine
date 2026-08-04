@@ -546,3 +546,11 @@ Typography: Clean soft sans-serif (Nunito / Poppins).
   * Created `hekugo.online/notari-local/index.html` providing a dedicated APK download page matching the Zeitplan download layout.
   * Committed and pushed `hekugo.online` repository updates to `origin main`.
   * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded cleanly in ~130ms).
+
+### Change 27: Clean Images Tab Aspect Ratio Rendering, APK Release Asset & GitHub Actions Workflow Fix
+* **Goal**: I wanted to remove outer card borders, titles, breadcrumbs, and notes from the Images search tab to display pure images in their natural aspect ratio, upload the live APK file to hekugo.online, and fix the Gradle Kotlin stdlib duplicate class error in the GitHub Actions build workflow.
+* **Actions**:
+  * Updated [HomeDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/dashboards/HomeDashboard.jsx) in both `frontend` and `real-app-Notari-(local)` so that when `activeSearchTab === 'images'`, it renders ONLY the image in its natural aspect ratio (`objectFit: 'contain'`, `height: 'auto'`) with no card border, breadcrumb, title, or text excerpt.
+  * Added `Notari-local-v1.0.0.apk` asset to `hekugo.online/notari-local/Notari-local-v1.0.0.apk` and pushed to `origin main` so the Download APK button functions properly.
+  * Created [.github/workflows/build-apk.yml](file:///c:/Users/jai18/Desktop/link-archive-app/.github/workflows/build-apk.yml) with an automated Gradle step patching Kotlin `resolutionStrategy` to substitute legacy `kotlin-stdlib-jdk7` and `kotlin-stdlib-jdk8` with `kotlin-stdlib:1.8.22`, eliminating `checkDebugDuplicateClasses` failures.
+  * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 205ms & 185ms with 0 errors).

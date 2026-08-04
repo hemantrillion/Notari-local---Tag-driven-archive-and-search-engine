@@ -289,6 +289,33 @@ export default function HomeDashboard({
                         ) : (link.notes || '').match(/<(video|iframe)[^>]+src=["']([^"']+)["']/i)?.[1]
                       ) : null;
 
+                      if (activeSearchTab === 'images') {
+                        return (
+                          <div 
+                            key={link.id} 
+                            className="animate-fade"
+                            onClick={() => {
+                              setActiveViewLink(link);
+                              setDetailMode('view');
+                            }}
+                            style={{ cursor: 'pointer', margin: '16px 0', display: 'flex', justifyContent: 'center' }}
+                          >
+                            <img 
+                              src={imageSrc} 
+                              alt={link.title || 'Image'} 
+                              style={{ 
+                                maxWidth: '100%', 
+                                maxHeight: '500px',
+                                height: 'auto', 
+                                objectFit: 'contain', 
+                                borderRadius: '12px',
+                                display: 'block'
+                              }} 
+                            />
+                          </div>
+                        );
+                      }
+
                       return (
                         <div 
                           key={link.id} 
@@ -306,16 +333,6 @@ export default function HomeDashboard({
                             <span style={{ color: '#70757a', fontSize: '12px' }}>•</span>
                             <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{link.readableCode}</span>
                           </div>
-
-                          {activeSearchTab === 'images' && imageSrc && (
-                            <div style={{ marginBottom: '10px' }}>
-                              <img 
-                                src={imageSrc} 
-                                alt={link.title || 'Image Preview'} 
-                                style={{ width: '100%', maxHeight: '240px', objectFit: 'cover', borderRadius: '8px', border: '1px solid var(--border)' }} 
-                              />
-                            </div>
-                          )}
 
                           {activeSearchTab === 'videos' && videoEmbedSrc && (
                             <div style={{ marginBottom: '10px' }}>
