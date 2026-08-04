@@ -1026,3 +1026,11 @@ Typography: Clean soft sans-serif (Nunito / Poppins).
   * Removed `phone-side` mockup split container from [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)/src/App.jsx) in `real-app-Notari-(local)`.
   * Updated main app container to render `app-side` 100% full-screen (`100vw` by `100vh`).
   * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 130ms & 141ms with 0 errors).
+
+### Change 44: Tag & Publish Release Version Snapshots (v1.0.0, v1.0-web, v1.0-app)
+* **Goal**: I wanted to create permanent immutable release snapshots of the codebase so future updates can be built without needing to revert or lose Milestone 1 code.
+* **Actions**:
+  * Tagged master release `v1.0.0` for the combined project milestone.
+  * Tagged release `v1.0-web` for the desktop website application code.
+  * Tagged release `v1.0-app` for the standalone mobile application code.
+  * Pushed all 3 release tags to GitHub remote (`git push origin --tags`).
