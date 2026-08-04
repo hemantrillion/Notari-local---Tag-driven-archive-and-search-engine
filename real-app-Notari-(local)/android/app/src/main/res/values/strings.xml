@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Notari (local)</string>
+    <string name="title_activity_main">Notari (local)</string>
+    <string name="package_name">online.hekugo.notarilocal</string>
+    <string name="custom_url_scheme">online.hekugo.notarilocal</string>
+</resources>
