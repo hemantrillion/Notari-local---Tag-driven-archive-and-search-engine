@@ -38,19 +38,14 @@ jobs:
           npm install
           npm run build
 
-      - name: Install Capacitor & Sync Android Project
+      - name: Install Capacitor & Generate Clean Android Platform
         run: |
           cd "real-app-Notari-(local)"
           npm install @capacitor/core @capacitor/android
           npm install -D @capacitor/cli
-          npx cap sync android || true
-
-      - name: Generate Gradle Wrapper If Missing
-        run: |
-          cd "real-app-Notari-(local)/android"
-          if [ ! -f "gradlew" ]; then
-            gradle wrapper --gradle-version 8.2.1
-          fi
+          rm -rf android
+          npx cap add android
+          npx cap copy android
 
       - name: Inject Custom Native Java Share Bridge & Priority Intent Filters
         run: |
