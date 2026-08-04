@@ -413,6 +413,50 @@ function App() {
     fetchTags();
     fetchSources();
   }, []);
+
+  // Handle Incoming Shared URLs from Android System Share Sheet
+  useEffect(() => {
+    window.handleAndroidIncomingShare = (sharedUrl) => {
+      if (!sharedUrl) return;
+      let url = sharedUrl.trim();
+      const urlMatch = url.match(/https?:\/\/[^\s]+/i);
+      if (urlMatch) {
+        url = urlMatch[0];
+      }
+
+      let sourceCode = 'web';
+      if (/youtube\.com|youtu\.be/i.test(url)) sourceCode = 'ytb';
+      else if (/instagram\.com/i.test(url)) sourceCode = 'ins';
+      else if (/twitter\.com|x\.com/i.test(url)) sourceCode = 'twt';
+
+      const count = links.length + 1;
+      const readableCode = `${sourceCode}-web-0000-01-0826-${String(count).padStart(3, '0')}`;
+
+      const newLink = {
+        id: String(Date.now()),
+        readableCode,
+        url,
+        title: url,
+        notes: '',
+        from: sourceCode === 'ytb' ? 'YouTube' : sourceCode === 'ins' ? 'Instagram' : sourceCode === 'twt' ? 'Twitter' : 'Web',
+        sourceCode,
+        typeCode: 'web',
+        primaryTag: '0000',
+        primaryTagLabel: 'untagged',
+        tagLabel: 'untagged',
+        tags: [],
+        createdAt: new Date().toISOString()
+      };
+
+      setLinks((prev) => [newLink, ...prev]);
+      setActiveTab('untagged');
+      showToast('Shared link received & saved to Untagged!');
+    };
+
+    return () => {
+      delete window.handleAndroidIncomingShare;
+    };
+  }, [links]);
   useEffect(() => {
     if (activeViewLink) {
       setDetailTitle(activeViewLink.title || 'Untitled Page');

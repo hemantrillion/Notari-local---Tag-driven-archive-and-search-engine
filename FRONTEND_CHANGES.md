@@ -777,3 +777,10 @@ Typography: Clean soft sans-serif (Nunito / Poppins).
   * Added `const [isManualUrlModalOpen, setIsManualUrlModalOpen] = useState(false)` and `const [manualUrlInput, setManualUrlInput] = useState('')` in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) across both `frontend` and `real-app-Notari-(local)`.
   * Added `handleManualUrlSubmit` form handler to parse URL domains, generate `readableCode` URL IDs, insert untagged links, and display a success toast.
   * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 124ms & 120ms with 0 errors).
+
+### Change 31: Native Android MainActivity Share Bridge & Incoming Intent Listener
+* **Goal**: I wanted to create MainActivity.java with ACTION_SEND share intent handling and add a window.handleAndroidIncomingShare listener in App.jsx to receive shared URLs directly from external Android apps into Untagged.
+* **Actions**:
+  * Created [MainActivity.java](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)/android/app/src/main/java/online/hekugo/notarilocal/MainActivity.java) extending `BridgeActivity` to intercept Android system `ACTION_SEND` intents and evaluate JavaScript `window.handleAndroidIncomingShare(url)`.
+  * Added `useEffect` in [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)/src/App.jsx) to listen for `handleAndroidIncomingShare`, parse URLs, generate URL IDs, and save shared links directly into Untagged.
+  * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 120ms & 117ms with 0 errors).
