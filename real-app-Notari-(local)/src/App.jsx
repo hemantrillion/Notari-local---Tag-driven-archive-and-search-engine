@@ -307,20 +307,35 @@ function App() {
 
   // Search querying
   const handleSearch = async (query) => {
-    if (!query.trim()) {
+    const q = query.trim().toLowerCase();
+    if (!q) {
       setSearchResults([]);
       return;
     }
+
+    const localMatches = links.filter((l) => {
+      const titleMatch = (l.title || '').toLowerCase().includes(q);
+      const urlMatch = (l.url || '').toLowerCase().includes(q);
+      const notesMatch = (l.notes || '').toLowerCase().includes(q);
+      const codeMatch = (l.readableCode || '').toLowerCase().includes(q);
+      const tagLabelMatch = (l.tagLabel || '').toLowerCase().includes(q);
+      const tagsArrayMatch = (l.tags || []).some((t) => (t.label || t.name || '').toLowerCase().includes(q));
+      return titleMatch || urlMatch || notesMatch || codeMatch || tagLabelMatch || tagsArrayMatch;
+    });
+
     try {
       const response = await fetch(
         `${API_BASE}/search?q=${encodeURIComponent(query)}`
       );
       const resData = await response.json();
-      if (resData.success) {
+      if (resData.success && resData.data && resData.data.length > 0) {
         setSearchResults(resData.data);
+      } else {
+        setSearchResults(localMatches);
       }
     } catch (err) {
-      console.error('Failed to execute search:', err);
+      console.error('Failed to execute backend search, using local matches:', err);
+      setSearchResults(localMatches);
     }
   };
 
@@ -1171,7 +1186,7 @@ function App() {
               }}
             />
             <div className="header-title">
-              {activeTab === 'home' ? 'Notari (local)' : activeTab}
+              {activeTab === 'home' ? '' : activeTab}
             </div>
           </div>
           

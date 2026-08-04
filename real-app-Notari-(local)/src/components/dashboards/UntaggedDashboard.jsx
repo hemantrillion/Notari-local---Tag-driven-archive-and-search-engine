@@ -7,10 +7,21 @@ export default function UntaggedDashboard({
   setActiveEditLinkId = () => {},
   handleDeleteLink = () => {},
   setActiveViewLink = () => {},
-  setDetailMode = () => {}
+  setDetailMode = () => {},
+  onOpenManualUrlModal = () => {}
 }) {
   return (
     <div id="untagged-dashboard" className="dashboard-container" onClick={(e) => e.stopPropagation()}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+        <h2 style={{ fontSize: '18px', fontWeight: 600, margin: 0, color: 'var(--text-color)' }}>Untagged Records</h2>
+        <button 
+          className="btn-primary"
+          onClick={onOpenManualUrlModal}
+          style={{ padding: '8px 16px', borderRadius: '6px', fontSize: '13px', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', backgroundColor: 'var(--accent, #1a73e8)', color: '#fff', border: 'none' }}
+        >
+          + Add Manual URL
+        </button>
+      </div>
       <div style={{ overflowX: 'auto', flex: 1 }}>
         {untaggedLinks.length === 0 ? (
           <div id="untagged-empty-msg" style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', padding: '40px 0' }}>

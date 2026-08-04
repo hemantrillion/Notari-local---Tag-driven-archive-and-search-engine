@@ -554,3 +554,13 @@ Typography: Clean soft sans-serif (Nunito / Poppins).
   * Added `Notari-local-v1.0.0.apk` asset to `hekugo.online/notari-local/Notari-local-v1.0.0.apk` and pushed to `origin main` so the Download APK button functions properly.
   * Created [.github/workflows/build-apk.yml](file:///c:/Users/jai18/Desktop/link-archive-app/.github/workflows/build-apk.yml) with an automated Gradle step patching Kotlin `resolutionStrategy` to substitute legacy `kotlin-stdlib-jdk7` and `kotlin-stdlib-jdk8` with `kotlin-stdlib:1.8.22`, eliminating `checkDebugDuplicateClasses` failures.
   * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 205ms & 185ms with 0 errors).
+
+### Change 28: Tag Editor Inline Create & Send Flow, Untagged Manual URL, Search Filter Fix & Android System Share Target
+* **Goal**: I wanted to refine the Tag Editor with an embedded send button and inline tag creation, add a + Add Manual URL button in the Untagged dashboard, fix tag search query matching, clean up header titles, and expand Android system share intent filters.
+* **Actions**:
+  * Updated [App.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/App.jsx) in both projects to hide redundant `"Notari (local)"` header title next to the Home icon on the home tab.
+  * Fixed `handleSearch` in `App.jsx` to thoroughly match query strings against tag names (`l.tags`), tag labels, titles, URLs, notes, and readable codes across all search tabs.
+  * Refined [TagEditorModal.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/floating-windows/TagEditorModal.jsx) on website: embedded a Send icon button (`➜`) inside the Tag Label input box, renamed header button to `+ Add New Tag`, and added inline tag creation mode with Cancel and Save buttons.
+  * Added `+ Add Manual URL` button in [UntaggedDashboard.jsx](file:///c:/Users/jai18/Desktop/link-archive-app/frontend/src/components/dashboards/UntaggedDashboard.jsx) across both projects with automatic domain source detection (`youtube`, `instagram`, `twitter`, `web`) and URL ID generation.
+  * Updated [AndroidManifest.xml](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)/android/app/src/main/AndroidManifest.xml) with expanded `ACTION_SEND` intent-filters (`text/plain`, `text/*`, `*/*`) to register Notari (local) directly into the native Android system Share sheet.
+  * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 130ms & 121ms with 0 errors).

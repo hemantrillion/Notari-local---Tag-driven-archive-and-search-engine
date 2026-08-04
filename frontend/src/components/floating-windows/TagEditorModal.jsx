@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import WordEditor from '../WordEditor';
 
 /**
@@ -26,8 +26,12 @@ export default function TagEditorModal({
   allSources,
   handleSaveEdit,
   handleRemoveTag,
-  handleAddTag
+  handleAddTag,
+  handleCreateNewTag
 }) {
+  const [isInlineCreatingTag, setIsInlineCreatingTag] = useState(false);
+  const [newTagName, setNewTagName] = useState('');
+
   if (activeEditLinkId === null) return null;
 
   const urlIdParts = (editReadableCode || 'web-web-0000-01-0126-000').split('-');
@@ -189,19 +193,105 @@ export default function TagEditorModal({
               <button 
                 type="button"
                 style={{ background: 'none', border: 'none', color: '#1a73e8', cursor: 'pointer', fontWeight: 600, fontSize: '0.75rem' }}
-                onClick={() => handleAddTag && handleAddTag(editPrimaryTagLabel)}
+                onClick={() => setIsInlineCreatingTag(!isInlineCreatingTag)}
               >
-                + Add Tag
+                + Add New Tag
               </button>
             </div>
-            <input 
-              type="text" 
-              className="input-field" 
-              style={{ padding: '0.55rem', width: '100%', borderRadius: '0.4rem', border: '1px solid #ccc', boxSizing: 'border-box' }}
-              placeholder="e.g. recipes, coding"
-              value={editPrimaryTagLabel}
-              onChange={(e) => setEditPrimaryTagLabel(e.target.value)}
-            />
+
+            {isInlineCreatingTag ? (
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                <input 
+                  type="text" 
+                  className="input-field" 
+                  style={{ padding: '0.55rem', flex: 1, borderRadius: '0.4rem', border: '1px solid var(--accent, #1a73e8)', boxSizing: 'border-box' }}
+                  placeholder="Enter new tag name..."
+                  value={newTagName}
+                  onChange={(e) => setNewTagName(e.target.value)}
+                  autoFocus
+                  onKeyDown={async (e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      if (newTagName.trim()) {
+                        if (handleCreateNewTag) {
+                          await handleCreateNewTag(newTagName.trim());
+                        }
+                        handleAddTag && handleAddTag(newTagName.trim());
+                        setNewTagName('');
+                        setIsInlineCreatingTag(false);
+                      }
+                    }
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={async () => {
+                    if (newTagName.trim()) {
+                      if (handleCreateNewTag) {
+                        await handleCreateNewTag(newTagName.trim());
+                      }
+                      handleAddTag && handleAddTag(newTagName.trim());
+                      setNewTagName('');
+                      setIsInlineCreatingTag(false);
+                    }
+                  }}
+                  style={{ padding: '0.5rem 0.9rem', backgroundColor: '#1a73e8', color: '#fff', border: 'none', borderRadius: '0.4rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.75rem' }}
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setNewTagName('');
+                    setIsInlineCreatingTag(false);
+                  }}
+                  style={{ padding: '0.5rem 0.9rem', backgroundColor: '#e0e0e0', color: '#333', border: 'none', borderRadius: '0.4rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.75rem' }}
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <div style={{ position: 'relative', width: '100%' }}>
+                <input 
+                  type="text" 
+                  className="input-field" 
+                  style={{ padding: '0.55rem 2.5rem 0.55rem 0.55rem', width: '100%', borderRadius: '0.4rem', border: '1px solid #ccc', boxSizing: 'border-box' }}
+                  placeholder="e.g. recipes, coding"
+                  value={editPrimaryTagLabel}
+                  onChange={(e) => setEditPrimaryTagLabel(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleAddTag && handleAddTag(editPrimaryTagLabel);
+                    }
+                  }}
+                />
+                <button
+                  type="button"
+                  title="Attach Tag"
+                  onClick={() => handleAddTag && handleAddTag(editPrimaryTagLabel)}
+                  style={{
+                    position: 'absolute',
+                    right: '6px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'var(--accent, #1a73e8)',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '50%',
+                    width: '26px',
+                    height: '26px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    fontSize: '13px'
+                  }}
+                >
+                  ➜
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Type & Source Dropdowns */}
