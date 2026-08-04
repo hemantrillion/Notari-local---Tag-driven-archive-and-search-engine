@@ -133,7 +133,20 @@ function App() {
   // Navigation & Data States (Right Panel)
   const [activeTab, setActiveTab] = useState('home'); // 'home' | 'untagged' | 'profile'
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [links, setLinks] = useState(DEFAULT_INITIAL_LINKS);
+  const [links, setLinks] = useState(() => {
+    try {
+      const saved = localStorage.getItem('notari_links');
+      return saved ? JSON.parse(saved) : DEFAULT_INITIAL_LINKS;
+    } catch (e) {
+      return DEFAULT_INITIAL_LINKS;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('notari_links', JSON.stringify(links));
+    } catch (e) {}
+  }, [links]);
   const [recentShowCount, setRecentShowCount] = useState(10);
   const [activeEditLinkId, setActiveEditLinkId] = useState(null);
   const [isLocalStorageEnabled, setIsLocalStorageEnabled] = useState(true);
