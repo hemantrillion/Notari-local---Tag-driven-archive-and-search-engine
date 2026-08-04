@@ -997,3 +997,12 @@ Typography: Clean soft sans-serif (Nunito / Poppins).
 * **Actions**:
   * Deleted directory `real-app-Notari-(local)`.
   * Removed `.github/workflows/build-apk.yml`.
+
+### Change 36: Complete Rebuild of real-app-Notari-(local) Standalone Phone App & Workflow
+* **Goal**: I wanted to rebuild the standalone Android app folder `real-app-Notari-(local)` with full offline-first localStorage persistence, connected Add Manual URL modal, priority ACTION_SEND intent filters, and Java share bridge.
+* **Actions**:
+  * Created clean [real-app-Notari-(local)](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)) directory.
+  * Added priority `ACTION_SEND` intent filters to [AndroidManifest.xml](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)/android/app/src/main/AndroidManifest.xml).
+  * Created native [MainActivity.java](file:///c:/Users/jai18/Desktop/link-archive-app/real-app-Notari-(local)/android/app/src/main/java/online/hekugo/notarilocal/MainActivity.java) share intent handler bridge.
+  * Created [.github/workflows/build-apk.yml](file:///c:/Users/jai18/Desktop/link-archive-app/.github/workflows/build-apk.yml) workflow for automated APK building.
+  * Verified production build in both `frontend` and `real-app-Notari-(local)` (`npx vite build` succeeded in 121ms & 122ms with 0 errors).

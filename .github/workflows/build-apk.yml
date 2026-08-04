@@ -1,0 +1,73 @@
+name: Build and Deploy Notari APK
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'real-app-Notari-(local)/**'
+      - '.github/workflows/build-apk.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Java 21 (JDK)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Dependencies & Build Frontend
+        run: |
+          cd "real-app-Notari-(local)"
+          npm install
+          npm run build
+
+      - name: Install Capacitor Dependencies & Sync Web Assets
+        run: |
+          cd "real-app-Notari-(local)"
+          npm install @capacitor/core @capacitor/android
+          npm install -D @capacitor/cli
+          npx cap copy android
+
+      - name: Fix Kotlin Duplicate Classes Conflict in Gradle
+        run: |
+          cd "real-app-Notari-(local)"
+          echo "" >> android/build.gradle
+          echo "allprojects {" >> android/build.gradle
+          echo "    configurations.all {" >> android/build.gradle
+          echo "        resolutionStrategy {" >> android/build.gradle
+          echo "            dependencySubstitution {" >> android/build.gradle
+          echo "                substitute module('org.jetbrains.kotlin:kotlin-stdlib-jdk7') using module('org.jetbrains.kotlin:kotlin-stdlib:1.8.22')" >> android/build.gradle
+          echo "                substitute module('org.jetbrains.kotlin:kotlin-stdlib-jdk8') using module('org.jetbrains.kotlin:kotlin-stdlib:1.8.22')" >> android/build.gradle
+          echo "            }" >> android/build.gradle
+          echo "        }" >> android/build.gradle
+          echo "    }" >> android/build.gradle
+          echo "}" >> android/build.gradle
+
+      - name: Build Android APK with Gradle
+        run: |
+          cd "real-app-Notari-(local)/android"
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Notari-local-v1.0.0-apk
+          path: real-app-Notari-(local)/android/app/build/outputs/apk/debug/app-debug.apk

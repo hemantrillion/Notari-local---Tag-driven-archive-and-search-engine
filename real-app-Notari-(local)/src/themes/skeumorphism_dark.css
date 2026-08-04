@@ -1,0 +1,16 @@
+/* Theme: Skeumorphism | Mode: Dark */
+.theme-skeumorphism.mode-dark,
+body.theme-skeumorphism.mode-dark {
+  --bg-app: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  --bg-header: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  --bg-card: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  --bg-white: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #334155;
+  --accent: #38bdf8;
+  --accent-hover: #7dd3fc;
+  --box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+  --card-radius: 10px;
+  --font-family: 'Georgia', serif;
+}
